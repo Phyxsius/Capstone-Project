@@ -23,7 +23,7 @@ def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], pr
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         applicationId "us.phyxsi.gameshelf"
