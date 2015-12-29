@@ -47,7 +47,7 @@
 
         <!-- Glide configurations for image loading -->
         <meta-data
-            android:name="io.plaidapp.util.glide.GlideConfiguration"
+            android:name="us.phyxsi.gameshelf.util.glide.GlideConfiguration"
             android:value="GlideModule" />
         <meta-data
             android:name="com.bumptech.glide.integration.okhttp.OkHttpGlideModule"

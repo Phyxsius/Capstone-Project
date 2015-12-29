@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GameShelf.iml" filepath="$PROJECT_DIR$/GameShelf.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/third_party/bypass/bypass.iml" filepath="$PROJECT_DIR$/third_party/bypass/bypass.iml" />
     </modules>
   </component>
 </project>
