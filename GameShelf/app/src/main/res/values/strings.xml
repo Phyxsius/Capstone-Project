@@ -2,6 +2,11 @@
     <string name="app_name">Game Shelf</string>
     <string name="action_settings">Settings</string>
 
+    <!-- main screen -->
+    <string name="search">Search</string>
+    <string name="sort">Sort</string>
+    <string name="about">About</string>
+
     <!-- content authorities -->
     <string name="share_authority"  translatable="false">us.phyxsi.gameshelf.shareprovider</string>
 

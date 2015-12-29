@@ -123,22 +123,31 @@ public class HomeActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
+        switch (item.getItemId()) {
+            case R.id.menu_sort:
+//                drawer.openDrawer(GravityCompat.END);
+                return true;
+            case R.id.menu_search:
+                // get the icon's location on screen to pass through to the search screen
+                View searchMenuView = toolbar.findViewById(R.id.menu_search);
+                int[] loc = new int[2];
+                searchMenuView.getLocationOnScreen(loc);
+//                startActivityForResult(SearchActivity.createStartIntent(this, loc[0], loc[0] +
+//                        (searchMenuView.getWidth() / 2)), RC_SEARCH, ActivityOptions
+//                        .makeSceneTransitionAnimation(this).toBundle());
+                searchMenuView.setAlpha(0f);
+                return true;
+            case R.id.menu_about:
+//                startActivity(new Intent(HomeActivity.this, AboutActivity.class),
+//                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
