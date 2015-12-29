@@ -17,12 +17,9 @@
 package us.phyxsi.gameshelf.ui.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-
-import us.phyxsi.gameshelf.R;
 
 public class BaselineGridTextView extends FontTextView {
 
@@ -46,17 +43,17 @@ public class BaselineGridTextView extends FontTextView {
                                 int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
-        final TypedArray a = context.obtainStyledAttributes(
-                attrs, R.styleable.BaselineGridTextView, defStyleAttr, defStyleRes);
-
-        lineHeightMultiplierHint =
-                a.getFloat(R.styleable.BaselineGridTextView_lineHeightMultiplierHint, 1f);
-        lineHeightHint =
-                a.getDimensionPixelSize(R.styleable.BaselineGridTextView_lineHeightHint, 0);
-        topPaddingHint =
-                a.getDimensionPixelSize(R.styleable.BaselineGridTextView_topPaddingHint, 0);
-
-        a.recycle();
+//        final TypedArray a = context.obtainStyledAttributes(
+//                attrs, R.styleable.BaselineGridTextView, defStyleAttr, defStyleRes);
+//
+//        lineHeightMultiplierHint =
+//                a.getFloat(R.styleable.BaselineGridTextView_lineHeightMultiplierHint, 1f);
+//        lineHeightHint =
+//                a.getDimensionPixelSize(R.styleable.BaselineGridTextView_lineHeightHint, 0);
+//        topPaddingHint =
+//                a.getDimensionPixelSize(R.styleable.BaselineGridTextView_topPaddingHint, 0);
+//
+//        a.recycle();
 
         setIncludeFontPadding(false);
         setElegantTextHeight(false);

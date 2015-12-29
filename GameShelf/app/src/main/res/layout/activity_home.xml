@@ -35,14 +35,14 @@
             android:layout_height="0dp"
             android:background="@color/status_bar_back" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/games_grid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:scrollbarStyle="outsideOverlay"
-            android:clipToPadding="false"
-            android:elevation="1dp" />
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/games_grid"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:scrollbars="vertical"-->
+            <!--android:scrollbarStyle="outsideOverlay"-->
+            <!--android:clipToPadding="false"-->
+            <!--android:elevation="1dp" />-->
 
         <Toolbar
             android:id="@+id/toolbar"
@@ -82,22 +82,5 @@
             android:src="@drawable/ic_add_dark" />
 
     </FrameLayout>
-
-    <!-- filter drawer -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/filters"
-        android:layout_width="@dimen/drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:paddingTop="@dimen/spacing_normal"
-        android:paddingBottom="@dimen/spacing_normal"
-        android:elevation="@dimen/z_drawer"
-        android:background="@color/background_dark"
-        android:clipToPadding="false"
-        android:fitsSystemWindows="true"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="outsideOverlay"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:listitem="@layout/filter_item" />
 
 </android.support.v4.widget.DrawerLayout>

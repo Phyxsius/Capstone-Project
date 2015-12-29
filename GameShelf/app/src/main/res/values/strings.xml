@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Game Shelf</string>
     <string name="action_settings">Settings</string>
+
+    <!-- content authorities -->
+    <string name="share_authority"  translatable="false">us.phyxsi.gameshelf.shareprovider</string>
+
 </resources>
