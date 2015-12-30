@@ -31,11 +31,9 @@ public abstract class GameShelfItem {
     public int colspan;
 
     public GameShelfItem(long id,
-                     String title,
-                     String url) {
+                     String title) {
         this.id = id;
         this.title = title;
-        this.url = url;
     }
 
     @Override

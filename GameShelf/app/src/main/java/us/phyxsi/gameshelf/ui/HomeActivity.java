@@ -37,7 +37,7 @@ public class HomeActivity extends Activity {
 
     @Bind(R.id.drawer) DrawerLayout drawer;
     @Bind(R.id.toolbar) Toolbar toolbar;
-//    @Bind(R.id.games_grid) RecyclerView grid;
+    @Bind(R.id.games_grid) RecyclerView grid;
     @Bind(R.id.fab) ImageButton fab;
     @Bind(android.R.id.empty) ProgressBar loading;
     private TextView noFiltersEmptyText;
@@ -61,6 +61,39 @@ public class HomeActivity extends Activity {
         if (savedInstanceState == null) {
             animateToolbar();
         }
+
+        grid.setAdapter(new RecyclerView.Adapter() {
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                return null;
+            }
+
+            @Override
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+            }
+
+            @Override
+            public int getItemCount() {
+                return 0;
+            }
+        });
+        layoutManager = new GridLayoutManager(this, columns);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return columns;
+            }
+        });
+        grid.setLayoutManager(layoutManager);
+        grid.addOnScrollListener(gridScroll);
+//        grid.addOnScrollListener(new InfiniteScrollListener(layoutManager) {
+//            @Override
+//            public void onLoadMore() {
+//                // TODO: Load more items
+//            }
+//        });
+        grid.setHasFixedSize(true);
 
         // drawer layout treats fitsSystemWindows specially so we have to handle insets ourselves
         drawer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
