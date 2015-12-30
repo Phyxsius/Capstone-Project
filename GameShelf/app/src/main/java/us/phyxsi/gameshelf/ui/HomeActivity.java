@@ -28,10 +28,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
 import us.phyxsi.gameshelf.R;
+import us.phyxsi.gameshelf.data.DataManager;
+import us.phyxsi.gameshelf.data.GameShelfItem;
+import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
 
 public class HomeActivity extends Activity {
 
@@ -45,7 +50,9 @@ public class HomeActivity extends Activity {
     @BindInt(R.integer.num_columns) int columns;
 
     // data
+    private DataManager dataManager;
 //    private FeedAdapter adapter;
+    private BGGPrefs bggPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,15 @@ public class HomeActivity extends Activity {
         if (savedInstanceState == null) {
             animateToolbar();
         }
+
+        bggPrefs = BGGPrefs.get(this);
+        dataManager = new DataManager(this) {
+            @Override
+            public void onDataLoaded(List<? extends GameShelfItem> data) {
+//                adapater.addAndResort(data);
+                checkEmptyState();
+            }
+        };
 
         grid.setAdapter(new RecyclerView.Adapter() {
             @Override
