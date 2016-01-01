@@ -40,37 +40,37 @@ public class Boardgame extends GameShelfItem implements Parcelable {
 
     public final String description;
     public final String image;
-    public final int maxplayers;
-    public final int maxplaytime;
-    public final int minage;
-    public final int minplayers;
-    public final int minplaytime;
-    public final int suggested_numplayers;
-    public final long yearpublished;
+    public final int maxPlayers;
+    public final int maxPlaytime;
+    public final int minAge;
+    public final int minPlayers;
+    public final int minPlaytime;
+    public final int suggestedNumplayers;
+    public final long yearPublished;
     public final List<Category> categories;
 
     public Boardgame(long id,
                      String title,
                      String description,
                      String image,
-                     int maxplayers,
-                     int maxplaytime,
-                     int minage,
-                     int minplayers,
-                     int minplaytime,
-                     int suggested_numplayers,
-                     long yearpublished,
+                     int maxPlayers,
+                     int maxPlaytime,
+                     int minAge,
+                     int minPlayers,
+                     int minPlaytime,
+                     int suggestedNumplayers,
+                     long yearPublished,
                      List<Category> categories) {
         super(id, title);
         this.description = description;
         this.image = image;
-        this.maxplayers = maxplayers;
-        this.maxplaytime = maxplaytime;
-        this.minage = minage;
-        this.minplayers = minplayers;
-        this.minplaytime = minplaytime;
-        this.suggested_numplayers = suggested_numplayers;
-        this.yearpublished = yearpublished;
+        this.maxPlayers = maxPlayers;
+        this.maxPlaytime = maxPlaytime;
+        this.minAge = minAge;
+        this.minPlayers = minPlayers;
+        this.minPlaytime = minPlaytime;
+        this.suggestedNumplayers = suggestedNumplayers;
+        this.yearPublished = yearPublished;
         this.categories = categories;
     }
 
@@ -79,13 +79,13 @@ public class Boardgame extends GameShelfItem implements Parcelable {
 
         description = in.readString();
         image = in.readString();
-        maxplayers = in.readInt();
-        maxplaytime = in.readInt();
-        minage = in.readInt();
-        minplayers = in.readInt();
-        minplaytime = in.readInt();
-        suggested_numplayers = in.readInt();
-        yearpublished = in.readLong();
+        maxPlayers = in.readInt();
+        maxPlaytime = in.readInt();
+        minAge = in.readInt();
+        minPlayers = in.readInt();
+        minPlaytime = in.readInt();
+        suggestedNumplayers = in.readInt();
+        yearPublished = in.readLong();
         if (in.readByte() == 0x01) {
             categories = new ArrayList<Category>();
             in.readList(categories, Category.class.getClassLoader());
@@ -111,13 +111,13 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         dest.writeString(title);
         dest.writeString(description);
         dest.writeString(image);
-        dest.writeInt(maxplayers);
-        dest.writeInt(maxplaytime);
-        dest.writeInt(minage);
-        dest.writeInt(minplayers);
-        dest.writeInt(minplaytime);
-        dest.writeInt(suggested_numplayers);
-        dest.writeLong(yearpublished);
+        dest.writeInt(maxPlayers);
+        dest.writeInt(maxPlaytime);
+        dest.writeInt(minAge);
+        dest.writeInt(minPlayers);
+        dest.writeInt(minPlaytime);
+        dest.writeInt(suggestedNumplayers);
+        dest.writeLong(yearPublished);
         if (categories == null) {
             dest.writeByte((byte) (0x00));
         } else {
