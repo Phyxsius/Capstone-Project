@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package us.phyxsi.gameshelf.data.db;
+package us.phyxsi.gameshelf.data.db.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
+import us.phyxsi.gameshelf.data.api.bgg.model.Category;
 import us.phyxsi.gameshelf.data.db.GameShelfContract.BoardgameEntry;
 import us.phyxsi.gameshelf.data.db.GameShelfContract.BoardgamesCategoriesEntry;
 import us.phyxsi.gameshelf.data.db.GameShelfContract.CategoryEntry;
 
 /**
- * Database helper methods for the Boardgame table
+ * Database helper methods for the Game Shelf database
  */
 public class GameShelfDbHelper extends SQLiteOpenHelper {
 
@@ -104,32 +104,5 @@ public class GameShelfDbHelper extends SQLiteOpenHelper {
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
-    }
-
-    private long insertBoardgame(Context context, Boardgame boardgame) {
-        GameShelfDbHelper mDbHelper = new GameShelfDbHelper(context);
-        // Gets the data repository in write mode
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-        // Create a new map of values, where column names are the keys
-        ContentValues values = new ContentValues();
-        values.put(BoardgameEntry.COLUMN_NAME_GAME_ID, boardgame.id);
-        values.put(BoardgameEntry.COLUMN_NAME_TITLE, boardgame.title);
-        values.put(BoardgameEntry.COLUMN_NAME_DESCRIPTION, boardgame.description);
-        values.put(BoardgameEntry.COLUMN_NAME_MAX_PLAYERS, boardgame.maxPlayers);
-        values.put(BoardgameEntry.COLUMN_NAME_MAX_PLAYTIME, boardgame.maxPlaytime);
-        values.put(BoardgameEntry.COLUMN_NAME_MIN_AGE, boardgame.minAge);
-        values.put(BoardgameEntry.COLUMN_NAME_MIN_PLAYERS, boardgame.minPlayers);
-        values.put(BoardgameEntry.COLUMN_NAME_MIN_PLAYTIME, boardgame.minPlaytime);
-        values.put(BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS, boardgame.suggestedNumplayers);
-        values.put(BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED, boardgame.yearPublished);
-
-        // Insert the new row, returning the primary key value of the new row
-        long newRowId  = db.insert(
-                BoardgameEntry.TABLE_NAME,
-                null,
-                values);
-
-        return newRowId;
     }
 }
