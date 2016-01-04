@@ -16,6 +16,7 @@
 
 package us.phyxsi.gameshelf.data.api.bgg.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import us.phyxsi.gameshelf.data.GameShelfItem;
+import us.phyxsi.gameshelf.data.db.GameShelfContract;
 
 /**
  * Models a Board Game Geek boardgame
@@ -72,6 +74,24 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         this.suggestedNumplayers = suggestedNumplayers;
         this.yearPublished = yearPublished;
         this.categories = categories;
+    }
+
+    public Boardgame(Cursor cursor) {
+        super(cursor.getLong(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID)),
+                cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_TITLE)));
+
+        this.description = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_DESCRIPTION));
+        this.image = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_IMAGE));
+        this.maxPlayers = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYERS));
+        this.maxPlaytime = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYTIME));
+        this.minAge = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_AGE));
+        this.minPlayers = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYERS));
+        this.minPlaytime = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYTIME));
+        this.suggestedNumplayers = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS));
+        this.yearPublished = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED));
+
+        // TODO: Set categories from a cursor
+        this.categories = null;
     }
 
     protected Boardgame(Parcel in) {

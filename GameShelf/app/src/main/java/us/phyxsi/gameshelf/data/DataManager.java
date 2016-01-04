@@ -17,9 +17,15 @@
 package us.phyxsi.gameshelf.data;
 
 import android.content.Context;
+import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
+import us.phyxsi.gameshelf.data.db.helper.BoardgameDbHelper;
 
 /**
  * Responsible for loading data from the various sources. Instantiating classes are responsible for
@@ -31,9 +37,12 @@ public abstract class DataManager extends BaseDataManager
 //    private final FilterAdapter filterAdapter;
     private AtomicInteger loadingCount;
     private Map<String, Integer> pageIndexes;
+    private Context context;
 
     public DataManager(Context context) {
         super(context);
+
+        this.context = context;
         loadingCount = new AtomicInteger(0);
         setupPageIndexes();
     }
@@ -43,6 +52,21 @@ public abstract class DataManager extends BaseDataManager
 //            loadSource(filter);
 //        }
 //    }
+
+    public void loadFromDatabase() {
+        loadingCount.incrementAndGet();
+
+        BoardgameDbHelper bgHelper = new BoardgameDbHelper(context);
+        Cursor bgCursor = bgHelper.getAll();
+        List<Boardgame> boardgameList = new ArrayList<Boardgame>();
+
+        for (bgCursor.moveToFirst(); !bgCursor.isAfterLast(); bgCursor.moveToNext()) {
+            Boardgame bg = new Boardgame(bgCursor);
+            boardgameList.add(bg);
+        }
+
+        onDataLoaded(boardgameList);
+    }
 
     @Override
     public boolean isDataLoading() {

@@ -153,6 +153,8 @@ public class HomeActivity extends Activity {
         });
         setupTaskDescription();
 
+        dataManager.loadFromDatabase();
+
         checkEmptyState();
         checkConnectivity();
     }
