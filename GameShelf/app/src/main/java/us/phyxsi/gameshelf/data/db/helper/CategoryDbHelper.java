@@ -30,7 +30,7 @@ import us.phyxsi.gameshelf.data.db.GameShelfContract;
 public class CategoryDbHelper {
     private static GameShelfDbHelper mDbHelper;
 
-    public static void CategoryDbHelper(Context context) {
+    public CategoryDbHelper(Context context) {
         mDbHelper = new GameShelfDbHelper(context);
     }
 
@@ -52,7 +52,7 @@ public class CategoryDbHelper {
         return newRowId;
     }
 
-    public static Cursor getAll() {
+    public Cursor getAll() {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
