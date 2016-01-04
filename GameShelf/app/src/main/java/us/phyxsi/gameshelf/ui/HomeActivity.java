@@ -37,6 +37,7 @@ import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.DataManager;
 import us.phyxsi.gameshelf.data.GameShelfItem;
 import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
+import us.phyxsi.gameshelf.util.ViewUtils;
 
 public class HomeActivity extends Activity {
 
@@ -123,11 +124,11 @@ public class HomeActivity extends Activity {
                 toolbar.setLayoutParams(lpToolbar);
 
                 // inset the grid top by statusbar+toolbar & the bottom by the navbar (don't clip)
-//                grid.setPadding(grid.getPaddingLeft(),
-//                        insets.getSystemWindowInsetTop() + ViewUtils.getActionBarSize
-//                                (HomeActivity.this),
-//                        grid.getPaddingRight() + insets.getSystemWindowInsetRight(), // landscape
-//                        grid.getPaddingBottom());
+                grid.setPadding(grid.getPaddingLeft(),
+                        insets.getSystemWindowInsetTop() + ViewUtils.getActionBarSize
+                                (HomeActivity.this),
+                        grid.getPaddingRight() + insets.getSystemWindowInsetRight(), // landscape
+                        grid.getPaddingBottom());
 
                 // inset the fab for the navbar
                 ViewGroup.MarginLayoutParams lpFab = (ViewGroup.MarginLayoutParams) fab
