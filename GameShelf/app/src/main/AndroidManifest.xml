@@ -35,6 +35,15 @@
             </intent-filter>
         </activity-alias>
 
+        <activity
+            android:name=".ui.BoardgameActivity"
+            android:parentActivityName=".ui.HomeActivity"
+            android:theme="@style/GameShelf.Translucent.Boardgame">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.HomeActivity" />
+        </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="@string/share_authority"

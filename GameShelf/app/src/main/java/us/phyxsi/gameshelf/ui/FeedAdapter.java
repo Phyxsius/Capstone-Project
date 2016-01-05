@@ -52,7 +52,7 @@ import us.phyxsi.gameshelf.data.DataLoadingSubject;
 import us.phyxsi.gameshelf.data.GameShelfItem;
 import us.phyxsi.gameshelf.data.GameShelfItemComparator;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
-import us.phyxsi.gameshelf.ui.widget.BadgedFourThreeImageView;
+import us.phyxsi.gameshelf.ui.widget.BadgedFourFourImageView;
 import us.phyxsi.gameshelf.util.ObservableColorMatrix;
 import us.phyxsi.gameshelf.util.glide.BoardgameTarget;
 
@@ -122,7 +122,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void bindBoardgame(final Boardgame game, final BoardgameHolder holder) {
-        final BadgedFourThreeImageView iv = (BadgedFourThreeImageView) holder.itemView;
+        final BadgedFourFourImageView iv = (BadgedFourFourImageView) holder.itemView;
         Glide.with(host)
                 .load("http:" + game.image)
                 .listener(new RequestListener<String, GlideDrawable>() {

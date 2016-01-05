@@ -37,7 +37,7 @@ import us.phyxsi.gameshelf.R;
 /**
  * A view group that draws a badge drawable on top of it's contents.
  */
-public class BadgedFourThreeImageView extends FourFourImageView {
+public class BadgedFourFourImageView extends FourFourImageView {
 
     private Drawable badge;
     private boolean drawBadge;
@@ -45,7 +45,7 @@ public class BadgedFourThreeImageView extends FourFourImageView {
     private int badgeGravity;
     private int badgePadding;
 
-    public BadgedFourThreeImageView(Context context, AttributeSet attrs) {
+    public BadgedFourFourImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         badge = new GifBadge(context);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BadgedImageView, 0, 0);

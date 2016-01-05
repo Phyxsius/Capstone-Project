@@ -12,16 +12,16 @@
   limitations under the License.
   -->
 
-<us.phyxsi.gameshelf.ui.widget.BadgedFourFourImageView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/boardgame"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:stateListAnimator="@animator/raise"
-    android:background="@color/background_dark"
-    android:foreground="@drawable/mid_grey_ripple"
-    android:theme="@style/GameShelfDarkOverlay"
-    android:scaleType="centerCrop"
-    app:badgeGravity="end|bottom"
-    app:badgePadding="@dimen/padding_normal" />
+<resources>
+
+    <!-- standard metrics -->
+    <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="spacing_micro">8dp</dimen>
+    <dimen name="padding_normal">24dp</dimen>
+    <dimen name="keyline_1">80dp</dimen>
+    <dimen name="touch_raise">9dp</dimen>
+
+    <!-- grid -->
+    <dimen name="grid_icon_with_padding">56dp</dimen> <!-- 24dp icon + 2 * @dimen/spacing_normal -->
+
+</resources>

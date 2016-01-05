@@ -26,11 +26,11 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 
 import us.phyxsi.gameshelf.R;
-import us.phyxsi.gameshelf.ui.widget.BadgedFourThreeImageView;
+import us.phyxsi.gameshelf.ui.widget.BadgedFourFourImageView;
 import us.phyxsi.gameshelf.util.ViewUtils;
 
 /**
- * A Glide {@see ViewTarget} for {@link BadgedFourThreeImageView}s. It applies a badge for animated
+ * A Glide {@see ViewTarget} for {@link BadgedFourFourImageView}s. It applies a badge for animated
  * images, can prevent GIFs from auto-playing & applies a palette generated ripple.
  */
 public class BoardgameTarget extends GlideDrawableImageViewTarget implements
@@ -38,7 +38,7 @@ public class BoardgameTarget extends GlideDrawableImageViewTarget implements
 
     private final boolean autoplayGifs;
 
-    public BoardgameTarget(BadgedFourThreeImageView view, boolean autoplayGifs) {
+    public BoardgameTarget(BadgedFourFourImageView view, boolean autoplayGifs) {
         super(view);
         this.autoplayGifs = autoplayGifs;
     }
@@ -51,7 +51,7 @@ public class BoardgameTarget extends GlideDrawableImageViewTarget implements
             resource.stop();
         }
 
-        BadgedFourThreeImageView badgedImageView = (BadgedFourThreeImageView) getView();
+        BadgedFourFourImageView badgedImageView = (BadgedFourFourImageView) getView();
         if (resource instanceof GlideBitmapDrawable) {
             Palette.from(((GlideBitmapDrawable) resource).getBitmap())
                     .clearFilters()
@@ -76,7 +76,7 @@ public class BoardgameTarget extends GlideDrawableImageViewTarget implements
 
     @Override
     public void onGenerated(Palette palette) {
-        ((BadgedFourThreeImageView) getView()).setForeground(
+        ((BadgedFourFourImageView) getView()).setForeground(
                 ViewUtils.createRipple(palette, 0.25f, 0.5f,
                         ContextCompat.getColor(getView().getContext(), R.color.mid_grey), true));
     }
