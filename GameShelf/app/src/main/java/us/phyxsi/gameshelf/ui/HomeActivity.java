@@ -1,8 +1,25 @@
+/*
+ * Copyright 2015 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package us.phyxsi.gameshelf.ui;
 
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -33,10 +50,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.DataManager;
 import us.phyxsi.gameshelf.data.GameShelfItem;
 import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
+import us.phyxsi.gameshelf.ui.transitions.FabDialogMorphSetup;
 import us.phyxsi.gameshelf.util.ViewUtils;
 
 public class HomeActivity extends Activity {
@@ -156,6 +175,18 @@ public class HomeActivity extends Activity {
             }
         }
     };
+
+    @OnClick(R.id.fab)
+    protected void fabClick() {
+        Intent intent = new Intent(this, AddNewGame.class);
+        intent.putExtra(FabDialogMorphSetup.EXTRA_SHARED_ELEMENT_START_COLOR,
+                ContextCompat.getColor(this, R.color.accent));
+//        intent.putExtra(PostStoryService.EXTRA_BROADCAST_RESULT, true);
+//        registerPostStoryResultListener();
+//        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, fab,
+//                getString(R.string.transition_new_designer_news_post));
+//        startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_STORY, options.toBundle());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
