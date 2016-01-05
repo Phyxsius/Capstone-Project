@@ -52,7 +52,7 @@ public class HomeActivity extends Activity {
 
     // data
     private DataManager dataManager;
-//    private FeedAdapter adapter;
+    private FeedAdapter adapter;
     private BGGPrefs bggPrefs;
 
     @Override
@@ -74,27 +74,12 @@ public class HomeActivity extends Activity {
         dataManager = new DataManager(this) {
             @Override
             public void onDataLoaded(List<? extends GameShelfItem> data) {
-//                adapater.addAndResort(data);
+                adapter.addAndResort(data);
                 checkEmptyState();
             }
         };
-
-        grid.setAdapter(new RecyclerView.Adapter() {
-            @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return null;
-            }
-
-            @Override
-            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return 0;
-            }
-        });
+        adapter = new FeedAdapter(this, dataManager, columns);
+        grid.setAdapter(adapter);
         layoutManager = new GridLayoutManager(this, columns);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -204,7 +189,7 @@ public class HomeActivity extends Activity {
     }
 
     private void checkEmptyState() {
-        if (0 == 0) {
+        if (adapter.getDataItemCount() == 0) {
             loading.setVisibility(View.VISIBLE);
 
             // ensure grid scroll tracking/toolbar z-order is reset

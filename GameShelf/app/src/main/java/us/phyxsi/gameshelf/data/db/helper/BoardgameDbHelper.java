@@ -43,6 +43,7 @@ public class BoardgameDbHelper {
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID, boardgame.id);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_TITLE, boardgame.title);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_DESCRIPTION, boardgame.description);
+        values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_IMAGE, boardgame.image);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYERS, boardgame.maxPlayers);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYTIME, boardgame.maxPlaytime);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_AGE, boardgame.minAge);
@@ -70,6 +71,7 @@ public class BoardgameDbHelper {
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_TITLE,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_DESCRIPTION,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_IMAGE,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYERS,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYTIME,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_AGE,

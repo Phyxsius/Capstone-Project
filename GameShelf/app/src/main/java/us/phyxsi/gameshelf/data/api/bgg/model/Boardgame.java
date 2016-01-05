@@ -50,6 +50,8 @@ public class Boardgame extends GameShelfItem implements Parcelable {
     public final int suggestedNumplayers;
     public final long yearPublished;
     public final List<Category> categories;
+    // todo move this into a decorator
+    public boolean hasFadedIn = false;
 
     public Boardgame(long id,
                      String title,
@@ -106,6 +108,9 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         minPlaytime = in.readInt();
         suggestedNumplayers = in.readInt();
         yearPublished = in.readLong();
+
+        hasFadedIn = in.readByte() != 0x00;
+
         if (in.readByte() == 0x01) {
             categories = new ArrayList<Category>();
             in.readList(categories, Category.class.getClassLoader());
@@ -138,11 +143,13 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         dest.writeInt(minPlaytime);
         dest.writeInt(suggestedNumplayers);
         dest.writeLong(yearPublished);
+        dest.writeByte((byte) (hasFadedIn ? 0x01 : 0x00));
         if (categories == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(categories);
         }
+
     }
 }

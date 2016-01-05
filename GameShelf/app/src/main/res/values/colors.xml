@@ -36,4 +36,11 @@
     <!-- text (most text uses material theme colors) -->
     <color name="hint_disabled_dark">#43000000</color> <!-- 26% black -->
     <color name="text_on_accent">#8f000000</color>
+
+    <!-- game -->
+    <array name="loading_placeholders">
+        <item>#ff191919</item>
+        <item>#ff212121</item>
+        <item>#ff232323</item>
+    </array>
 </resources>

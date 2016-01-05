@@ -31,7 +31,7 @@ android {
         targetSdkVersion 23
         versionCode gitCommitCount
         versionName gitTag
-        archivesBaseName = "gameshelf-${versionName}"
+        //archivesBaseName = "gameshelf-${versionName}"
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
     }
     buildTypes {
