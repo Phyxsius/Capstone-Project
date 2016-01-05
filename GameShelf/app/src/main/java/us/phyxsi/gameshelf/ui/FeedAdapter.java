@@ -27,9 +27,12 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +56,9 @@ import us.phyxsi.gameshelf.data.GameShelfItem;
 import us.phyxsi.gameshelf.data.GameShelfItemComparator;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.ui.widget.BadgedFourFourImageView;
+import us.phyxsi.gameshelf.util.AnimUtils;
 import us.phyxsi.gameshelf.util.ObservableColorMatrix;
+import us.phyxsi.gameshelf.util.ViewUtils;
 import us.phyxsi.gameshelf.util.glide.BoardgameTarget;
 
 /**
@@ -72,7 +77,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private @Nullable DataLoadingSubject dataLoading;
     private final int columns;
     private final ColorDrawable[] shotLoadingPlaceholders;
-    private int shotWidth = 0;
 
     private List<GameShelfItem> items;
 
@@ -99,8 +103,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_BOARDGAME:
-                return new BoardgameHolder(
-                        layoutInflater.inflate(R.layout.boardgame_item, parent, false));
+                return createBoardgameHolder(parent);
             case TYPE_LOADING_MORE:
                 return new LoadingMoreHolder(
                         layoutInflater.inflate(R.layout.infinite_loading, parent, false));
@@ -110,30 +113,68 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position < getDataItemCount()
-                && getDataItemCount() > 0) {
-            GameShelfItem item = getItem(position);
-            if (item instanceof Boardgame) {
-                bindBoardgame((Boardgame) getItem(position), (BoardgameHolder) holder);
-            }
-        } else {
-            bindLoadingViewHolder((LoadingMoreHolder) holder, position);
+        switch (getItemViewType(position)) {
+            case TYPE_BOARDGAME:
+                bindBoardgameHolder((Boardgame) getItem(position), (BoardgameHolder) holder);
+                break;
+            case TYPE_LOADING_MORE:
+                bindLoadingViewHolder((LoadingMoreHolder) holder);
+                break;
         }
     }
 
-    private void bindBoardgame(final Boardgame game, final BoardgameHolder holder) {
-        final BadgedFourFourImageView iv = (BadgedFourFourImageView) holder.itemView;
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        if (holder instanceof BoardgameHolder) {
+            // reset the badge & ripple which are dynamically determined
+            BoardgameHolder bgHolder = (BoardgameHolder) holder;
+            bgHolder.image.showBadge(false);
+            bgHolder.image.setForeground(
+                    ContextCompat.getDrawable(host, R.drawable.mid_grey_ripple));
+        }
+    }
+
+    @NonNull
+    private BoardgameHolder createBoardgameHolder(ViewGroup parent) {
+        final BoardgameHolder holder = new BoardgameHolder(
+                layoutInflater.inflate(R.layout.boardgame_item, parent, false));
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.itemView.setTransitionName(holder.itemView.getResources().getString(R
+                        .string.transition_game));
+                holder.itemView.setBackgroundColor(
+                        ContextCompat.getColor(host, R.color.background_light));
+                Intent intent = new Intent();
+                intent.setClass(host, BoardgameDetails.class);
+                intent.putExtra(BoardgameDetails.EXTRA_BOARDGAME,
+                        (Boardgame) getItem(holder.getAdapterPosition()));
+                setGridItemContentTransitions(holder.itemView);
+                ActivityOptions options =
+                        ActivityOptions.makeSceneTransitionAnimation(host,
+                                Pair.create(view, host.getString(R.string.transition_game)),
+                                Pair.create(view, host.getString(R.string
+                                        .transition_game_background)));
+                host.startActivity(intent, options.toBundle());
+            }
+        });
+        return holder;
+    }
+
+    private void bindBoardgameHolder(final Boardgame game, final BoardgameHolder holder) {
+        final int[] imageSize = {400, 400};
         Glide.with(host)
                 .load("http:" + game.image)
                 .listener(new RequestListener<String, GlideDrawable>() {
 
                     @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model,
-                                                   Target<GlideDrawable> target, boolean
-                                                           isFromMemoryCache, boolean
-                                                           isFirstResource) {
+                    public boolean onResourceReady(GlideDrawable resource,
+                                                   String model,
+                                                   Target<GlideDrawable> target,
+                                                   boolean isFromMemoryCache,
+                                                   boolean isFirstResource) {
                         if (!game.hasFadedIn) {
-                            iv.setHasTransientState(true);
+                            holder.image.setHasTransientState(true);
                             final ObservableColorMatrix cm = new ObservableColorMatrix();
                             ObjectAnimator saturation = ObjectAnimator.ofFloat(cm,
                                     ObservableColorMatrix.SATURATION, 0f, 1f);
@@ -144,9 +185,9 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                     // just animating the color matrix does not invalidate the
                                     // drawable so need this update listener.  Also have to create a
                                     // new CMCF as the matrix is immutable :(
-                                    if (iv.getDrawable() != null) {
-                                        iv.getDrawable().setColorFilter(new
-                                                ColorMatrixColorFilter(cm));
+                                    if (holder.image.getDrawable() != null) {
+                                        holder.image.getDrawable().setColorFilter(
+                                                new ColorMatrixColorFilter(cm));
                                     }
                                 }
                             });
@@ -156,7 +197,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             saturation.addListener(new AnimatorListenerAdapter() {
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
-                                    iv.setHasTransientState(false);
+                                    holder.image.setHasTransientState(false);
                                 }
                             });
                             saturation.start();
@@ -171,34 +212,20 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         return false;
                     }
                 })
-                // needed to prevent seeing through view as it fades in
-                .placeholder(R.color.background_dark)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(new BoardgameTarget(iv, false));
+                .placeholder(shotLoadingPlaceholders[holder.getAdapterPosition() %
+                        shotLoadingPlaceholders.length])
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .centerCrop()
+                .override(imageSize[0], imageSize[1])
+                .into(new BoardgameTarget(holder.image, false));
 
-        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                iv.setTransitionName(iv.getResources().getString(R.string.transition_game));
-                iv.setBackgroundColor(
-                        ContextCompat.getColor(host, R.color.background_light));
-                Intent intent = new Intent();
-                intent.setClass(host, BoardgameActivity.class);
-                intent.putExtra(BoardgameActivity.EXTRA_BOARDGAME, game);
-                ActivityOptions options =
-                        ActivityOptions.makeSceneTransitionAnimation(host,
-                                Pair.create(view, host.getString(R.string.transition_game)),
-                                Pair.create(view, host.getString(R.string.transition_game_background)));
-                host.startActivity(intent, options.toBundle());
-            }
-        });
     }
 
-    private void bindLoadingViewHolder(LoadingMoreHolder holder, int position) {
+    private void bindLoadingViewHolder(LoadingMoreHolder holder) {
         // only show the infinite load progress spinner if there are already items in the
         // grid i.e. it's not the first item & data is being loaded
-        holder.progress.setVisibility(position > 0 && dataLoading.isDataLoading() ?
-                View.VISIBLE : View.INVISIBLE);
+        holder.progress.setVisibility((holder.getAdapterPosition() > 0
+                && dataLoading.isDataLoading()) ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -353,8 +380,30 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        // include loading footer
-        return getDataItemCount() + 1;
+        return getDataItemCount() + 1; // include loading footer
+    }
+
+    /**
+     * The shared element transition to dribbble shots & dn stories can intersect with the FAB.
+     * This can cause a strange layers-passing-through-each-other effect, especially on return.
+     * In this situation, hide the FAB on exit and re-show it on return.
+     */
+    private void setGridItemContentTransitions(View gridItem) {
+        if (!ViewUtils.viewsIntersect(gridItem, host.findViewById(R.id.fab))) return;
+
+        final TransitionInflater ti = TransitionInflater.from(host);
+        host.getWindow().setExitTransition(
+                ti.inflateTransition(R.transition.home_content_item_exit));
+        final Transition reenter = ti.inflateTransition(R.transition.home_content_item_reenter);
+        // we only want this content transition in certain cases so clear it out after it's done.
+        reenter.addListener(new AnimUtils.TransitionListenerAdapter() {
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                host.getWindow().setExitTransition(null);
+                host.getWindow().setReenterTransition(null);
+            }
+        });
+        host.getWindow().setReenterTransition(reenter);
     }
 
     public int getDataItemCount() {
@@ -363,8 +412,11 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     /* protected */ class BoardgameHolder extends RecyclerView.ViewHolder {
 
+        BadgedFourFourImageView image;
+
         public BoardgameHolder(View itemView) {
             super(itemView);
+            image = (BadgedFourFourImageView) itemView;
         }
 
     }

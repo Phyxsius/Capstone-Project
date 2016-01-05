@@ -36,7 +36,7 @@
         </activity-alias>
 
         <activity
-            android:name=".ui.BoardgameActivity"
+            android:name=".ui.BoardgameDetails"
             android:parentActivityName=".ui.HomeActivity"
             android:theme="@style/GameShelf.Translucent.Boardgame">
             <meta-data

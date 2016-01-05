@@ -12,15 +12,14 @@
   limitations under the License.
   -->
 
-<us.phyxsi.gameshelf.ui.widget.BadgedFourFourImageView
+<transition
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/boardgame"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:stateListAnimator="@animator/raise"
-    android:background="@color/background_dark"
-    android:foreground="@drawable/mid_grey_ripple"
-    android:theme="@style/GameShelfDarkOverlay"
-    app:badgeGravity="end|bottom"
-    app:badgePadding="@dimen/padding_normal" />
+    class="us.phyxsi.gameshelf.ui.transitions.Pop"
+    android:fadingMode="fade_in"
+    android:startDelay="450"
+    android:duration="300"
+    android:interpolator="@android:interpolator/linear_out_slow_in">
+    <targets>
+        <target android:targetId="@id/fab" />
+    </targets>
+</transition>
