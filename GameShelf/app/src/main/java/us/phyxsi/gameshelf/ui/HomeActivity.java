@@ -84,7 +84,7 @@ public class HomeActivity extends Activity {
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return columns;
+                return adapter.getItemColumnSpan(position);
             }
         });
         grid.setLayoutManager(layoutManager);
