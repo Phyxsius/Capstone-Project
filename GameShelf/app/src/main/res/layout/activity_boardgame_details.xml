@@ -71,20 +71,20 @@
 
         </FrameLayout>
 
-        <!--<ListView-->
-            <!--android:id="@+id/dribbble_comments"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:paddingBottom="@dimen/padding_normal"-->
-            <!--android:clipToPadding="false"-->
-            <!--android:listSelector="@android:color/transparent"-->
-            <!--android:divider="@null"-->
-            <!--android:dividerHeight="@dimen/divider_height"-->
-            <!--android:headerDividersEnabled="false"-->
-            <!--android:footerDividersEnabled="true"-->
-            <!--android:nestedScrollingEnabled="true"-->
-            <!--android:overScrollMode="never"-->
-            <!--android:overScrollFooter="@android:color/transparent" /> &lt;!&ndash; http://stackoverflow.com/a/24394230 &ndash;&gt;-->
+        <ListView
+            android:id="@+id/game_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/padding_normal"
+            android:clipToPadding="false"
+            android:listSelector="@android:color/transparent"
+            android:divider="@null"
+            android:dividerHeight="@dimen/divider_height"
+            android:headerDividersEnabled="false"
+            android:footerDividersEnabled="true"
+            android:nestedScrollingEnabled="true"
+            android:overScrollMode="never"
+            android:overScrollFooter="@android:color/transparent" /> <!-- http://stackoverflow.com/a/24394230 -->
 
     </FrameLayout>
 

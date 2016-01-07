@@ -78,4 +78,24 @@
         <item name="android:fontFeatureSettings">smcp</item>
         <item name="android:letterSpacing">0.1</item>
     </style>
+
+    <style name="TextAppearance.BoardgameDetailsTitle" parent="@android:style/TextAppearance.Material.Headline">
+        <item name="font">roboto-mono-regular</item>
+        <item name="android:textColor">@color/text_primary_dark</item>
+    </style>
+
+    <style name="TextAppearance.BoardgameDetailsDescription" parent="@android:style/TextAppearance.Material.Subhead">
+        <item name="android:textColor">@color/text_tertiary_dark</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="Widget.GameShelf.BoardgameDetailsTitle">
+        <item name="android:textAppearance">@style/TextAppearance.BoardgameDetailsTitle</item>
+        <item name="lineHeightHint">32sp</item>
+    </style>
+
+    <style name="Widget.GameShelf.BoardgameDetailsDescription">
+        <item name="android:textAppearance">@style/TextAppearance.BoardgameDetailsDescription</item>
+        <item name="lineHeightHint">24sp</item>
+    </style>
 </resources>
