@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -83,7 +84,7 @@ public class BoardgameDetails extends Activity {
         setContentView(R.layout.activity_boardgame_details);
         boardgame = getIntent().getParcelableExtra(EXTRA_BOARDGAME);
 
-        getWindow().getSharedElementReturnTransition().addListener(shotReturnHomeListener);
+        getWindow().getSharedElementReturnTransition().addListener(boardgameReturnHomeListener);
         Resources res = getResources();
 
         ButterKnife.bind(this);
@@ -93,6 +94,7 @@ public class BoardgameDetails extends Activity {
         description = boardgameDescription.findViewById(R.id.boardgame_description);
         detailsList = (ListView) findViewById(R.id.game_details);
         detailsList.addHeaderView(boardgameDescription);
+        detailsList.setOnScrollListener(scrollListener);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,7 +270,28 @@ public class BoardgameDetails extends Activity {
         }
     };
 
-    private Transition.TransitionListener shotReturnHomeListener = new AnimUtils
+    private AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener() {
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItemPosition, int
+                visibleItemCount, int totalItemCount) {
+            if (detailsList.getMaxScrollAmount() > 0
+                    && firstVisibleItemPosition == 0
+                    && detailsList.getChildAt(0) != null) {
+                int listScroll = detailsList.getChildAt(0).getTop();
+                imageView.setOffset(listScroll);
+            }
+        }
+
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            // as we animate the main image's elevation change when it 'pins' at it's min height
+            // a fling can cause the title to go over the image before the animation has a chance to
+            // run. In this case we short circuit the animation and just jump to state.
+            imageView.setImmediatePin(scrollState == AbsListView.OnScrollListener
+                    .SCROLL_STATE_FLING);
+        }
+    };
+
+    private Transition.TransitionListener boardgameReturnHomeListener = new AnimUtils
             .TransitionListenerAdapter() {
         @Override
         public void onTransitionStart(Transition transition) {
@@ -282,6 +305,11 @@ public class BoardgameDetails extends Activity {
                             .interpolator.linear_out_slow_in));
             imageView.setElevation(1f);
             back.setElevation(0f);
+            detailsList.animate()
+                    .alpha(0f)
+                    .setDuration(50)
+                    .setInterpolator(AnimationUtils.loadInterpolator(BoardgameDetails.this, android.R
+                            .interpolator.linear_out_slow_in));
         }
     };
 
