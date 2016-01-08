@@ -27,6 +27,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.transition.Transition;
 import android.util.TypedValue;
 import android.view.View;
@@ -34,6 +36,8 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -50,6 +54,7 @@ import us.phyxsi.gameshelf.ui.widget.ElasticDragDismissFrameLayout;
 import us.phyxsi.gameshelf.ui.widget.ParallaxScrimageView;
 import us.phyxsi.gameshelf.util.AnimUtils;
 import us.phyxsi.gameshelf.util.ColorUtils;
+import us.phyxsi.gameshelf.util.HtmlUtils;
 import us.phyxsi.gameshelf.util.ViewUtils;
 import us.phyxsi.gameshelf.util.glide.GlideUtils;
 
@@ -64,6 +69,9 @@ public class BoardgameDetails extends Activity {
     ImageButton back;
     @Bind(R.id.boardgame)
     ParallaxScrimageView imageView;
+    private View title;
+    private View description;
+    private ListView detailsList;
 
     private Boardgame boardgame;
     private ElasticDragDismissFrameLayout.SystemChromeFader chromeFader;
@@ -79,6 +87,12 @@ public class BoardgameDetails extends Activity {
         Resources res = getResources();
 
         ButterKnife.bind(this);
+        View boardgameDescription = getLayoutInflater().inflate(R.layout.boardgame_description,
+                detailsList, false);
+        title = boardgameDescription.findViewById(R.id.boardgame_title);
+        description = boardgameDescription.findViewById(R.id.boardgame_description);
+        detailsList = (ListView) findViewById(R.id.game_details);
+        detailsList.addHeaderView(boardgameDescription);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +129,25 @@ public class BoardgameDetails extends Activity {
                 return true;
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ((TextView) title).setText(boardgame.title);
+        } else {
+            ((TextView) title).setText(boardgame.title);
+        }
+        if (!TextUtils.isEmpty(boardgame.description)) {
+            final Spanned descText = boardgame.getParsedDescription(
+                    ContextCompat.getColorStateList(this, R.color.primary),
+                    ContextCompat.getColor(this, R.color.accent));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ((TextView) description).setText(descText);
+            } else {
+                HtmlUtils.setTextWithNiceLinks((TextView) description, descText);
+            }
+        } else {
+            description.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -279,13 +312,13 @@ public class BoardgameDetails extends Activity {
     private void enterAnimation(boolean isOrientationChange) {
         Interpolator interp = AnimationUtils.loadInterpolator(this, android.R.interpolator
                 .fast_out_slow_in);
-//        int offset = title.getHeight();
-//        viewEnterAnimation(title, offset, interp);
-//        if (description.getVisibility() == View.VISIBLE) {
-//            offset *= 1.5f;
-//            viewEnterAnimation(description, offset, interp);
-//        }
-//        offset *= 1.5f;
+        int offset = title.getHeight();
+        viewEnterAnimation(title, offset, interp);
+        if (description.getVisibility() == View.VISIBLE) {
+            offset *= 1.5f;
+            viewEnterAnimation(description, offset, interp);
+        }
+        offset *= 1.5f;
 //        viewEnterAnimation(shotActions, offset, interp);
 //        offset *= 1.5f;
 //        viewEnterAnimation(playerName, offset, interp);

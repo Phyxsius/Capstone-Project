@@ -16,15 +16,20 @@
 
 package us.phyxsi.gameshelf.data.api.bgg.model;
 
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
+import android.text.Spanned;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import us.phyxsi.gameshelf.data.GameShelfItem;
 import us.phyxsi.gameshelf.data.db.GameShelfContract;
+import us.phyxsi.gameshelf.util.HtmlUtils;
 
 /**
  * Models a Board Game Geek boardgame
@@ -52,6 +57,7 @@ public class Boardgame extends GameShelfItem implements Parcelable {
     public final List<Category> categories;
     // todo move this into a decorator
     public boolean hasFadedIn = false;
+    public Spanned parsedDescription;
 
     public Boardgame(long id,
                      String title,
@@ -117,6 +123,14 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         } else {
             categories = null;
         }
+    }
+
+    public Spanned getParsedDescription(ColorStateList linkTextColor,
+                                        @ColorInt int linkHighlightColor) {
+        if (parsedDescription == null && !TextUtils.isEmpty(description)) {
+            parsedDescription = HtmlUtils.parseHtml(description, linkTextColor, linkHighlightColor);
+        }
+        return parsedDescription;
     }
 
     public void weigh() {
