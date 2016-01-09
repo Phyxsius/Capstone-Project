@@ -18,11 +18,9 @@ package us.phyxsi.gameshelf.util;
 
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
-import android.content.Context;
 import android.transition.Transition;
 import android.util.ArrayMap;
 import android.util.Property;
-import android.view.animation.Interpolator;
 
 import java.util.ArrayList;
 
@@ -179,11 +177,8 @@ public class AnimUtils {
         /* We don't want to override pause or resume methods because we don't want them
          * to affect mAnimator.
         public void pause();
-
         public void resume();
-
         public void addPauseListener(AnimatorPauseListener listener);
-
         public void removePauseListener(AnimatorPauseListener listener);
         */
 

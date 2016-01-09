@@ -191,7 +191,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                     }
                                 }
                             });
-                            saturation.setDuration(2000);
+                            saturation.setDuration(1000);
                             saturation.setInterpolator(AnimationUtils.loadInterpolator(host,
                                     android.R.interpolator.fast_out_slow_in));
                             saturation.addListener(new AnimatorListenerAdapter() {

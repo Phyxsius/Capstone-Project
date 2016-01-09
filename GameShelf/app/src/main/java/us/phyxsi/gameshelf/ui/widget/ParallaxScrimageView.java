@@ -35,7 +35,7 @@ import us.phyxsi.gameshelf.util.ColorUtils;
  *
  * It also has a custom pinned state, for use via state lists.
  */
-public class ParallaxScrimageView extends FourFourImageView {
+public class ParallaxScrimageView extends FourThreeImageView {
 
     private static final int[] STATE_PINNED = {R.attr.state_pinned};
     private final Paint scrimPaint;

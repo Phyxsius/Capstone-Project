@@ -52,6 +52,7 @@ import butterknife.ButterKnife;
 import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.ui.widget.ElasticDragDismissFrameLayout;
+import us.phyxsi.gameshelf.ui.widget.FabOverlapTextView;
 import us.phyxsi.gameshelf.ui.widget.ParallaxScrimageView;
 import us.phyxsi.gameshelf.util.AnimUtils;
 import us.phyxsi.gameshelf.util.ColorUtils;
@@ -64,12 +65,10 @@ public class BoardgameDetails extends Activity {
     protected final static String EXTRA_BOARDGAME = "boardgame";
     private static final float SCRIM_ADJUSTMENT = 0.075f;
 
-    @Bind(R.id.draggable_frame)
-    ElasticDragDismissFrameLayout draggableFrame;
-    @Bind(R.id.back)
-    ImageButton back;
-    @Bind(R.id.boardgame)
-    ParallaxScrimageView imageView;
+    @Bind(R.id.draggable_frame) ElasticDragDismissFrameLayout draggableFrame;
+    @Bind(R.id.back) ImageButton back;
+    @Bind(R.id.boardgame) ParallaxScrimageView imageView;
+    private View spacer;
     private View title;
     private View description;
     private ListView detailsList;
@@ -90,6 +89,7 @@ public class BoardgameDetails extends Activity {
         ButterKnife.bind(this);
         View boardgameDescription = getLayoutInflater().inflate(R.layout.boardgame_description,
                 detailsList, false);
+        spacer = boardgameDescription.findViewById(R.id.spacer);
         title = boardgameDescription.findViewById(R.id.boardgame_title);
         description = boardgameDescription.findViewById(R.id.boardgame_description);
         detailsList = (ListView) findViewById(R.id.game_details);
@@ -133,7 +133,7 @@ public class BoardgameDetails extends Activity {
         });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ((TextView) title).setText(boardgame.title);
+            ((FabOverlapTextView) title).setText(boardgame.title);
         } else {
             ((TextView) title).setText(boardgame.title);
         }
@@ -142,7 +142,7 @@ public class BoardgameDetails extends Activity {
                     ContextCompat.getColorStateList(this, R.color.primary),
                     ContextCompat.getColor(this, R.color.accent));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ((TextView) description).setText(descText);
+                ((FabOverlapTextView) description).setText(descText);
             } else {
                 HtmlUtils.setTextWithNiceLinks((TextView) description, descText);
             }
@@ -247,9 +247,9 @@ public class BoardgameDetails extends Activity {
                         @Override
                         public void onGenerated(Palette palette) {
                             // color the ripple on the image spacer (default is grey)
-//                            shotSpacer.setBackground(ViewUtils.createRipple(palette, 0.25f, 0.5f,
-//                                    ContextCompat.getColor(BoardgameDetails.this, R.color.mid_grey),
-//                                    true));
+                            spacer.setBackground(ViewUtils.createRipple(palette, 0.25f, 0.5f,
+                                    ContextCompat.getColor(BoardgameDetails.this, R.color.mid_grey),
+                                    true));
                             // slightly more opaque ripple on the pinned image to compensate
                             // for the scrim
                             imageView.setForeground(ViewUtils.createRipple(palette, 0.3f, 0.6f,

@@ -19,7 +19,6 @@ package us.phyxsi.gameshelf.ui;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -50,12 +49,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.DataManager;
 import us.phyxsi.gameshelf.data.GameShelfItem;
 import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
-import us.phyxsi.gameshelf.ui.transitions.FabDialogMorphSetup;
 import us.phyxsi.gameshelf.util.ViewUtils;
 
 public class HomeActivity extends Activity {
@@ -175,18 +172,6 @@ public class HomeActivity extends Activity {
             }
         }
     };
-
-    @OnClick(R.id.fab)
-    protected void fabClick() {
-        Intent intent = new Intent(this, AddNewGame.class);
-        intent.putExtra(FabDialogMorphSetup.EXTRA_SHARED_ELEMENT_START_COLOR,
-                ContextCompat.getColor(this, R.color.accent));
-//        intent.putExtra(PostStoryService.EXTRA_BROADCAST_RESULT, true);
-//        registerPostStoryResultListener();
-//        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, fab,
-//                getString(R.string.transition_new_designer_news_post));
-//        startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_STORY, options.toBundle());
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

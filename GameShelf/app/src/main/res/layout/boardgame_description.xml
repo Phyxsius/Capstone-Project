@@ -27,8 +27,8 @@
     <!-- transparent background needed for the ripple on the spacer -->
 
     <!-- spacer for the image -->
-    <us.phyxsi.gameshelf.ui.widget.FourThreeView
-        android:id="@+id/shot_spacer"
+    <us.phyxsi.gameshelf.ui.widget.FourFourView
+        android:id="@+id/spacer"
         android:layout_columnSpan="3"
         android:background="@drawable/mid_grey_bounded_ripple" />
 
@@ -74,16 +74,15 @@
 
     <!--</LinearLayout>-->
 
-    <!--<us.phyxsi.gamehslef.ui.widget.BaselineGridTextView-->
-        <!--android:id="@+id/player_name"-->
-        <!--android:layout_gravity="end"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:gravity="end"-->
-        <!--android:layout_marginTop="@dimen/padding_normal"-->
-        <!--app:topPaddingHint="@dimen/avatar_padding"-->
-        <!--android:textAppearance="@style/TextAppearance.CommentAuthor"-->
-        <!--android:clickable="false"-->
-        <!--tools:text="—Nick B" />-->
+    <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
+        android:id="@+id/player_name"
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
+        android:gravity="end"
+        android:layout_marginTop="@dimen/padding_normal"
+        app:topPaddingHint="4dp"
+        android:clickable="false"
+        tools:text="—Nick B" />
 
     <!--<us.phyxsi.gameshelf.ui.widget.CircularImageView-->
         <!--android:id="@+id/player_avatar"-->
@@ -99,24 +98,23 @@
         <!--android:src="@drawable/avatar_placeholder"-->
         <!--android:foreground="@drawable/mid_grey_ripple" />-->
 
-    <!--&lt;!&ndash; can't use a marginEnd on the above image view as it pushes in the whole column so instead-->
-         <!--add another column to contain the below space element &ndash;&gt;-->
+    <!-- can't use a marginEnd on the above image view as it pushes in the whole column so instead
+         add another column to contain the below space element -->
 
-    <!--<Space-->
-        <!--android:layout_width="@dimen/avatar_margin"-->
-        <!--android:layout_rowSpan="2" />-->
+    <Space
+        android:layout_width="12dp"
+        android:layout_rowSpan="2" />
 
-    <!--<us.phyxsi.gameshelf.ui.widget.BaselineGridTextView-->
-        <!--android:id="@+id/shot_time_ago"-->
-        <!--android:layout_gravity="end"-->
-        <!--android:gravity="end"-->
-        <!--android:textAppearance="@style/TextAppearance.CommentTimestamp"-->
-        <!--tools:text="3 hours ago" />-->
+    <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
+        android:id="@+id/shot_time_ago"
+        android:layout_gravity="end"
+        android:gravity="end"
+        tools:text="3 hours ago" />
 
-    <!--&lt;!&ndash; GridLayout seems to ignore layout_marginBottom so add another row with a space &ndash;&gt;-->
+    <!-- GridLayout seems to ignore layout_marginBottom so add another row with a space -->
 
-    <!--<Space-->
-        <!--android:layout_height="@dimen/avatar_margin"-->
-        <!--android:layout_columnSpan="3" />-->
+    <Space
+        android:layout_height="12dp"
+        android:layout_columnSpan="3" />
 
 </GridLayout>
