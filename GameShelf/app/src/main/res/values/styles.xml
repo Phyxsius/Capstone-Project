@@ -36,16 +36,16 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
-    <style name="GameShelf.Translucent.Boardgame">
-        <!--<item name="android:colorPrimary">@color/dribbble</item>-->
-        <!--<item name="android:colorAccent">@color/dribbble</item>-->
-        <!--<item name="android:statusBarColor">@color/dribbble_super_dark</item>-->
-        <!--<item name="android:navigationBarColor">@color/dribbble_super_dark</item>-->
+    <style name="GameShelf.Translucent.BoardgameDetails">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:statusBarColor">@color/primary_super_dark</item>
+        <item name="android:navigationBarColor">@color/primary_super_dark</item>
         <item name="android:colorControlActivated">?android:colorAccent</item>
-        <!--<item name="android:windowSharedElementEnterTransition">@transition/dribbble_shot_shared_enter</item>-->
-        <!--<item name="android:windowSharedElementReturnTransition">@transition/dribbble_shot_shared_return</item>-->
-        <!--<item name="android:windowEnterTransition">@transition/dribbble_shot_enter</item>-->
-        <!--<item name="android:windowReturnTransition">@transition/dribbble_shot_return</item>-->
+        <item name="android:windowSharedElementEnterTransition">@transition/boardgame_details_shared_enter</item>
+        <item name="android:windowSharedElementReturnTransition">@transition/boardgame_details_shared_return</item>
+        <item name="android:windowEnterTransition">@transition/boardgame_details_enter</item>
+        <item name="android:windowReturnTransition">@transition/boardgame_details_return</item>
         <item name="android:windowAllowReturnTransitionOverlap">false</item>
     </style>
 
@@ -73,6 +73,25 @@
         <item name="android:theme">@android:style/ThemeOverlay.Material.Dark</item>
     </style>
 
+    <style name="Widget.GameShelf.OverlayToolbar" parent="android:Widget.Material.ActionBar">
+        <item name="android:background">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Widget.GameShelf.Toolbar.Accent">
+        <item name="android:background">?android:colorAccent</item>
+        <item name="android:titleTextAppearance">@style/TextAppearance.AccentToolbar</item>
+    </style>
+
+    <style name="TextAppearance.AccentToolbar" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title.Inverse">
+        <item name="android:textColor">@color/text_on_accent</item>
+    </style>
+
+    <style name="TextAppearance.ToolbarTitle" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/text_primary_light</item>
+        <item name="font">roboto-mono-regular</item>
+    </style>
+
     <style name="TextAppearance.ToolbarTitleSmallCaps" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
         <item name="android:textColor">@color/text_primary_light</item>
         <item name="android:fontFeatureSettings">smcp</item>
@@ -82,6 +101,25 @@
     <style name="TextAppearance.BoardgameDetailsTitle" parent="@android:style/TextAppearance.Material.Headline">
         <item name="font">roboto-mono-regular</item>
         <item name="android:textColor">@color/text_primary_dark</item>
+    </style>
+
+    <style name="TextAppearance.TilePrimary" parent="@android:style/TextAppearance.Material.Subhead">
+        <item name="android:letterSpacing">0.01</item>
+        <item name="lineHeightHint">20sp</item>
+        <item name="font">roboto-mono-regular</item>
+    </style>
+
+    <style name="Widget.GameShelf.TilePrimary">
+        <item name="android:textAppearance">@style/TextAppearance.TilePrimary</item>
+    </style>
+
+    <style name="TextAppearance.TileSecondary" parent="@android:style/TextAppearance.Material.Body2">
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="Widget.GameShelf.TileSecondary">
+        <item name="android:textAppearance">@style/TextAppearance.TileSecondary</item>
     </style>
 
     <style name="TextAppearance.BoardgameDetailsDescription" parent="@android:style/TextAppearance.Material.Subhead">
@@ -97,5 +135,82 @@
     <style name="Widget.GameShelf.BoardgameDetailsDescription">
         <item name="android:textAppearance">@style/TextAppearance.BoardgameDetailsDescription</item>
         <item name="lineHeightHint">24sp</item>
+    </style>
+
+    <style name="Widget.GameShelf.CollapsingTitle">
+        <item name="android:textAppearance">@style/TextAppearance.ToolbarTitle</item>
+        <item name="lineHeightHint">28sp</item>
+        <item name="maxExpandedTextSize">@dimen/display_4_text_size</item>
+        <item name="titleInsetStart">@dimen/keyline_1</item>
+        <item name="titleInsetTop">@dimen/padding_normal</item>
+        <item name="titleInsetEnd">@dimen/padding_normal</item>
+        <item name="titleInsetBottom">@dimen/padding_normal</item>
+        <item name="android:maxLines">5</item>
+    </style>
+
+    <style name="TextAppearance.EmptyState" parent="@android:style/TextAppearance.Material.Subhead">
+        <item name="android:textColor">@color/grey_300</item>
+    </style>
+
+    <style name="TextAppearance.Button" parent="@android:style/TextAppearance.Material.Widget.Button">
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="TextAppearance.DarkButton" parent="@android:style/TextAppearance.Material.Widget.Button">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Widget.GameShelf.DialogText">
+        <item name="android:textAppearance">@style/TextAppearance.DialogContent</item>
+        <item name="lineHeightHint">20sp</item>
+    </style>
+
+    <style name="Widget.GameShelf.DialogTitle">
+        <item name="android:textAppearance">@style/TextAppearance.DialogTitle</item>
+        <item name="lineHeightHint">28sp</item>
+    </style>
+
+    <style name="TextAppearance.DialogTitle" parent="@android:style/TextAppearance.Material.Title">
+        <item name="android:textColor">@color/text_primary_dark</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="TextAppearance.DialogContent" parent="@android:style/TextAppearance.Material.Subhead">
+        <item name="android:textColor">@color/text_secondary_dark</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="Widget.GameShelf.EmptyText">
+        <item name="android:textAppearance">@style/TextAppearance.DialogContent</item>
+        <item name="lineHeightHint">24sp</item>
+        <item name="android:textColor">@color/text_primary_light</item>
+    </style>
+
+    <!-- By default float labels (well, the design lib) rely on AppCompat which we're not using
+         yet (minSdk=21). We use this style to work around this and to provide the accent color. -->
+    <style name="TextAppearance.FloatLabelHint" parent="@android:style/TextAppearance.Material.Caption">
+        <item name="android:textColor">?android:colorAccent</item>
+    </style>
+
+    <style name="Widget.Plaid.HintCheckBox" parent="@android:style/Widget.Material.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/text_secondary_dark</item>
+    </style>
+
+    <style name="Widget.GameShelf.Subhead">
+        <item name="android:textAppearance">@style/TextAppearance.Subhead</item>
+        <item name="lineHeightHint">24sp</item>
+    </style>
+
+    <style name="TextAppearance.Subhead" parent="@android:style/TextAppearance.Material.Subhead">
+        <item name="android:textColor">@color/text_secondary_dark</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="PlaidDarkOverlay" parent="@android:style/ThemeOverlay.Material.Dark.ActionBar">
+        <!-- Used to theme dark elements in light themed screens.
+             Extend the material dark Action Bar overlay as this contains text styling. -->
     </style>
 </resources>

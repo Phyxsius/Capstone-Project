@@ -37,7 +37,7 @@ import us.phyxsi.gameshelf.R;
 /**
  * A view group that draws a badge drawable on top of it's contents.
  */
-public class BadgedFourThreeImageView extends FourFourImageView {
+public class BadgedFourThreeImageView extends FourThreeImageView {
 
     private Drawable badge;
     private boolean drawBadge;

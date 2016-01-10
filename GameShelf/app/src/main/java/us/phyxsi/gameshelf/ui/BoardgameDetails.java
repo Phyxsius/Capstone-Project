@@ -21,7 +21,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,11 +31,14 @@ import android.text.TextUtils;
 import android.transition.Transition;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.AbsListView;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -84,14 +86,15 @@ public class BoardgameDetails extends Activity {
         boardgame = getIntent().getParcelableExtra(EXTRA_BOARDGAME);
 
         getWindow().getSharedElementReturnTransition().addListener(boardgameReturnHomeListener);
-        Resources res = getResources();
 
         ButterKnife.bind(this);
+
         View boardgameDescription = getLayoutInflater().inflate(R.layout.boardgame_description,
                 detailsList, false);
-        spacer = boardgameDescription.findViewById(R.id.spacer);
+        spacer = boardgameDescription.findViewById(R.id.description_spacer);
         title = boardgameDescription.findViewById(R.id.boardgame_title);
         description = boardgameDescription.findViewById(R.id.boardgame_description);
+
         detailsList = (ListView) findViewById(R.id.game_details);
         detailsList.addHeaderView(boardgameDescription);
         detailsList.setOnScrollListener(scrollListener);
@@ -108,12 +111,11 @@ public class BoardgameDetails extends Activity {
                 expandImageAndFinish();
             }
         };
-        
-        // load the main image
+
         final int[] imageSize = { 800, 800 };
         Glide.with(this)
                 .load("http:" + boardgame.image)
-                .listener(boardgameLoadListener)
+                .listener(boardgameImageLoadListener)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .priority(Priority.IMMEDIATE)
                 .centerCrop()
@@ -150,6 +152,32 @@ public class BoardgameDetails extends Activity {
             description.setVisibility(View.GONE);
         }
 
+        detailsList.setAdapter(getLoadingCommentsAdapter());
+    }
+
+    private ListAdapter getLoadingCommentsAdapter() {
+        return new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return 1;
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                return BoardgameDetails.this.getLayoutInflater().inflate(R.layout.loading, parent,
+                        false);
+            }
+        };
     }
 
     @Override
@@ -175,7 +203,26 @@ public class BoardgameDetails extends Activity {
         return true;
     }
 
-    private RequestListener boardgameLoadListener = new RequestListener<String, GlideDrawable>() {
+    private void expandImageAndFinish() {
+        if (imageView.getOffset() != 0f) {
+            Animator expandImage = ObjectAnimator.ofFloat(imageView, ParallaxScrimageView.OFFSET,
+                    0f);
+            expandImage.setDuration(80);
+            expandImage.setInterpolator(AnimationUtils.loadInterpolator(this, android.R
+                    .interpolator.fast_out_slow_in));
+            expandImage.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    finishAfterTransition();
+                }
+            });
+            expandImage.start();
+        } else {
+            finishAfterTransition();
+        }
+    }
+
+    private RequestListener boardgameImageLoadListener = new RequestListener<String, GlideDrawable>() {
         @Override
         public boolean onResourceReady(GlideDrawable resource, String model,
                                        Target<GlideDrawable> target, boolean isFromMemoryCache,
@@ -313,25 +360,6 @@ public class BoardgameDetails extends Activity {
         }
     };
 
-    private void expandImageAndFinish() {
-        if (imageView.getOffset() != 0f) {
-            Animator expandImage = ObjectAnimator.ofFloat(imageView, ParallaxScrimageView.OFFSET,
-                    0f);
-            expandImage.setDuration(80);
-            expandImage.setInterpolator(AnimationUtils.loadInterpolator(this, android.R
-                    .interpolator.fast_out_slow_in));
-            expandImage.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    finishAfterTransition();
-                }
-            });
-            expandImage.start();
-        } else {
-            finishAfterTransition();
-        }
-    }
-
     /**
      * Animate in the title, description and author – can't do this in a content transition as they
      * are within the ListView so do it manually.  Also handle the FAB tanslation here so that it
@@ -346,7 +374,16 @@ public class BoardgameDetails extends Activity {
             offset *= 1.5f;
             viewEnterAnimation(description, offset, interp);
         }
+        // animate the fab without touching the alpha as this is handled in the content transition
         offset *= 1.5f;
+//        float fabTransY = fab.getTranslationY();
+//        fab.setTranslationY(fabTransY + offset);
+//        fab.animate()
+//                .translationY(fabTransY)
+//                .setDuration(600)
+//                .setInterpolator(interp)
+//                .start();
+//        offset *= 1.5f;
 //        viewEnterAnimation(shotActions, offset, interp);
 //        offset *= 1.5f;
 //        viewEnterAnimation(playerName, offset, interp);
@@ -370,5 +407,4 @@ public class BoardgameDetails extends Activity {
                 .setListener(null)
                 .start();
     }
-
 }

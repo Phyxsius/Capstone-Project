@@ -38,7 +38,7 @@
         <activity
             android:name=".ui.BoardgameDetails"
             android:parentActivityName=".ui.HomeActivity"
-            android:theme="@style/GameShelf.Translucent.Boardgame">
+            android:theme="@style/GameShelf.Translucent.BoardgameDetails">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.HomeActivity" />

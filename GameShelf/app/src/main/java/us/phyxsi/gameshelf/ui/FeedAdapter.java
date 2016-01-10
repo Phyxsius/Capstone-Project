@@ -410,7 +410,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return items.size();
     }
 
-    /* protected */ class BoardgameHolder extends RecyclerView.ViewHolder {
+    /* package */ class BoardgameHolder extends RecyclerView.ViewHolder {
 
         BadgedFourFourImageView image;
 
@@ -421,7 +421,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    /* protected */ class LoadingMoreHolder extends RecyclerView.ViewHolder {
+    /* package */ class LoadingMoreHolder extends RecyclerView.ViewHolder {
 
         ProgressBar progress;
 

@@ -28,7 +28,7 @@
 
     <!-- spacer for the image -->
     <us.phyxsi.gameshelf.ui.widget.FourFourView
-        android:id="@+id/spacer"
+        android:id="@+id/description_spacer"
         android:layout_columnSpan="3"
         android:background="@drawable/mid_grey_bounded_ripple" />
 
@@ -36,67 +36,68 @@
         layout="@layout/boardgame_title" />
 
     <!--<LinearLayout-->
-        <!--android:id="@+id/shot_actions"-->
-        <!--android:layout_columnSpan="3"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:paddingStart="@dimen/padding_normal"-->
-        <!--android:paddingTop="@dimen/spacing_large"-->
-        <!--android:paddingEnd="@dimen/padding_normal">-->
+    <!--android:id="@+id/shot_actions"-->
+    <!--android:layout_columnSpan="3"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:paddingStart="@dimen/padding_normal"-->
+    <!--android:paddingTop="@dimen/spacing_large"-->
+    <!--android:paddingEnd="@dimen/padding_normal">-->
 
-        <!--<Button-->
-            <!--android:id="@+id/shot_like_count"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:drawableTop="@drawable/ic_heart_full_24dp_grey"-->
-            <!--tools:text="33 likes"-->
-            <!--style="@style/Widget.Plaid.InlineActionButton" />-->
+    <!--<Button-->
+    <!--android:id="@+id/shot_like_count"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:drawableTop="@drawable/ic_heart_full_24dp_grey"-->
+    <!--tools:text="33 likes"-->
+    <!--style="@style/Widget.Plaid.InlineActionButton" />-->
 
-        <!--<Button-->
-            <!--android:id="@+id/shot_view_count"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:drawableTop="@drawable/ic_views_24dp"-->
-            <!--android:background="@null"-->
-            <!--tools:text="33 views"-->
-            <!--style="@style/Widget.Plaid.InlineActionButton" />-->
+    <!--<Button-->
+    <!--android:id="@+id/shot_view_count"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:drawableTop="@drawable/ic_views_24dp"-->
+    <!--android:background="@null"-->
+    <!--tools:text="33 views"-->
+    <!--style="@style/Widget.Plaid.InlineActionButton" />-->
 
-        <!--<Button-->
-            <!--android:id="@+id/shot_share_action"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_marginBottom="@dimen/spacing_normal"-->
-            <!--android:drawableTop="@drawable/ic_action_share_24dp"-->
-            <!--android:text="@string/share"-->
-            <!--style="@style/Widget.Plaid.InlineActionButton" />-->
+    <!--<Button-->
+    <!--android:id="@+id/shot_share_action"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:layout_marginBottom="@dimen/spacing_normal"-->
+    <!--android:drawableTop="@drawable/ic_action_share_24dp"-->
+    <!--android:text="@string/share"-->
+    <!--style="@style/Widget.Plaid.InlineActionButton" />-->
 
     <!--</LinearLayout>-->
 
-    <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
-        android:id="@+id/player_name"
-        android:layout_gravity="end"
-        android:layout_width="wrap_content"
-        android:gravity="end"
-        android:layout_marginTop="@dimen/padding_normal"
-        app:topPaddingHint="4dp"
-        android:clickable="false"
-        tools:text="—Nick B" />
+    <!--<us.phyxsi.gamehslef.ui.widget.BaselineGridTextView-->
+    <!--android:id="@+id/player_name"-->
+    <!--android:layout_gravity="end"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:gravity="end"-->
+    <!--android:layout_marginTop="@dimen/padding_normal"-->
+    <!--app:topPaddingHint="@dimen/avatar_padding"-->
+    <!--android:textAppearance="@style/TextAppearance.CommentAuthor"-->
+    <!--android:clickable="false"-->
+    <!--tools:text="—Nick B" />-->
 
     <!--<us.phyxsi.gameshelf.ui.widget.CircularImageView-->
-        <!--android:id="@+id/player_avatar"-->
-        <!--android:layout_width="@dimen/avatar_bounds"-->
-        <!--android:layout_height="@dimen/avatar_bounds"-->
-        <!--android:gravity="center_horizontal"-->
-        <!--android:layout_marginStart="@dimen/avatar_margin"-->
-        <!--android:layout_rowSpan="2"-->
-        <!--android:padding="@dimen/avatar_padding"-->
-        <!--android:textColorLink="@color/dribbble_links"-->
-        <!--android:textColorHighlight="@color/dribbble"-->
-        <!--android:stateListAnimator="@animator/raise"-->
-        <!--android:src="@drawable/avatar_placeholder"-->
-        <!--android:foreground="@drawable/mid_grey_ripple" />-->
+    <!--android:id="@+id/player_avatar"-->
+    <!--android:layout_width="@dimen/avatar_bounds"-->
+    <!--android:layout_height="@dimen/avatar_bounds"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:layout_marginStart="@dimen/avatar_margin"-->
+    <!--android:layout_rowSpan="2"-->
+    <!--android:padding="@dimen/avatar_padding"-->
+    <!--android:textColorLink="@color/dribbble_links"-->
+    <!--android:textColorHighlight="@color/dribbble"-->
+    <!--android:stateListAnimator="@animator/raise"-->
+    <!--android:src="@drawable/avatar_placeholder"-->
+    <!--android:foreground="@drawable/mid_grey_ripple" />-->
 
     <!-- can't use a marginEnd on the above image view as it pushes in the whole column so instead
          add another column to contain the below space element -->

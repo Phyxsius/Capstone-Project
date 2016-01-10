@@ -47,4 +47,7 @@
 
     <color name="dribbble_super_dark">#ff33292d</color>
     <color name="dribbble_link_highlight">#b3f06292</color>
+    <color name="fab_heart_empty">@color/text_primary_light</color>
+    <color name="fab_heart_progress_bar">#deffffff</color> <!-- 87% white-->
+    <color name="fab_heart_full">#ffffffff</color>
 </resources>
