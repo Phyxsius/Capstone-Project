@@ -16,12 +16,10 @@
 
 package us.phyxsi.gameshelf.data.db.helper;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import us.phyxsi.gameshelf.data.api.bgg.model.Category;
 import us.phyxsi.gameshelf.data.db.GameShelfContract.BoardgameEntry;
 import us.phyxsi.gameshelf.data.db.GameShelfContract.BoardgamesCategoriesEntry;
 import us.phyxsi.gameshelf.data.db.GameShelfContract.CategoryEntry;
@@ -52,7 +50,8 @@ public class GameShelfDbHelper extends SQLiteOpenHelper {
                     BoardgameEntry.COLUMN_NAME_MIN_PLAYERS + INT_TYPE + COMMA_SEP +
                     BoardgameEntry.COLUMN_NAME_MIN_PLAYTIME + INT_TYPE + COMMA_SEP +
                     BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS + INT_TYPE + COMMA_SEP +
-                    BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED + INT_TYPE +
+                    BoardgameEntry.COLUMN_NAME_PUBLISHER + TEXT_TYPE + COMMA_SEP +
+                    BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED + TEXT_TYPE +
                     " )";
 
     private static final String SQL_DELETE_BOARDGAMES =

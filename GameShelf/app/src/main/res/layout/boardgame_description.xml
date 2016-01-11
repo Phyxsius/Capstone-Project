@@ -35,45 +35,6 @@
     <include
         layout="@layout/boardgame_title" />
 
-    <!--<LinearLayout-->
-    <!--android:id="@+id/shot_actions"-->
-    <!--android:layout_columnSpan="3"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:paddingStart="@dimen/padding_normal"-->
-    <!--android:paddingTop="@dimen/spacing_large"-->
-    <!--android:paddingEnd="@dimen/padding_normal">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/shot_like_count"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:drawableTop="@drawable/ic_heart_full_24dp_grey"-->
-    <!--tools:text="33 likes"-->
-    <!--style="@style/Widget.Plaid.InlineActionButton" />-->
-
-    <!--<Button-->
-    <!--android:id="@+id/shot_view_count"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:drawableTop="@drawable/ic_views_24dp"-->
-    <!--android:background="@null"-->
-    <!--tools:text="33 views"-->
-    <!--style="@style/Widget.Plaid.InlineActionButton" />-->
-
-    <!--<Button-->
-    <!--android:id="@+id/shot_share_action"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_marginBottom="@dimen/spacing_normal"-->
-    <!--android:drawableTop="@drawable/ic_action_share_24dp"-->
-    <!--android:text="@string/share"-->
-    <!--style="@style/Widget.Plaid.InlineActionButton" />-->
-
-    <!--</LinearLayout>-->
-
     <!--<us.phyxsi.gamehslef.ui.widget.BaselineGridTextView-->
     <!--android:id="@+id/player_name"-->
     <!--android:layout_gravity="end"-->

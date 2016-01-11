@@ -38,6 +38,8 @@ import android.view.animation.Interpolator;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -72,7 +74,19 @@ public class BoardgameDetails extends Activity {
     @Bind(R.id.boardgame) ParallaxScrimageView imageView;
     private View spacer;
     private View title;
+    private View byline;
     private View description;
+    private LinearLayout boardgameSummary;
+    private LinearLayout boardgameSummaryLine1;
+    private LinearLayout boardgameSummaryLine2;
+    private TextView numOfPlayers;
+    private ImageView numOfPlayersIcon;
+    private TextView playTime;
+    private ImageView playTimeIcon;
+    private TextView bestWith;
+    private ImageView bestWithIcon;
+    private TextView ages;
+    private ImageView agesIcon;
     private ListView detailsList;
 
     private Boardgame boardgame;
@@ -93,8 +107,19 @@ public class BoardgameDetails extends Activity {
                 detailsList, false);
         spacer = boardgameDescription.findViewById(R.id.description_spacer);
         title = boardgameDescription.findViewById(R.id.boardgame_title);
+        byline = boardgameDescription.findViewById(R.id.boardgame_byline);
         description = boardgameDescription.findViewById(R.id.boardgame_description);
-
+        boardgameSummary = (LinearLayout) boardgameDescription.findViewById(R.id.boardgame_summary);
+        boardgameSummaryLine1 = (LinearLayout) boardgameDescription.findViewById(R.id.boardgame_summary_line_one);
+        boardgameSummaryLine2 = (LinearLayout) boardgameDescription.findViewById(R.id.boardgame_summary_line_two);
+        numOfPlayers = (TextView) boardgameDescription.findViewById(R.id.num_of_players_text);
+        numOfPlayersIcon = (ImageView) boardgameDescription.findViewById(R.id.num_of_players_icon);
+        playTime = (TextView) boardgameDescription.findViewById(R.id.play_time_text);
+        playTimeIcon = (ImageView) boardgameDescription.findViewById(R.id.play_time_icon);
+        bestWith = (TextView) boardgameDescription.findViewById(R.id.best_with_text);
+        bestWithIcon = (ImageView) boardgameDescription.findViewById(R.id.best_with_icon);
+        ages = (TextView) boardgameDescription.findViewById(R.id.ages_text);
+        agesIcon = (ImageView) boardgameDescription.findViewById(R.id.ages_icon);
         detailsList = (ListView) findViewById(R.id.game_details);
         detailsList.addHeaderView(boardgameDescription);
         detailsList.setOnScrollListener(scrollListener);
@@ -136,8 +161,10 @@ public class BoardgameDetails extends Activity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ((FabOverlapTextView) title).setText(boardgame.title);
+            ((FabOverlapTextView) byline).setText(boardgame.getByline());
         } else {
             ((TextView) title).setText(boardgame.title);
+            ((TextView) byline).setText(boardgame.getByline());
         }
         if (!TextUtils.isEmpty(boardgame.description)) {
             final Spanned descText = boardgame.getParsedDescription(
@@ -151,6 +178,11 @@ public class BoardgameDetails extends Activity {
         } else {
             description.setVisibility(View.GONE);
         }
+
+        numOfPlayers.setText(boardgame.getPlayers());
+        playTime.setText(boardgame.getPlaytime());
+        bestWith.setText("Best with " + boardgame.suggestedNumplayers + " players");
+        ages.setText(boardgame.minAge + " and up");
 
         detailsList.setAdapter(getLoadingCommentsAdapter());
     }
@@ -228,7 +260,7 @@ public class BoardgameDetails extends Activity {
                                        Target<GlideDrawable> target, boolean isFromMemoryCache,
                                        boolean isFirstResource) {
             final Bitmap bitmap = GlideUtils.getBitmap(resource);
-            float imageScale = (float) imageView.getHeight() / (float) bitmap.getHeight();
+            float imageScale = 0;
             float twentyFourDip = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24,
                     BoardgameDetails.this.getResources().getDisplayMetrics());
             Palette.from(bitmap)
@@ -256,13 +288,43 @@ public class BoardgameDetails extends Activity {
                             // light or dark color on M (with matching status bar icons)
                             int statusBarColor = getWindow().getStatusBarColor();
                             Palette.Swatch topColor = ColorUtils.getMostPopulousSwatch(palette);
-                            if (topColor != null &&
-                                    (isDark || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)) {
-                                statusBarColor = ColorUtils.scrimify(topColor.getRgb(),
+                            if (topColor != null) {
+                                int scrimmed = ColorUtils.scrimify(topColor.getRgb(),
                                         isDark, SCRIM_ADJUSTMENT);
-                                // set a light status bar on M+
-                                if (!isDark && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                    ViewUtils.setLightStatusBar(imageView);
+
+                                title.setBackgroundColor(ColorUtils.getSlightlyDarkerColor(scrimmed));
+                                byline.setBackgroundColor(ColorUtils.getSlightlyDarkerColor(scrimmed));
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    ((FabOverlapTextView) title).setTextColor(
+                                            ColorUtils.getTitleTextColor(isDark, BoardgameDetails.this));
+                                    ((FabOverlapTextView) byline).setTextColor(
+                                                ColorUtils.getTextColor(isDark, BoardgameDetails.this));
+                                } else {
+                                    ((TextView) title).setTextColor(
+                                            ColorUtils.getTitleTextColor(isDark, BoardgameDetails.this));
+                                    ((TextView) byline).setTextColor(
+                                            ColorUtils.getTextColor(isDark, BoardgameDetails.this));
+                                }
+
+                                // Summary views
+                                boardgameSummary.setBackgroundColor(scrimmed);
+                                numOfPlayers.setTextColor(ColorUtils.getTextColor(isDark, BoardgameDetails.this));
+                                numOfPlayersIcon.setColorFilter(ColorUtils.getIconColor(isDark, BoardgameDetails.this));
+                                bestWith.setTextColor(ColorUtils.getTextColor(isDark, BoardgameDetails.this));
+                                bestWithIcon.setColorFilter(ColorUtils.getIconColor(isDark, BoardgameDetails.this));
+                                playTime.setTextColor(ColorUtils.getTextColor(isDark, BoardgameDetails.this));
+                                playTimeIcon.setColorFilter(ColorUtils.getIconColor(isDark, BoardgameDetails.this));
+                                ages.setTextColor(ColorUtils.getTextColor(isDark, BoardgameDetails.this));
+                                agesIcon.setColorFilter(ColorUtils.getIconColor(isDark, BoardgameDetails.this));
+
+                                if ((isDark || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)) {
+                                    statusBarColor = ColorUtils.scrimify(topColor.getRgb(),
+                                            isDark, SCRIM_ADJUSTMENT);
+                                    // set a light status bar on M+
+                                    if (!isDark && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                        ViewUtils.setLightStatusBar(imageView);
+                                    }
                                 }
                             }
 
@@ -370,25 +432,17 @@ public class BoardgameDetails extends Activity {
                 .fast_out_slow_in);
         int offset = title.getHeight();
         viewEnterAnimation(title, offset, interp);
+        viewEnterAnimation(byline, offset, interp);
         if (description.getVisibility() == View.VISIBLE) {
             offset *= 1.5f;
             viewEnterAnimation(description, offset, interp);
         }
-        // animate the fab without touching the alpha as this is handled in the content transition
         offset *= 1.5f;
-//        float fabTransY = fab.getTranslationY();
-//        fab.setTranslationY(fabTransY + offset);
-//        fab.animate()
-//                .translationY(fabTransY)
-//                .setDuration(600)
-//                .setInterpolator(interp)
-//                .start();
-//        offset *= 1.5f;
-//        viewEnterAnimation(shotActions, offset, interp);
-//        offset *= 1.5f;
-//        viewEnterAnimation(playerName, offset, interp);
-//        viewEnterAnimation(playerAvatar, offset, interp);
-//        viewEnterAnimation(shotTimeAgo, offset, interp);
+        viewEnterAnimation(boardgameSummary, offset, interp);
+        offset *= 1.5f;
+        viewEnterAnimation(boardgameSummaryLine1, offset, interp);
+        offset *= 1.5f;
+        viewEnterAnimation(boardgameSummaryLine2, offset, interp);
         back.animate()
                 .alpha(1f)
                 .setDuration(600)

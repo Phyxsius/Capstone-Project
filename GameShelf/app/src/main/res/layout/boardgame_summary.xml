@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2015 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<!-- layout_[width|height] not needed as this is only included in a GridLayout -->
+<!--suppress AndroidDomInspection -->
+<merge
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:showIn="@layout/boardgame_title">
+
+    <LinearLayout
+        android:id="@+id/boardgame_summary"
+        android:layout_columnSpan="3"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/padding_normal"
+        android:paddingTop="@dimen/spacing_large"
+        android:paddingBottom="@dimen/spacing_large"
+        android:paddingEnd="@dimen/padding_normal"
+        android:baselineAligned="false"
+        android:layout_height="wrap_content">
+
+        <LinearLayout android:id="@+id/boardgame_summary_line_one"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/num_of_players"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_normal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:paddingTop="@dimen/padding_normal_til"
+                android:paddingBottom="@dimen/padding_normal_til"
+                style="@style/Widget.GameShelf.InlineActionButton">
+
+                <ImageView
+                    android:id="@+id/num_of_players_icon"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_people_24dp"
+                    android:tint="@android:color/white" />
+                <TextView
+                    android:drawablePadding="@dimen/padding_normal"
+                    android:id="@+id/num_of_players_text"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="123 likes"
+                    android:textColor="@android:color/white"
+                    android:textSize="16.0sp" />
+
+            </FrameLayout>
+
+            <View
+                android:background="@color/divider"
+                android:layout_height="fill_parent"
+                android:layout_width="@dimen/divider_height" />
+
+            <FrameLayout
+                android:id="@+id/play_time"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_normal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:paddingTop="@dimen/padding_normal_til"
+                android:paddingBottom="@dimen/padding_normal_til"
+                style="@style/Widget.GameShelf.InlineActionButton">
+
+                <ImageView
+                    android:id="@+id/play_time_icon"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_clock_24dp"
+                    android:tint="@android:color/white" />
+                <TextView
+                    android:drawablePadding="@dimen/padding_normal"
+                    android:id="@+id/play_time_text"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="123 likes"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/boardgame_summary_line_two"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/best_with"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_normal"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:paddingTop="@dimen/padding_normal_til"
+            android:paddingBottom="@dimen/padding_normal_til"
+            style="@style/Widget.GameShelf.InlineActionButton">
+
+            <ImageView
+                android:id="@+id/best_with_icon"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_people_24dp"
+                android:tint="@android:color/white" />
+            <TextView
+                android:drawablePadding="@dimen/padding_normal"
+                android:id="@+id/best_with_text"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_width="wrap_content"
+                android:singleLine="false"
+                android:text="Best with 8 players"
+                android:textColor="@android:color/black"
+                android:textSize="16.0sp" />
+
+        </FrameLayout>
+
+        <View
+            android:background="@color/divider"
+            android:layout_height="fill_parent"
+            android:layout_width="@dimen/divider_height" />
+
+        <FrameLayout
+            android:id="@+id/ages"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_normal"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:paddingTop="@dimen/padding_normal_til"
+            android:paddingBottom="@dimen/padding_normal_til"
+            style="@style/Widget.GameShelf.InlineActionButton">
+
+            <ImageView
+                android:id="@+id/ages_icon"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_cake_24dp"
+                android:tint="@android:color/white" />
+            <TextView
+                android:drawablePadding="@dimen/padding_normal"
+                android:id="@+id/ages_text"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:text="123 likes"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+</merge>

@@ -50,6 +50,7 @@ public class BoardgameDbHelper {
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYERS, boardgame.minPlayers);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYTIME, boardgame.minPlaytime);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS, boardgame.suggestedNumplayers);
+        values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_PUBLISHER, boardgame.publisher);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED, boardgame.yearPublished);
 
         // Insert the new row, returning the primary key value of the new row
@@ -78,6 +79,7 @@ public class BoardgameDbHelper {
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYERS,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYTIME,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_PUBLISHER,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED,
         };
 

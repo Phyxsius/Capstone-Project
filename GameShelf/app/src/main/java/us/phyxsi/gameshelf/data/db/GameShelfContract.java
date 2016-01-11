@@ -41,6 +41,7 @@ public final class GameShelfContract {
         public static final String COLUMN_NAME_MIN_PLAYERS = "min_players";
         public static final String COLUMN_NAME_MIN_PLAYTIME = "min_playtime";
         public static final String COLUMN_NAME_SUGGESTED_NUMPLAYERS = "suggested_numplayers";
+        public static final String COLUMN_NAME_PUBLISHER = "publisher";
         public static final String COLUMN_NAME_YEAR_PUBLISHED = "year_published";
     }
 

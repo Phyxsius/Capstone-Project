@@ -53,7 +53,8 @@ public class Boardgame extends GameShelfItem implements Parcelable {
     public final int minPlayers;
     public final int minPlaytime;
     public final int suggestedNumplayers;
-    public final long yearPublished;
+    public final String publisher;
+    public final String yearPublished;
     public final List<Category> categories;
     // todo move this into a decorator
     public boolean hasFadedIn = false;
@@ -69,7 +70,8 @@ public class Boardgame extends GameShelfItem implements Parcelable {
                      int minPlayers,
                      int minPlaytime,
                      int suggestedNumplayers,
-                     long yearPublished,
+                     String publisher,
+                     String yearPublished,
                      List<Category> categories) {
         super(id, title);
         this.description = description;
@@ -80,6 +82,7 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         this.minPlayers = minPlayers;
         this.minPlaytime = minPlaytime;
         this.suggestedNumplayers = suggestedNumplayers;
+        this.publisher = publisher;
         this.yearPublished = yearPublished;
         this.categories = categories;
     }
@@ -96,7 +99,8 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         this.minPlayers = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYERS));
         this.minPlaytime = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYTIME));
         this.suggestedNumplayers = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS));
-        this.yearPublished = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED));
+        this.publisher = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_PUBLISHER));
+        this.yearPublished = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED));
 
         // TODO: Set categories from a cursor
         this.categories = null;
@@ -113,7 +117,8 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         minPlayers = in.readInt();
         minPlaytime = in.readInt();
         suggestedNumplayers = in.readInt();
-        yearPublished = in.readLong();
+        publisher = in.readString();
+        yearPublished = in.readString();
 
         hasFadedIn = in.readByte() != 0x00;
 
@@ -131,6 +136,36 @@ public class Boardgame extends GameShelfItem implements Parcelable {
             parsedDescription = HtmlUtils.parseHtml(description, linkTextColor, linkHighlightColor);
         }
         return parsedDescription;
+    }
+
+    public String getPlayers() {
+        if (minPlayers == 0) return null;
+
+        String output = Integer.toString(minPlayers);
+
+        if (minPlayers != maxPlayers) output += "-" + Integer.toString(maxPlayers);
+
+        return output + " players";
+    }
+
+    public String getPlaytime() {
+        if (minPlaytime == 0) return null;
+
+        String output = Integer.toString(minPlaytime);
+
+        if (minPlaytime != maxPlaytime) output += "-" + Integer.toString(maxPlaytime);
+
+        return output + " minutes";
+    }
+
+    public String getByline() {
+        String byline = "";
+        if (!TextUtils.isEmpty(publisher)) {
+            byline += "by " + publisher + ", ";
+        }
+        byline += yearPublished;
+
+        return byline;
     }
 
     public void weigh() {
@@ -156,7 +191,8 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         dest.writeInt(minPlayers);
         dest.writeInt(minPlaytime);
         dest.writeInt(suggestedNumplayers);
-        dest.writeLong(yearPublished);
+        dest.writeString(publisher);
+        dest.writeString(yearPublished);
         dest.writeByte((byte) (hasFadedIn ? 0x01 : 0x00));
         if (categories == null) {
             dest.writeByte((byte) (0x00));

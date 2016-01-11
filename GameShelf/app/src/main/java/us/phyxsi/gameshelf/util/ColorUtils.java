@@ -16,6 +16,7 @@
 
 package us.phyxsi.gameshelf.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
@@ -24,10 +25,13 @@ import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import us.phyxsi.gameshelf.R;
 
 /**
  * Utility methods for working with colors.
@@ -166,6 +170,56 @@ public class ColorUtils {
     public static @ColorInt int scrimify(@ColorInt int color,
                                          @FloatRange(from = 0f, to = 1f) float lightnessMultiplier) {
         return scrimify(color, isDark(color), lightnessMultiplier);
+    }
+
+    public static int getDarkerColor(int color) {
+        float[] palette = new float[3];
+
+        Color.colorToHSV(color, palette);
+        palette[2] *= 0.8f;
+        return Color.HSVToColor(palette);
+    }
+
+    public static int getSlightlyDarkerColor(int color) {
+        float[] palette = new float[3];
+
+        Color.colorToHSV(color, palette);
+        palette[2] *= 0.9f;
+        return Color.HSVToColor(palette);
+    }
+
+    public static int getMuchDarkerColor(int color) {
+        float[] palette = new float[3];
+
+        Color.colorToHSV(color, palette);
+        palette[2] *= 0.6f;
+        return Color.HSVToColor(palette);
+    }
+
+    public static int getLightColor(int color) {
+        float[] palette = new float[3];
+
+        Color.colorToHSV(color, palette);
+        palette[2] *= 1.8f;
+        return Color.HSVToColor(palette);
+    }
+
+    public static int getTitleTextColor(Boolean isDark, Context context) {
+        return isDark ?
+                ContextCompat.getColor(context, R.color.text_primary_light) :
+                ContextCompat.getColor(context, R.color.text_primary_dark);
+    }
+
+    public static int getTextColor(Boolean isDark, Context context) {
+        return isDark ?
+                ContextCompat.getColor(context, R.color.text_secondary_light) :
+                ContextCompat.getColor(context, R.color.text_secondary_dark);
+    }
+
+    public static int getIconColor(Boolean isDark, Context context) {
+        return isDark ?
+                ContextCompat.getColor(context, R.color.light_icon) :
+                ContextCompat.getColor(context, R.color.dark_icon);
     }
 
     @Retention(RetentionPolicy.SOURCE)

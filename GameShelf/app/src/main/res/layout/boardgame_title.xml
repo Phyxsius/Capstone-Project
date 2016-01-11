@@ -27,14 +27,28 @@
         android:id="@+id/boardgame_title"
         android:layout_columnSpan="3"
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/spacing_large"
+        android:paddingStart="@dimen/padding_normal"
+        app:topPaddingHint="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_room_for_fab"
+        android:background="@color/light_grey"
+        tools:text="Boardgame title"
+        style="@style/Widget.GameShelf.BoardgameDetailsTitle" />
+
+    <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
+        android:id="@+id/boardgame_byline"
+        android:layout_columnSpan="3"
+        android:layout_width="match_parent"
         android:paddingStart="@dimen/padding_normal"
         app:topPaddingHint="@dimen/padding_normal"
         android:paddingEnd="@dimen/padding_room_for_fab"
         android:paddingBottom="@dimen/padding_normal"
         android:background="@color/light_grey"
-        tools:text="Boardgame title"
-        style="@style/Widget.GameShelf.BoardgameDetailsTitle" />
+        tools:text="by Publisher, 2015"
+        style="@style/Widget.GameShelf.BoardgameDetailsByline"
+        android:ellipsize="end" />
+
+    <include
+        layout="@layout/boardgame_summary" />
 
     <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
         android:id="@+id/boardgame_description"
