@@ -44,6 +44,18 @@
                 android:value=".ui.HomeActivity" />
         </activity>
 
+        <activity
+            android:name=".ui.AddNewBoardgame"
+            android:exported="true"
+            android:theme="@style/GameShelf.Translucent.AddNewBoardgame">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="@string/share_authority"

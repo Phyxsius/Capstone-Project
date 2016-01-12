@@ -7,9 +7,15 @@
     <string name="sort">Sort</string>
     <string name="about">About</string>
 
+    <!-- add new boardgame -->
+    <string name="add_new_boardgame_title">Add a boardgame to your collection</string>
+    <string name="add_new_boardgame_game_title">Title</string>
+    <string name="add_new_boardgame_collect">Collect</string>
+
     <!-- transition shared elements -->
     <string name="transition_game" translatable="false">game</string>
     <string name="transition_game_background" translatable="false">game_background</string>
+    <string name="transition_add_new_boardgame" translatable="false">add_new_boardgame</string>
 
     <!-- content authorities -->
     <string name="share_authority"  translatable="false">us.phyxsi.gameshelf.shareprovider</string>

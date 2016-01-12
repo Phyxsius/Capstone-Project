@@ -18,7 +18,9 @@ package us.phyxsi.gameshelf.ui;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -49,13 +51,19 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.DataManager;
 import us.phyxsi.gameshelf.data.GameShelfItem;
+import us.phyxsi.gameshelf.data.api.gameshelf.NewBoardgameService;
 import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
+import us.phyxsi.gameshelf.ui.transitions.FabDialogMorphSetup;
 import us.phyxsi.gameshelf.util.ViewUtils;
 
 public class HomeActivity extends Activity {
+
+    private static final int RC_SEARCH = 0;
+    private static final int RC_ADD_NEW_BOARDGAME = 1;
 
     @Bind(R.id.drawer) DrawerLayout drawer;
     @Bind(R.id.toolbar) Toolbar toolbar;
@@ -172,6 +180,18 @@ public class HomeActivity extends Activity {
             }
         }
     };
+
+    @OnClick(R.id.fab)
+    protected void fabClick() {
+        Intent intent = new Intent(this, AddNewBoardgame.class);
+        intent.putExtra(FabDialogMorphSetup.EXTRA_SHARED_ELEMENT_START_COLOR,
+                ContextCompat.getColor(this, R.color.accent));
+        intent.putExtra(NewBoardgameService.EXTRA_BOARDGAME_RESULT, true);
+//        registerPostStoryResultListener();
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, fab,
+                getString(R.string.transition_add_new_boardgame));
+        startActivityForResult(intent, RC_ADD_NEW_BOARDGAME, options.toBundle());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
