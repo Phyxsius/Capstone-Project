@@ -21,14 +21,16 @@ package us.phyxsi.gameshelf.data;
  */
 public abstract class GameShelfItem {
 
-    public final long id;
-    public final String title;
+    public long id;
+    public String title;
     public String url; // can't be final as some APIs use different serialized names
     public String dataSource;
     public int page;
     public float weight;
     public float weightBoost;
     public int colspan;
+
+    public GameShelfItem() {}
 
     public GameShelfItem(long id,
                      String title) {

@@ -16,11 +16,14 @@
 
 package us.phyxsi.gameshelf.data.api.bgg.model;
 
+import org.simpleframework.xml.Root;
+
 import java.util.List;
 
 /**
  * Models a response from the Board Game Geek API that returns a collection of boardgames
  */
+@Root(name = "items")
 public class CollectionResponse {
 
     public final List<Boardgame> boardgames;

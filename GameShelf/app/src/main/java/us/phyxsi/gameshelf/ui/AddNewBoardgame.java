@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -33,7 +34,14 @@ import butterknife.BindDimen;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.converter.SimpleXMLConverter;
 import us.phyxsi.gameshelf.R;
+import us.phyxsi.gameshelf.data.api.bgg.BGGService;
+import us.phyxsi.gameshelf.data.api.bgg.model.BoardgamesResponse;
 import us.phyxsi.gameshelf.ui.transitions.FabDialogMorphSetup;
 import us.phyxsi.gameshelf.ui.widget.BottomSheet;
 import us.phyxsi.gameshelf.ui.widget.ObservableScrollView;
@@ -53,6 +61,8 @@ public class AddNewBoardgame extends Activity {
     @Bind(R.id.add_new_boardgame_collect) Button collect;
     @BindDimen(R.dimen.z_app_bar) float appBarElevation;
 
+    private BGGService bggApi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +70,8 @@ public class AddNewBoardgame extends Activity {
         setContentView(R.layout.activity_add_new_boardgame);
         ButterKnife.bind(this);
         FabDialogMorphSetup.setupSharedEelementTransitions(this, bottomSheetContent, 0);
+
+        createBGGApi();
 
         bottomSheet.addListener(new BottomSheet.Listener() {
             @Override
@@ -136,7 +148,32 @@ public class AddNewBoardgame extends Activity {
 
     @OnTextChanged(R.id.add_new_boardgame_title)
     protected void titleTextChanged(CharSequence text) {
+
         setPostButtonState();
+    }
+
+    @OnClick(R.id.add_new_boardgame_collect)
+    protected void collectBoardgame() {
+        bggApi.search(title.getText().toString(), new Callback<BoardgamesResponse>() {
+            @Override
+            public void success(BoardgamesResponse boardgamesResponse, Response response) {
+                Log.d("SUCCESS", response.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("FAILURE", error.toString());
+            }
+        });
+
+    }
+
+    private void createBGGApi() {
+        bggApi = new RestAdapter.Builder()
+                .setEndpoint(BGGService.ENDPOINT)
+                .setConverter(new SimpleXMLConverter())
+                .build()
+                .create(BGGService.class);
     }
 
     private boolean isShareIntent() {

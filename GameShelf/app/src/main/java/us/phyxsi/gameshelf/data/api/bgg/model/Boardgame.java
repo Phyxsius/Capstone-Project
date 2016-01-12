@@ -24,17 +24,21 @@ import android.support.annotation.ColorInt;
 import android.text.Spanned;
 import android.text.TextUtils;
 
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import us.phyxsi.gameshelf.data.GameShelfItem;
 import us.phyxsi.gameshelf.data.db.GameShelfContract;
 import us.phyxsi.gameshelf.util.HtmlUtils;
 
 /**
  * Models a Board Game Geek boardgame
  */
-public class Boardgame extends GameShelfItem implements Parcelable {
+@Root(name = "boardgame")
+public class Boardgame implements Parcelable {
 
     @SuppressWarnings("unused")
     public static final Parcelable.Creator<Boardgame> CREATOR = new Parcelable.Creator<Boardgame>() {
@@ -45,20 +49,36 @@ public class Boardgame extends GameShelfItem implements Parcelable {
         public Boardgame[] newArray(int size) { return new Boardgame[size]; }
     };
 
-    public final String description;
-    public final String image;
-    public final int maxPlayers;
-    public final int maxPlaytime;
-    public final int minAge;
-    public final int minPlayers;
-    public final int minPlaytime;
-    public final int suggestedNumplayers;
-    public final String publisher;
-    public final String yearPublished;
-    public final List<Category> categories;
+    @Attribute(name = "objectid")
+    public long id;
+    @Element(name = "name")
+    public String title;
+    @Element(name = "description", required = false)
+    public String description;
+    @Element(name = "image", required = false)
+    public String image;
+    @Element(name = "maxplayers", required = false)
+    public int maxPlayers;
+    @Element(name = "maxplaytime", required = false)
+    public int maxPlaytime;
+    @Element(name = "age", required = false)
+    public int minAge;
+    @Element(name = "minplayers", required = false)
+    public int minPlayers;
+    @Element(name = "minplaytime", required = false)
+    public int minPlaytime;
+    public int suggestedNumplayers;
+    @Element(name = "boardgamepublisher", required = false)
+    public String publisher;
+    @Element(name = "yearpublished", required = false)
+    public String yearPublished;
+    public List<Category> categories;
     // todo move this into a decorator
     public boolean hasFadedIn = false;
     public Spanned parsedDescription;
+    public int colspan;
+
+    public Boardgame() {}
 
     public Boardgame(long id,
                      String title,
@@ -73,7 +93,8 @@ public class Boardgame extends GameShelfItem implements Parcelable {
                      String publisher,
                      String yearPublished,
                      List<Category> categories) {
-        super(id, title);
+        this.id = id;
+        this.title = title;
         this.description = description;
         this.image = image;
         this.maxPlayers = maxPlayers;
@@ -88,9 +109,8 @@ public class Boardgame extends GameShelfItem implements Parcelable {
     }
 
     public Boardgame(Cursor cursor) {
-        super(cursor.getLong(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID)),
-                cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_TITLE)));
-
+        this.id = cursor.getLong(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID));
+        this.title = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_TITLE));
         this.description = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_DESCRIPTION));
         this.image = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_IMAGE));
         this.maxPlayers = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYERS));
@@ -107,8 +127,8 @@ public class Boardgame extends GameShelfItem implements Parcelable {
     }
 
     protected Boardgame(Parcel in) {
-        super(in.readLong(), in.readString());
-
+        id = in.readLong();
+        title = in.readString();
         description = in.readString();
         image = in.readString();
         maxPlayers = in.readInt();
@@ -170,7 +190,7 @@ public class Boardgame extends GameShelfItem implements Parcelable {
 
     public void weigh() {
         // TODO: Weigh boardgame based on it's ranking in the hotness list?
-        weight = 1f;
+//        weight = 1f;
     }
 
 

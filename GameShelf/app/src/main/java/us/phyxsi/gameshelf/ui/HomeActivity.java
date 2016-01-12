@@ -54,7 +54,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.DataManager;
-import us.phyxsi.gameshelf.data.GameShelfItem;
+import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.data.api.gameshelf.NewBoardgameService;
 import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
 import us.phyxsi.gameshelf.ui.transitions.FabDialogMorphSetup;
@@ -97,7 +97,7 @@ public class HomeActivity extends Activity {
         bggPrefs = BGGPrefs.get(this);
         dataManager = new DataManager(this) {
             @Override
-            public void onDataLoaded(List<? extends GameShelfItem> data) {
+            public void onDataLoaded(List<? extends Boardgame> data) {
                 adapter.addAndResort(data);
                 checkEmptyState();
             }

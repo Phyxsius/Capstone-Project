@@ -16,14 +16,12 @@
 
 package us.phyxsi.gameshelf.data.api.bgg;
 
-
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
-import us.phyxsi.gameshelf.data.api.bgg.model.BoardgameResponse;
+import us.phyxsi.gameshelf.data.api.bgg.model.BoardgamesResponse;
 import us.phyxsi.gameshelf.data.api.bgg.model.CollectionResponse;
-import us.phyxsi.gameshelf.data.api.bgg.model.SearchResponse;
 
 /**
  * Models the BGG API.
@@ -37,11 +35,11 @@ public interface BGGService {
 
     @GET("/xmlapi/search")
     void search(@Query("search") String query,
-                Callback<SearchResponse> callback);
+                Callback<BoardgamesResponse> callback);
 
     @GET("/xmlapi/boardgame/{id}")
     void getBoardgame(@Path("id") long boardgameId,
-                      Callback<BoardgameResponse> callback);
+                      Callback<BoardgamesResponse> callback);
 
     @GET("/xmlapi/collection/{username}")
     void getCollection(@Path("username") String username,

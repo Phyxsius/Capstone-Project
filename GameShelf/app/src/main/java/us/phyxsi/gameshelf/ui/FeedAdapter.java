@@ -52,7 +52,6 @@ import java.util.List;
 
 import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.DataLoadingSubject;
-import us.phyxsi.gameshelf.data.GameShelfItem;
 import us.phyxsi.gameshelf.data.GameShelfItemComparator;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.ui.widget.BadgedFourFourImageView;
@@ -78,7 +77,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int columns;
     private final ColorDrawable[] shotLoadingPlaceholders;
 
-    private List<GameShelfItem> items;
+    private List<Boardgame> items;
 
     public FeedAdapter(Activity hostActivity,
                        DataLoadingSubject dataLoading,
@@ -232,7 +231,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         if (position < getDataItemCount()
                 && getDataItemCount() > 0) {
-            GameShelfItem item = getItem(position);
+            Boardgame item = getItem(position);
             if (item instanceof Boardgame) {
                 return TYPE_BOARDGAME;
             }
@@ -240,7 +239,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return TYPE_LOADING_MORE;
     }
 
-    private GameShelfItem getItem(int position) {
+    private Boardgame getItem(int position) {
         return items.get(position);
     }
 
@@ -253,7 +252,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    private void add(GameShelfItem item) {
+    private void add(Boardgame item) {
         items.add(item);
     }
 
@@ -262,18 +261,18 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void addAndResort(Collection<? extends GameShelfItem> newItems) {
+    public void addAndResort(Collection<? extends Boardgame> newItems) {
         // de-dupe results as the same item can be returned by multiple feeds
         boolean add = true;
-        for (GameShelfItem newItem : newItems) {
+        for (Boardgame newItem : newItems) {
             int count = getDataItemCount();
             for (int i = 0; i < count; i++) {
-                GameShelfItem existingItem = getItem(i);
+                Boardgame existingItem = getItem(i);
                 if (existingItem.equals(newItem)) {
                     // if we find a dupe mark the weight boost field on the first-in, but don't add
                     // the dupe. We use the fact that an item comes from multiple sources to indicate it
                     // is more important and sort it higher
-                    existingItem.weightBoost = DUPE_WEIGHT_BOOST;
+//                    existingItem.weightBoost = DUPE_WEIGHT_BOOST;
                     add = false;
                     break;
                 }
@@ -295,7 +294,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int page = -1;
         final int count = items.size();
         for (int i = 0; i < count; i++) {
-            GameShelfItem item = getItem(i);
+            Boardgame item = getItem(i);
 //            if (item instanceof Shot && item.page > page) {
 //                item.colspan = columns;
 //                page = item.page;
@@ -333,7 +332,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //
 //        // work out some maximum values to weigh individual items against
 //        for (int i = 0; i < count; i++) {
-//            GameShelfItem item = getItem(i);
+//            Boardgame item = getItem(i);
 //            if (item instanceof Shot) {
 //                maxDribbleLikes = Math.max(((Shot) item).likes_count, maxDribbleLikes);
 //            }
@@ -341,7 +340,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //
 //        // now go through and set the weight of each item
 //        for (int i = 0; i < count; i++) {
-//            GameShelfItem item = getItem(i);
+//            Boardgame item = getItem(i);
 //            if (item instanceof Story) {
 //                ((Story) item).weigh(maxDesignNewsComments, maxDesignNewsVotes);
 //            } else if (item instanceof Shot) {
@@ -358,17 +357,17 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        notifyDataSetChanged(); // TODO call the more specific RV variants
     }
 
-    public void removeDataSource(String dataSource) {
-        int i = items.size() - 1;
-        while (i >= 0) {
-            GameShelfItem item = items.get(i);
-            if (dataSource.equals(item.dataSource)) {
-                items.remove(i);
-            }
-            i--;
-        }
-        notifyDataSetChanged();
-    }
+//    public void removeDataSource(String dataSource) {
+//        int i = items.size() - 1;
+//        while (i >= 0) {
+//            Boardgame item = items.get(i);
+//            if (dataSource.equals(item.dataSource)) {
+//                items.remove(i);
+//            }
+//            i--;
+//        }
+//        notifyDataSetChanged();
+//    }
 
     @Override
     public long getItemId(int position) {

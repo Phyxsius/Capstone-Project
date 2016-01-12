@@ -22,6 +22,7 @@ import java.util.List;
 
 import retrofit.RestAdapter;
 import us.phyxsi.gameshelf.data.api.bgg.BGGService;
+import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
 
 /**
@@ -39,19 +40,19 @@ public abstract class BaseDataManager implements
         createBGGApi();
     }
 
-    public abstract void onDataLoaded(List<? extends GameShelfItem> data);
+    public abstract void onDataLoaded(List<? extends Boardgame> data);
 
-    protected static void setPage(List<? extends GameShelfItem> items, int page) {
-        for (GameShelfItem item : items) {
-            item.page = page;
-        }
-    }
-
-    protected static void setDataSource(List<? extends GameShelfItem> items, String dataSource) {
-        for (GameShelfItem item : items) {
-            item.dataSource = dataSource;
-        }
-    }
+//    protected static void setPage(List<? extends GameShelfItem> items, int page) {
+//        for (Boardgame item : items) {
+//            item.page = page;
+//        }
+//    }
+//
+//    protected static void setDataSource(List<? extends Boardgame> items, String dataSource) {
+//        for (Boardgame item : items) {
+//            item.dataSource = dataSource;
+//        }
+//    }
 
     private void createBGGApi() {
         bggApi = new RestAdapter.Builder()
