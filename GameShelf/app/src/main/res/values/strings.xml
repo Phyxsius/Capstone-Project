@@ -11,6 +11,7 @@
     <string name="add_new_boardgame_title">Add a boardgame to your collection</string>
     <string name="add_new_boardgame_game_title">Title</string>
     <string name="add_new_boardgame_collect">Collect</string>
+    <string name="no_search_results">No results for\n“%1$s”</string>
 
     <!-- transition shared elements -->
     <string name="transition_game" translatable="false">game</string>

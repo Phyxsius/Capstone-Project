@@ -21,6 +21,7 @@ import android.content.Context;
 import java.util.List;
 
 import retrofit.RestAdapter;
+import retrofit.converter.SimpleXMLConverter;
 import us.phyxsi.gameshelf.data.api.bgg.BGGService;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
@@ -57,6 +58,7 @@ public abstract class BaseDataManager implements
     private void createBGGApi() {
         bggApi = new RestAdapter.Builder()
                 .setEndpoint(BGGService.ENDPOINT)
+                .setConverter(new SimpleXMLConverter())
                 .build()
                 .create(BGGService.class);
     }

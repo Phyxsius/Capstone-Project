@@ -39,6 +39,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -50,6 +51,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.DataLoadingSubject;
 import us.phyxsi.gameshelf.data.GameShelfItemComparator;
@@ -66,6 +69,7 @@ import us.phyxsi.gameshelf.util.glide.BoardgameTarget;
 public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_BOARDGAME = 0;
+    private static final int TYPE_SEARCH_RESULT = 1;
     private static final int TYPE_LOADING_MORE = -1;
     public static final float DUPE_WEIGHT_BOOST = 0.4f;
 
@@ -103,6 +107,8 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (viewType) {
             case TYPE_BOARDGAME:
                 return createBoardgameHolder(parent);
+            case TYPE_SEARCH_RESULT:
+                return createSearchResultHolder(parent);
             case TYPE_LOADING_MORE:
                 return new LoadingMoreHolder(
                         layoutInflater.inflate(R.layout.infinite_loading, parent, false));
@@ -115,6 +121,9 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (getItemViewType(position)) {
             case TYPE_BOARDGAME:
                 bindBoardgameHolder((Boardgame) getItem(position), (BoardgameHolder) holder);
+                break;
+            case TYPE_SEARCH_RESULT:
+                bindSearchResultHolder((Boardgame) getItem(position), (SearchResultHolder) holder);
                 break;
             case TYPE_LOADING_MORE:
                 bindLoadingViewHolder((LoadingMoreHolder) holder);
@@ -220,6 +229,19 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
+    @NonNull
+    private SearchResultHolder createSearchResultHolder(ViewGroup parent) {
+        final SearchResultHolder holder = new SearchResultHolder(
+                layoutInflater.inflate(R.layout.search_result_item, parent, false));
+
+        // TODO: Handle onClick
+        return holder;
+    }
+
+    private void bindSearchResultHolder(final Boardgame game, final SearchResultHolder holder) {
+        holder.title.setText(game.title);
+    }
+
     private void bindLoadingViewHolder(LoadingMoreHolder holder) {
         // only show the infinite load progress spinner if there are already items in the
         // grid i.e. it's not the first item & data is being loaded
@@ -233,7 +255,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 && getDataItemCount() > 0) {
             Boardgame item = getItem(position);
             if (item instanceof Boardgame) {
-                return TYPE_BOARDGAME;
+                return item.image != null ? TYPE_BOARDGAME : TYPE_SEARCH_RESULT;
             }
         }
         return TYPE_LOADING_MORE;
@@ -416,6 +438,17 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public BoardgameHolder(View itemView) {
             super(itemView);
             image = (BadgedFourFourImageView) itemView;
+        }
+
+    }
+
+    /* package */ class SearchResultHolder extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.search_result) TextView title;
+
+        public SearchResultHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
     }

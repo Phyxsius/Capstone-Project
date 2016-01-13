@@ -20,29 +20,38 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Log;
+import android.text.style.StyleSpan;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.transition.TransitionManager;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.BindDimen;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import retrofit.converter.SimpleXMLConverter;
 import us.phyxsi.gameshelf.R;
-import us.phyxsi.gameshelf.data.api.bgg.BGGService;
-import us.phyxsi.gameshelf.data.api.bgg.model.BoardgamesResponse;
+import us.phyxsi.gameshelf.data.SearchDataManager;
+import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.ui.transitions.FabDialogMorphSetup;
+import us.phyxsi.gameshelf.ui.widget.BaselineGridTextView;
 import us.phyxsi.gameshelf.ui.widget.BottomSheet;
 import us.phyxsi.gameshelf.ui.widget.ObservableScrollView;
 
@@ -61,7 +70,13 @@ public class AddNewBoardgame extends Activity {
     @Bind(R.id.add_new_boardgame_collect) Button collect;
     @BindDimen(R.dimen.z_app_bar) float appBarElevation;
 
-    private BGGService bggApi;
+    @Bind(android.R.id.empty) ProgressBar progress;
+    @Bind(R.id.search_results) RecyclerView results;
+    private BaselineGridTextView noResults;
+    private Transition auto;
+
+    private SearchDataManager dataManager;
+    private FeedAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +86,36 @@ public class AddNewBoardgame extends Activity {
         ButterKnife.bind(this);
         FabDialogMorphSetup.setupSharedEelementTransitions(this, bottomSheetContent, 0);
 
-        createBGGApi();
+        auto = TransitionInflater.from(this).inflateTransition(R.transition.auto);
+        dataManager = new SearchDataManager(this) {
+            @Override
+            public void onDataLoaded(List<? extends Boardgame> data) {
+                if (data != null && data.size() > 0) {
+                    if (results.getVisibility() != View.VISIBLE) {
+                        TransitionManager.beginDelayedTransition(scrollContainer, auto);
+                        progress.setVisibility(View.GONE);
+                        results.setVisibility(View.VISIBLE);
+                    }
+                    adapter.addAndResort(data);
+                } else {
+                    TransitionManager.beginDelayedTransition(scrollContainer, auto);
+                    progress.setVisibility(View.GONE);
+                    setNoResultsVisibility(View.VISIBLE);
+                }
+            }
+        };
+
+        adapter = new FeedAdapter(this, dataManager, 1);
+        results.setAdapter(adapter);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return adapter.getItemColumnSpan(position);
+            }
+        });
+        results.setLayoutManager(layoutManager);
+        results.setHasFixedSize(true);
 
         bottomSheet.addListener(new BottomSheet.Listener() {
             @Override
@@ -154,26 +198,46 @@ public class AddNewBoardgame extends Activity {
 
     @OnClick(R.id.add_new_boardgame_collect)
     protected void collectBoardgame() {
-        bggApi.search(title.getText().toString(), new Callback<BoardgamesResponse>() {
-            @Override
-            public void success(BoardgamesResponse boardgamesResponse, Response response) {
-                Log.d("SUCCESS", response.toString());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e("FAILURE", error.toString());
-            }
-        });
-
+        clearResults();
+        progress.setVisibility(View.VISIBLE);
+        dataManager.searchFor(title.getText().toString());
     }
 
-    private void createBGGApi() {
-        bggApi = new RestAdapter.Builder()
-                .setEndpoint(BGGService.ENDPOINT)
-                .setConverter(new SimpleXMLConverter())
-                .build()
-                .create(BGGService.class);
+    private void clearResults() {
+//        adapter.clear();
+        dataManager.clear();
+//        TransitionManager.beginDelayedTransition(scrollContainer, auto);
+//        results.setVisibility(View.GONE);
+//        progress.setVisibility(View.GONE);
+//        setNoResultsVisibility(View.GONE);
+    }
+
+    private void setNoResultsVisibility(int visibility) {
+        if (visibility == View.VISIBLE) {
+            if (noResults == null) {
+                noResults = (BaselineGridTextView) ((ViewStub)
+                        findViewById(R.id.stub_no_search_results)).inflate();
+//                noResults.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        searchView.setQuery("", false);
+//                        searchView.requestFocus();
+//                        ImeUtils.showIme(searchView);
+//                    }
+//                });
+            }
+            String message = String.format(getString(R
+                    .string.no_search_results), title.getText().toString());
+            SpannableStringBuilder ssb = new SpannableStringBuilder(message);
+            ssb.setSpan(new StyleSpan(Typeface.ITALIC),
+                    message.indexOf('“') + 1,
+                    message.length() - 1,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            noResults.setText(ssb);
+        }
+        if (noResults != null) {
+            noResults.setVisibility(visibility);
+        }
     }
 
     private boolean isShareIntent() {

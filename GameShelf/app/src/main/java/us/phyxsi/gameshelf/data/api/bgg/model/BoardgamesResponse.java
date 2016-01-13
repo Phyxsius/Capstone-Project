@@ -16,7 +16,7 @@ public class BoardgamesResponse {
     private String termsofuse;
 
     @ElementList(inline = true)
-    private List<Boardgame> boardgames;
+    public List<Boardgame> boardgames;
 
     public BoardgamesResponse() {
         super();
