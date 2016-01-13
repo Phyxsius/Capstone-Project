@@ -15,7 +15,7 @@ public class BoardgamesResponse {
     @Attribute(name = "termsofuse")
     private String termsofuse;
 
-    @ElementList(inline = true)
+    @ElementList(inline = true, required = false)
     public List<Boardgame> boardgames;
 
     public BoardgamesResponse() {

@@ -55,9 +55,6 @@ import us.phyxsi.gameshelf.ui.widget.BaselineGridTextView;
 import us.phyxsi.gameshelf.ui.widget.BottomSheet;
 import us.phyxsi.gameshelf.ui.widget.ObservableScrollView;
 
-/**
- * Created by Andy on 1/11/2016.
- */
 public class AddNewBoardgame extends Activity {
 
     public static final int RESULT_DRAG_DISMISSED = 3;
@@ -66,6 +63,7 @@ public class AddNewBoardgame extends Activity {
     @Bind(R.id.bottom_sheet_content) ViewGroup bottomSheetContent;
     @Bind(R.id.title) TextView sheetTitle;
     @Bind(R.id.scroll_container) ObservableScrollView scrollContainer;
+    @Bind(R.id.results_container) ViewGroup resultsContainer;
     @Bind(R.id.add_new_boardgame_title) EditText title;
     @Bind(R.id.add_new_boardgame_collect) Button collect;
     @BindDimen(R.dimen.z_app_bar) float appBarElevation;
@@ -92,13 +90,13 @@ public class AddNewBoardgame extends Activity {
             public void onDataLoaded(List<? extends Boardgame> data) {
                 if (data != null && data.size() > 0) {
                     if (results.getVisibility() != View.VISIBLE) {
-                        TransitionManager.beginDelayedTransition(scrollContainer, auto);
+                        TransitionManager.beginDelayedTransition(resultsContainer, auto);
                         progress.setVisibility(View.GONE);
                         results.setVisibility(View.VISIBLE);
                     }
                     adapter.addAndResort(data);
                 } else {
-                    TransitionManager.beginDelayedTransition(scrollContainer, auto);
+                    TransitionManager.beginDelayedTransition(resultsContainer, auto);
                     progress.setVisibility(View.GONE);
                     setNoResultsVisibility(View.VISIBLE);
                 }
@@ -204,12 +202,12 @@ public class AddNewBoardgame extends Activity {
     }
 
     private void clearResults() {
-//        adapter.clear();
+        adapter.clear();
         dataManager.clear();
-//        TransitionManager.beginDelayedTransition(scrollContainer, auto);
-//        results.setVisibility(View.GONE);
-//        progress.setVisibility(View.GONE);
-//        setNoResultsVisibility(View.GONE);
+        TransitionManager.beginDelayedTransition(resultsContainer, auto);
+        results.setVisibility(View.GONE);
+        progress.setVisibility(View.GONE);
+        setNoResultsVisibility(View.GONE);
     }
 
     private void setNoResultsVisibility(int visibility) {

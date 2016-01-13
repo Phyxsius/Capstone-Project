@@ -82,8 +82,6 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-
-
                 <FrameLayout
                     android:id="@+id/results_container"
                     android:layout_width="match_parent"

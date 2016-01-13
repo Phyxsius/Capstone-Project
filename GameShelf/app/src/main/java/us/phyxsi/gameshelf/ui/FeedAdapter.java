@@ -376,7 +376,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //
 //        // sort by weight
 //        Collections.sort(items, comparator);
-//        notifyDataSetChanged(); // TODO call the more specific RV variants
+        notifyDataSetChanged(); // TODO call the more specific RV variants
     }
 
 //    public void removeDataSource(String dataSource) {

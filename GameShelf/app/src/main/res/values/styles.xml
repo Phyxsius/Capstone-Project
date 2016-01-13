@@ -210,7 +210,7 @@
     <style name="Widget.GameShelf.EmptyText">
         <item name="android:textAppearance">@style/TextAppearance.DialogContent</item>
         <item name="lineHeightHint">24sp</item>
-        <item name="android:textColor">@color/text_primary_light</item>
+        <item name="android:textColor">@color/text_primary_dark</item>
     </style>
 
     <!-- By default float labels (well, the design lib) rely on AppCompat which we're not using
