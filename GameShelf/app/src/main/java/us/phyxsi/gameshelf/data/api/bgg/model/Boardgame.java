@@ -26,6 +26,7 @@ import android.text.TextUtils;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import us.phyxsi.gameshelf.util.HtmlUtils;
 /**
  * Models a Board Game Geek boardgame
  */
-@Root(name = "boardgame")
+@Root(name = "boardgame", strict = false)
 public class Boardgame implements Parcelable {
 
     @SuppressWarnings("unused")
@@ -51,8 +52,9 @@ public class Boardgame implements Parcelable {
 
     @Attribute(name = "objectid")
     public long id;
-    @Element(name = "name")
     public String title;
+    @ElementList(name = "name", inline = true, required = false)
+    public List<BoardgameName> names;
     @Element(name = "description", required = false)
     public String description;
     @Element(name = "image", required = false)
@@ -68,7 +70,7 @@ public class Boardgame implements Parcelable {
     @Element(name = "minplaytime", required = false)
     public int minPlaytime;
     public int suggestedNumplayers;
-    @Element(name = "boardgamepublisher", required = false)
+//    @ElementList(name = "boardgamepublisher", required = false)
     public String publisher;
     @Element(name = "yearpublished", required = false)
     public String yearPublished;
@@ -156,6 +158,18 @@ public class Boardgame implements Parcelable {
             parsedDescription = HtmlUtils.parseHtml(description, linkTextColor, linkHighlightColor);
         }
         return parsedDescription;
+    }
+
+    public String getTitle() {
+        if (names != null) {
+            if (names.size() == 1) return names.get(0).getTitle();
+
+            for (BoardgameName name : names) {
+                if (name.isPrimary()) return name.getTitle();
+            }
+        }
+
+        return "";
     }
 
     public String getPlayers() {

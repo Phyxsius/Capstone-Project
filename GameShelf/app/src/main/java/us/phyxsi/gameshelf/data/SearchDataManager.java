@@ -59,6 +59,24 @@ public abstract class SearchDataManager extends BaseDataManager implements DataL
 
     }
 
+    public void getById(Long id) {
+        loadingResults = true;
+        getBggApi().getBoardgame(id, new Callback<BoardgamesResponse>() {
+            @Override
+            public void success(BoardgamesResponse boardgamesResponse, Response response) {
+                if (boardgamesResponse != null) {
+                    onDataLoaded(boardgamesResponse.boardgames);
+                }
+                loadingResults = false;
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                loadingResults = false;
+            }
+        });
+    }
+
     public void clear() {
         query = "";
         loadingResults = false;

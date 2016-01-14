@@ -19,24 +19,28 @@ package us.phyxsi.gameshelf.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
+import android.transition.AutoTransition;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -50,6 +54,7 @@ import butterknife.OnTextChanged;
 import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.SearchDataManager;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
+import us.phyxsi.gameshelf.data.db.helper.BoardgameDbHelper;
 import us.phyxsi.gameshelf.ui.transitions.FabDialogMorphSetup;
 import us.phyxsi.gameshelf.ui.widget.BaselineGridTextView;
 import us.phyxsi.gameshelf.ui.widget.BottomSheet;
@@ -69,12 +74,12 @@ public class AddNewBoardgame extends Activity {
     @BindDimen(R.dimen.z_app_bar) float appBarElevation;
 
     @Bind(android.R.id.empty) ProgressBar progress;
-    @Bind(R.id.search_results) RecyclerView results;
+    @Bind(R.id.search_results) ListView results;
     private BaselineGridTextView noResults;
     private Transition auto;
 
     private SearchDataManager dataManager;
-    private FeedAdapter adapter;
+    private AddNewBoardgameAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +93,26 @@ public class AddNewBoardgame extends Activity {
         dataManager = new SearchDataManager(this) {
             @Override
             public void onDataLoaded(List<? extends Boardgame> data) {
-                if (data != null && data.size() > 0) {
-                    if (results.getVisibility() != View.VISIBLE) {
-                        TransitionManager.beginDelayedTransition(resultsContainer, auto);
-                        progress.setVisibility(View.GONE);
-                        results.setVisibility(View.VISIBLE);
+                if (data != null) {
+                    if (data.size() == 1) {
+                        // Save to DB
+                        BoardgameDbHelper bgHelper = new BoardgameDbHelper(getApplicationContext());
+                        bgHelper.insert(getApplicationContext(), data.get(0));
+
+                        finishAfterTransition();
+                    } else if (data.size() > 1) {
+                        if (results.getVisibility() == View.VISIBLE) {
+                            TransitionManager.beginDelayedTransition(resultsContainer, auto);
+                            progress.setVisibility(View.INVISIBLE);
+                            results.setVisibility(View.VISIBLE);
+                        }
+//                    adapter.addAndResort(data);
+                        adapter = new AddNewBoardgameAdapter(AddNewBoardgame.this, R.layout.search_result_item, (List<Boardgame>) data);
+                        results.setAdapter(adapter);
+                        results.setDivider(getDrawable(R.drawable.list_divider));
+                        results.setDividerHeight(getResources().getDimensionPixelSize(R.dimen
+                                .divider_height));
                     }
-                    adapter.addAndResort(data);
                 } else {
                     TransitionManager.beginDelayedTransition(resultsContainer, auto);
                     progress.setVisibility(View.GONE);
@@ -103,17 +121,18 @@ public class AddNewBoardgame extends Activity {
             }
         };
 
-        adapter = new FeedAdapter(this, dataManager, 1);
+//        adapter = new FeedAdapter(this, dataManager, 1);
         results.setAdapter(adapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return adapter.getItemColumnSpan(position);
-            }
-        });
-        results.setLayoutManager(layoutManager);
-        results.setHasFixedSize(true);
+//        GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
+//        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(int position) {
+//                return adapter.getItemColumnSpan(position);
+//            }
+//        });
+//        results.setLayoutManager(layoutManager);
+//        results.setHasFixedSize(true);
+        results.setOnScrollListener(scrollListener);
 
         bottomSheet.addListener(new BottomSheet.Listener() {
             @Override
@@ -190,19 +209,25 @@ public class AddNewBoardgame extends Activity {
 
     @OnTextChanged(R.id.add_new_boardgame_title)
     protected void titleTextChanged(CharSequence text) {
+        if (TextUtils.isEmpty(title.getText().toString())) return;
 
         setPostButtonState();
     }
 
     @OnClick(R.id.add_new_boardgame_collect)
     protected void collectBoardgame() {
+        searchFor(title.getText().toString());
+    }
+
+    private void searchFor(String query) {
         clearResults();
         progress.setVisibility(View.VISIBLE);
-        dataManager.searchFor(title.getText().toString());
+        results.setVisibility(View.VISIBLE);
+        dataManager.searchFor(query);
     }
 
     private void clearResults() {
-        adapter.clear();
+//        adapter.clear();
         dataManager.clear();
         TransitionManager.beginDelayedTransition(resultsContainer, auto);
         results.setVisibility(View.GONE);
@@ -244,5 +269,87 @@ public class AddNewBoardgame extends Activity {
 
     private void setPostButtonState() {
         collect.setEnabled(!TextUtils.isEmpty(title.getText()));
+    }
+
+    private AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener() {
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItemPosition, int
+                visibleItemCount, int totalItemCount) {
+            if (results.getMaxScrollAmount() > 0
+                    && firstVisibleItemPosition == 0
+                    && results.getChildAt(0) != null) {
+                int listScroll = results.getChildAt(0).getTop();
+            }
+        }
+
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            // as we animate the main image's elevation change when it 'pins' at it's min height
+            // a fling can cause the title to go over the image before the animation has a chance to
+            // run. In this case we short circuit the animation and just jump to state.
+//            imageView.setImmediatePin(scrollState == AbsListView.OnScrollListener
+//                    .SCROLL_STATE_FLING);
+        }
+    };
+
+    private void addToCollection(Boardgame boardgame) {
+        // Get the full boardgame details
+        dataManager.getById(boardgame.id);
+    }
+
+    protected class AddNewBoardgameAdapter extends ArrayAdapter<Boardgame> {
+
+        private final LayoutInflater inflater;
+        private final Transition change;
+        private int expandedCommentPosition = ListView.INVALID_POSITION;
+
+        public AddNewBoardgameAdapter(Context context, int resource, List<Boardgame> boardgames) {
+            super(context, resource, boardgames);
+            inflater = LayoutInflater.from(context);
+            change = new AutoTransition();
+            change.setDuration(200L);
+            change.setInterpolator(AnimationUtils.loadInterpolator(context,
+                    android.R.interpolator.fast_out_slow_in));
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup container) {
+            if (view == null) {
+                view = newNewCommentView(position, container);
+            }
+            bindComment(getItem(position), position, view);
+            return view;
+        }
+
+        private View newNewCommentView(int position, ViewGroup parent) {
+            View view = inflater.inflate(R.layout.search_result_item, parent, false);
+            view.setTag(R.id.search_result, view.findViewById(R.id.search_result));
+            return view;
+        }
+
+        private void bindComment(final Boardgame boardgame, final int position, final View view) {
+            final TextView title = (TextView) view.getTag(R.id.search_result);
+
+            title.setText(boardgame.getTitle());
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addToCollection(boardgame);
+
+                    notifyDataSetChanged();
+                }
+            });
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return getItem(position).id;
+        }
+
     }
 }
