@@ -40,7 +40,7 @@ public class GameShelfDbHelper extends SQLiteOpenHelper {
     static final String SQL_CREATE_BOARDGAMES =
             "CREATE TABLE " + BoardgameEntry.TABLE_NAME + " ( " +
                     BoardgameEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    BoardgameEntry.COLUMN_NAME_GAME_ID + TEXT_TYPE + COMMA_SEP +
+                    BoardgameEntry.COLUMN_NAME_GAME_ID + TEXT_TYPE + " UNIQUE " + COMMA_SEP +
                     BoardgameEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
                     BoardgameEntry.COLUMN_NAME_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
                     BoardgameEntry.COLUMN_NAME_IMAGE + TEXT_TYPE + COMMA_SEP +

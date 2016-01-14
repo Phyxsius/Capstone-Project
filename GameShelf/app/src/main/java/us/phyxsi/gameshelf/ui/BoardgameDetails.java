@@ -160,10 +160,10 @@ public class BoardgameDetails extends Activity {
         });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ((FabOverlapTextView) title).setText(boardgame.getTitle());
+            ((FabOverlapTextView) title).setText(boardgame.title);
             ((FabOverlapTextView) byline).setText(boardgame.getByline());
         } else {
-            ((TextView) title).setText(boardgame.getTitle());
+            ((TextView) title).setText(boardgame.title);
             ((TextView) byline).setText(boardgame.getByline());
         }
         if (!TextUtils.isEmpty(boardgame.description)) {

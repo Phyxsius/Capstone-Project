@@ -41,7 +41,7 @@ public class BoardgameDbHelper {
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID, boardgame.id);
-        values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_TITLE, boardgame.title);
+        values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_TITLE, boardgame.getTitle());
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_DESCRIPTION, boardgame.description);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_IMAGE, boardgame.image);
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYERS, boardgame.maxPlayers);
