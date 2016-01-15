@@ -22,6 +22,8 @@ import android.os.Parcelable;
 /**
  * Models a category on a Board Game Geek boardgame
  */
+
+
 public class Category implements Parcelable {
 
     @SuppressWarnings("unused")

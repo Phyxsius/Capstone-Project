@@ -52,7 +52,6 @@ public class Boardgame implements Parcelable {
 
     @Attribute(name = "objectid")
     public long id;
-    public String title;
     @ElementList(name = "name", inline = true, required = false)
     public List<BoardgameName> names;
     @Element(name = "description", required = false)
@@ -69,12 +68,18 @@ public class Boardgame implements Parcelable {
     public int minPlayers;
     @Element(name = "minplaytime", required = false)
     public int minPlaytime;
-    public int suggestedNumplayers;
-//    @ElementList(name = "boardgamepublisher", required = false)
-    public String publisher;
+    @ElementList(name = "boardgamepublisher", inline = true, required = false)
+    public List<BoardgamePublisher> publishers;
     @Element(name = "yearpublished", required = false)
     public String yearPublished;
+    @ElementList(name = "poll", inline = true, required = false)
+    public List<BoardgamePoll> polls;
+
+    public String title;
+    private String publisher;
+    public int suggestedNumplayers;
     public List<Category> categories;
+
     // todo move this into a decorator
     public boolean hasFadedIn = false;
     public Spanned parsedDescription;
@@ -200,6 +205,39 @@ public class Boardgame implements Parcelable {
         byline += yearPublished;
 
         return byline;
+    }
+
+    public String getPublisher() {
+        if (publishers != null && publishers.size() > 0)  return publishers.get(0).getName();
+
+        return "";
+    }
+
+    public int getSuggestedNumplayers() {
+        int best = 0;
+        int numOfPlayers = 0;
+
+        for (BoardgamePoll poll : polls) {
+            // Only suggested number of players poll
+            if (TextUtils.equals(poll.getName(), "suggested_numplayers")) {
+                for (BoardgameResults results : poll.getResults()) {
+                    for (BoardgameResult result : results.getResultList()) {
+
+                        // Only looking for number of votes for "Best"
+                        if (TextUtils.equals(result.getValue().toLowerCase(), "best")) {
+                            if (result.getNumvotes() > best) {
+                                best = result.getNumvotes();
+                                numOfPlayers = Integer.parseInt(results.getNumplayers());
+                            }
+
+                        }
+
+                    }
+                }
+            }
+        }
+
+        return numOfPlayers;
     }
 
     public void weigh() {
