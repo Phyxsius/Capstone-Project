@@ -13,6 +13,12 @@
     <string name="add_new_boardgame_collect">Collect</string>
     <string name="no_search_results">No results for\n“%1$s”</string>
 
+    <!-- deletion confirmation -->
+    <string name="remove_game_title">Remove boardgame from collection?</string>
+    <string name="remove_game_message">Remove this boardgame and all its data from your collection?</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_remove">Remove</string>
+
     <!-- transition shared elements -->
     <string name="transition_game" translatable="false">game</string>
     <string name="transition_game_background" translatable="false">game_background</string>

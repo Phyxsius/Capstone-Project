@@ -34,7 +34,7 @@ public class BoardgameDbHelper {
         mDbHelper = new GameShelfDbHelper(context);
     }
 
-    public long insert(Context context, Boardgame boardgame) {
+    public long insert(Boardgame boardgame) {
         // Gets the data repository in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -59,7 +59,26 @@ public class BoardgameDbHelper {
                 null,
                 values);
 
+        db.close();
+
         return newRowId;
+    }
+
+    public long delete(Boardgame boardgame) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        String selection = GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID + " = ?";
+        String[] selectionArgs = { String.valueOf(boardgame.id) };
+
+        long rowId = db.delete(
+                GameShelfContract.BoardgameEntry.TABLE_NAME,
+                selection,
+                selectionArgs
+        );
+
+        db.close();
+
+        return rowId;
     }
 
     public Cursor getAll() {
@@ -96,6 +115,8 @@ public class BoardgameDbHelper {
                 null,                                     // don't filter by row groups
                 sortOrder                                 // The sort order
         );
+
+        db.close();
 
         return c;
     }

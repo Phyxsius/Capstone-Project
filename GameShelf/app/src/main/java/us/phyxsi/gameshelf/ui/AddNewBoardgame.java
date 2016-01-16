@@ -97,7 +97,7 @@ public class AddNewBoardgame extends Activity {
                     if (data.size() == 1) {
                         // Save to DB
                         BoardgameDbHelper bgHelper = new BoardgameDbHelper(getApplicationContext());
-                        bgHelper.insert(getApplicationContext(), data.get(0));
+                        bgHelper.insert(data.get(0));
 
                         finishAfterTransition();
                     } else if (data.size() > 1) {

@@ -142,4 +142,11 @@ public abstract class DataManager extends BaseDataManager
         return pageIndexes.get(key) != 0;
     }
 
+
+    public interface DataUpdatedListener {
+
+        public void onDataAdded();
+
+        public void onDataRemoved();
+    }
 }

@@ -102,7 +102,7 @@ public class HomeActivity extends Activity {
                 checkEmptyState();
             }
         };
-        adapter = new FeedAdapter(this, dataManager, columns);
+        adapter = new FeedAdapter(this, HomeActivity.this, dataManager, columns);
         grid.setAdapter(adapter);
         layoutManager = new GridLayoutManager(this, columns);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

@@ -22,6 +22,9 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -57,6 +60,7 @@ import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.DataLoadingSubject;
 import us.phyxsi.gameshelf.data.GameShelfItemComparator;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
+import us.phyxsi.gameshelf.data.db.helper.BoardgameDbHelper;
 import us.phyxsi.gameshelf.ui.widget.BadgedFourFourImageView;
 import us.phyxsi.gameshelf.util.AnimUtils;
 import us.phyxsi.gameshelf.util.ObservableColorMatrix;
@@ -75,6 +79,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // we need to hold on to an activity ref for the shared element transitions :/
     private final Activity host;
+    private final Context context;
     private final LayoutInflater layoutInflater;
     private final GameShelfItemComparator comparator;
     private @Nullable DataLoadingSubject dataLoading;
@@ -84,9 +89,11 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Boardgame> items;
 
     public FeedAdapter(Activity hostActivity,
+                       Context context,
                        DataLoadingSubject dataLoading,
                        int columns) {
         this.host = hostActivity;
+        this.context = context;
         this.dataLoading = dataLoading;
         this.columns = columns;
         layoutInflater = LayoutInflater.from(host);
@@ -166,6 +173,31 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 host.startActivity(intent, options.toBundle());
             }
         });
+
+        // show deletion confirmation
+        holder.image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(context)
+                        .setTitle(host.getString(R.string.remove_game_title))
+                        .setMessage(host.getString(R.string.remove_game_message))
+                        .setPositiveButton(host.getString(R.string.dialog_remove),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        BoardgameDbHelper bgHelper = new BoardgameDbHelper(context);
+                                        bgHelper.delete((Boardgame) getItem(holder.getAdapterPosition()));
+
+                                        notifyDataSetChanged();
+                                    }
+                        })
+                        .setNegativeButton(host.getString(R.string.dialog_cancel), null)
+                        .show();
+
+                return false;
+            }
+        });
+
         return holder;
     }
 
