@@ -274,4 +274,12 @@ public class Boardgame implements Parcelable {
         }
 
     }
+
+    /**
+     * Equals check based on the id field
+     */
+    @Override
+    public boolean equals(Object o) {
+        return (o.getClass() == getClass() && ((Boardgame) o).id == id);
+    }
 }

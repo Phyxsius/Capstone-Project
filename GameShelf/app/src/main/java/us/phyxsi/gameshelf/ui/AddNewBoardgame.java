@@ -63,6 +63,7 @@ import us.phyxsi.gameshelf.ui.widget.ObservableScrollView;
 public class AddNewBoardgame extends Activity {
 
     public static final int RESULT_DRAG_DISMISSED = 3;
+    public static final int RESULT_BOARDGAME_ADDED = 4;
 
     @Bind(R.id.bottom_sheet) BottomSheet bottomSheet;
     @Bind(R.id.bottom_sheet_content) ViewGroup bottomSheetContent;
@@ -96,8 +97,9 @@ public class AddNewBoardgame extends Activity {
                 if (data != null) {
                     if (data.size() == 1) {
                         // Save to DB
-                        BoardgameDbHelper bgHelper = new BoardgameDbHelper(getApplicationContext());
+                        BoardgameDbHelper bgHelper = new BoardgameDbHelper(AddNewBoardgame.this);
                         bgHelper.insert(data.get(0));
+                        setResult(RESULT_BOARDGAME_ADDED);
 
                         finishAfterTransition();
                     } else if (data.size() > 1) {

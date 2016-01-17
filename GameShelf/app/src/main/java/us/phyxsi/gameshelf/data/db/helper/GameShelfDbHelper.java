@@ -38,7 +38,7 @@ public class GameShelfDbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
 
     static final String SQL_CREATE_BOARDGAMES =
-            "CREATE TABLE " + BoardgameEntry.TABLE_NAME + " ( " +
+            "CREATE VIRTUAL TABLE " + BoardgameEntry.TABLE_NAME + " USING fts3 ( " +
                     BoardgameEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     BoardgameEntry.COLUMN_NAME_GAME_ID + TEXT_TYPE + " UNIQUE " + COMMA_SEP +
                     BoardgameEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +

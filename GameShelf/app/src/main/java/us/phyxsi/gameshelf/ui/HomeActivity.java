@@ -224,6 +224,26 @@ public class HomeActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case RC_SEARCH:
+                // reset the search icon which we hid
+                View searchMenuView = toolbar.findViewById(R.id.menu_search);
+                if (searchMenuView != null) {
+                    searchMenuView.setAlpha(1f);
+                }
+                break;
+            case RC_ADD_NEW_BOARDGAME:
+                if (resultCode == AddNewBoardgame.RESULT_BOARDGAME_ADDED) {
+                    dataManager.loadFromDatabase();
+                }
+                break;
+        }
+    }
+
+
     private void checkEmptyState() {
         if (adapter.getDataItemCount() == 0) {
             loading.setVisibility(View.VISIBLE);

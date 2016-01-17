@@ -134,12 +134,6 @@ public class SearchActivity extends Activity {
             }
         });
         results.setLayoutManager(layoutManager);
-//        results.addOnScrollListener(new InfiniteScrollListener(layoutManager, dataManager) {
-//            @Override
-//            public void onLoadMore() {
-//                dataManager.loadMore();
-//            }
-//        });
         results.setHasFixedSize(true);
 
         // extract the search icon's location passed from the launching activity, minus 4dp to
@@ -227,7 +221,7 @@ public class SearchActivity extends Activity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             if (!TextUtils.isEmpty(query)) {
                 searchView.setQuery(query, false);
-                searchFor(query);
+                getByTitle(query);
             }
         }
     }
@@ -333,7 +327,7 @@ public class SearchActivity extends Activity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                searchFor(query);
+                getByTitle(query);
                 return true;
             }
 
@@ -385,11 +379,11 @@ public class SearchActivity extends Activity {
         }
     }
 
-    private void searchFor(String query) {
+    private void getByTitle(String query) {
         clearResults();
         progress.setVisibility(View.VISIBLE);
         ImeUtils.hideIme(searchView);
         searchView.clearFocus();
-        dataManager.searchFor(query);
+        dataManager.getByTitle(query, SearchActivity.this);
     }
 }

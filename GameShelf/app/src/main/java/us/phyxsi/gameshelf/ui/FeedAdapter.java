@@ -442,6 +442,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      * In this situation, hide the FAB on exit and re-show it on return.
      */
     private void setGridItemContentTransitions(View gridItem) {
+        if (host.findViewById(R.id.fab) == null) return;
         if (!ViewUtils.viewsIntersect(gridItem, host.findViewById(R.id.fab))) return;
 
         final TransitionInflater ti = TransitionInflater.from(host);

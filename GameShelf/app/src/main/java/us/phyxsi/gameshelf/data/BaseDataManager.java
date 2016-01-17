@@ -18,7 +18,9 @@ package us.phyxsi.gameshelf.data;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit.RestAdapter;
 import retrofit.converter.SimpleXMLConverter;
@@ -30,30 +32,72 @@ import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
  * Base class for loading data.
  */
 public abstract class BaseDataManager implements
+        DataLoadingSubject,
         BGGPrefs.BGGLoginStatusListener {
 
+    private AtomicInteger loadingCount;
     private BGGPrefs bggPrefs;
     private BGGService bggApi;
+    private List<DataLoadingSubject.DataLoadingCallbacks> loadingCallbacks;
 
     public BaseDataManager(Context context) {
         // setup the API access objects
         bggPrefs = BGGPrefs.get(context);
         createBGGApi();
+        loadingCount = new AtomicInteger(0);
+    }
+
+    @Override
+    public boolean isDataLoading() {
+        return loadingCount.get() > 0;
+    }
+
+    protected void loadStarted() {
+        if (0 == loadingCount.getAndIncrement()) {
+            notifyCallbacksLoadingStarted();
+        }
+    }
+
+    protected void resetLoadingCount() {
+        loadingCount.set(0);
+    }
+
+    protected void loadFinished() {
+        if (0 == loadingCount.decrementAndGet()) {
+            notifyCallbacksLoadingFinished();
+        }
+    }
+
+    @Override
+    public void addCallbacks(DataLoadingSubject.DataLoadingCallbacks callbacks) {
+        if (loadingCallbacks == null) {
+            loadingCallbacks = new ArrayList<>(1);
+        }
+        loadingCallbacks.add(callbacks);
+    }
+
+    @Override
+    public void removeCallbacks(DataLoadingSubject.DataLoadingCallbacks callbacks) {
+        if (loadingCallbacks.contains(callbacks)) {
+            loadingCallbacks.remove(callbacks);
+        }
+    }
+
+    protected void notifyCallbacksLoadingStarted() {
+        if (loadingCallbacks == null) return;
+        for (DataLoadingCallbacks loadingCallback : loadingCallbacks) {
+            loadingCallback.dataStartedLoading();
+        }
+    }
+
+    protected void notifyCallbacksLoadingFinished() {
+        if (loadingCallbacks == null) return;
+        for (DataLoadingCallbacks loadingCallback : loadingCallbacks) {
+            loadingCallback.dataFinishedLoading();
+        }
     }
 
     public abstract void onDataLoaded(List<? extends Boardgame> data);
-
-//    protected static void setPage(List<? extends GameShelfItem> items, int page) {
-//        for (Boardgame item : items) {
-//            item.page = page;
-//        }
-//    }
-//
-//    protected static void setDataSource(List<? extends Boardgame> items, String dataSource) {
-//        for (Boardgame item : items) {
-//            item.dataSource = dataSource;
-//        }
-//    }
 
     private void createBGGApi() {
         bggApi = new RestAdapter.Builder()
