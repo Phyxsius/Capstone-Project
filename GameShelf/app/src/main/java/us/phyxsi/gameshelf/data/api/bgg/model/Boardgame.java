@@ -29,7 +29,10 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import us.phyxsi.gameshelf.data.db.GameShelfContract;
@@ -79,6 +82,7 @@ public class Boardgame implements Parcelable {
     private String publisher;
     public int suggestedNumplayers;
     public List<Category> categories;
+    public String created_at;
 
     // todo move this into a decorator
     public boolean hasFadedIn = false;
@@ -99,6 +103,7 @@ public class Boardgame implements Parcelable {
                      int suggestedNumplayers,
                      String publisher,
                      String yearPublished,
+                     String created_at,
                      List<Category> categories) {
         this.id = id;
         this.title = title;
@@ -112,6 +117,7 @@ public class Boardgame implements Parcelable {
         this.suggestedNumplayers = suggestedNumplayers;
         this.publisher = publisher;
         this.yearPublished = yearPublished;
+        this.created_at = created_at;
         this.categories = categories;
     }
 
@@ -128,6 +134,7 @@ public class Boardgame implements Parcelable {
         this.suggestedNumplayers = cursor.getInt(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS));
         this.publisher = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_PUBLISHER));
         this.yearPublished = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED));
+        this.created_at = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_CREATED_AT));
 
         // TODO: Set categories from a cursor
         this.categories = null;
@@ -146,6 +153,7 @@ public class Boardgame implements Parcelable {
         suggestedNumplayers = in.readInt();
         publisher = in.readString();
         yearPublished = in.readString();
+        created_at = in.readString();
 
         hasFadedIn = in.readByte() != 0x00;
 
@@ -240,6 +248,19 @@ public class Boardgame implements Parcelable {
         return numOfPlayers;
     }
 
+    public Date getCreatedAt() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date convertedDate = new Date();
+
+        try {
+            convertedDate = dateFormat.parse(created_at);
+            return convertedDate;
+        } catch (ParseException e) {
+        }
+
+        return null;
+    }
+
     public void weigh() {
         // TODO: Weigh boardgame based on it's ranking in the hotness list?
 //        weight = 1f;
@@ -265,6 +286,7 @@ public class Boardgame implements Parcelable {
         dest.writeInt(suggestedNumplayers);
         dest.writeString(publisher);
         dest.writeString(yearPublished);
+        dest.writeString(created_at);
         dest.writeByte((byte) (hasFadedIn ? 0x01 : 0x00));
         if (categories == null) {
             dest.writeByte((byte) (0x00));
@@ -278,8 +300,7 @@ public class Boardgame implements Parcelable {
     /**
      * Equals check based on the id field
      */
-    @Override
-    public boolean equals(Object o) {
-        return (o.getClass() == getClass() && ((Boardgame) o).id == id);
+    public boolean equals(Boardgame boardgame) {
+        return (boardgame.id == id);
     }
 }

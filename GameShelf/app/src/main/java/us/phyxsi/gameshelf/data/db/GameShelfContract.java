@@ -43,6 +43,7 @@ public final class GameShelfContract {
         public static final String COLUMN_NAME_SUGGESTED_NUMPLAYERS = "suggested_numplayers";
         public static final String COLUMN_NAME_PUBLISHER = "publisher";
         public static final String COLUMN_NAME_YEAR_PUBLISHED = "year_published";
+        public static final String COLUMN_NAME_CREATED_AT = "created_at";
     }
 
     public static abstract class CategoryEntry implements BaseColumns {

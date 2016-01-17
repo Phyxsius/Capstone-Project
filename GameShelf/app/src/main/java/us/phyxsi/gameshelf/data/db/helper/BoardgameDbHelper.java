@@ -21,6 +21,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.data.db.GameShelfContract;
 
@@ -38,6 +41,9 @@ public class BoardgameDbHelper {
         // Gets the data repository in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID, boardgame.id);
@@ -52,6 +58,7 @@ public class BoardgameDbHelper {
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS, boardgame.getSuggestedNumplayers());
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_PUBLISHER, boardgame.getPublisher());
         values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED, boardgame.yearPublished);
+        values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_CREATED_AT, dateFormat.format(date));
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId  = db.insert(
@@ -100,6 +107,7 @@ public class BoardgameDbHelper {
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_PUBLISHER,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_CREATED_AT,
         };
 
         // How you want the results sorted in the resulting Cursor
@@ -138,6 +146,7 @@ public class BoardgameDbHelper {
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_PUBLISHER,
                 GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_CREATED_AT,
         };
 
         String selection = GameShelfContract.BoardgameEntry.TABLE_NAME + " MATCH ?";

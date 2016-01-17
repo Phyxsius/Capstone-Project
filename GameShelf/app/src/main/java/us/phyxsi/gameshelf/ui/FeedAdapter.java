@@ -52,13 +52,14 @@ import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import us.phyxsi.gameshelf.R;
+import us.phyxsi.gameshelf.data.BoardgameComparator;
 import us.phyxsi.gameshelf.data.DataLoadingSubject;
-import us.phyxsi.gameshelf.data.GameShelfItemComparator;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.data.db.helper.BoardgameDbHelper;
 import us.phyxsi.gameshelf.ui.widget.BadgedFourFourImageView;
@@ -70,7 +71,8 @@ import us.phyxsi.gameshelf.util.glide.BoardgameTarget;
 /**
  * Adapter for the main screen grid of items
  */
-public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements DataLoadingSubject.DataLoadingCallbacks {
 
     private static final int TYPE_BOARDGAME = 0;
     private static final int TYPE_SEARCH_RESULT = 1;
@@ -81,7 +83,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Activity host;
     private final Context context;
     private final LayoutInflater layoutInflater;
-    private final GameShelfItemComparator comparator;
+    private final BoardgameComparator comparator;
     private @Nullable DataLoadingSubject dataLoading;
     private final int columns;
     private final ColorDrawable[] shotLoadingPlaceholders;
@@ -95,9 +97,10 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.host = hostActivity;
         this.context = context;
         this.dataLoading = dataLoading;
+        dataLoading.addCallbacks(this);
         this.columns = columns;
         layoutInflater = LayoutInflater.from(host);
-        comparator = new GameShelfItemComparator();
+        comparator = new BoardgameComparator();
         items = new ArrayList<>();
         setHasStableIds(true);
         TypedArray placeholderColors = hostActivity.getResources()
@@ -317,8 +320,8 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void addAndResort(Collection<? extends Boardgame> newItems) {
         // de-dupe results as the same item can be returned by multiple feeds
-        boolean add = true;
         for (Boardgame newItem : newItems) {
+            boolean add = true;
             int count = getDataItemCount();
             for (int i = 0; i < count; i++) {
                 Boardgame existingItem = getItem(i);
@@ -407,7 +410,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        }
 //
 //        // sort by weight
-//        Collections.sort(items, comparator);
+        Collections.sort(items, comparator);
         notifyDataSetChanged(); // TODO call the more specific RV variants
     }
 
@@ -462,6 +465,16 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public int getDataItemCount() {
         return items.size();
+    }
+
+    @Override
+    public void dataStartedLoading() {
+        notifyItemChanged(getItemCount());
+    }
+
+    @Override
+    public void dataFinishedLoading() {
+        notifyItemChanged(getItemCount());
     }
 
     /* package */ class BoardgameHolder extends RecyclerView.ViewHolder {

@@ -51,7 +51,8 @@ public class GameShelfDbHelper extends SQLiteOpenHelper {
                     BoardgameEntry.COLUMN_NAME_MIN_PLAYTIME + INT_TYPE + COMMA_SEP +
                     BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS + INT_TYPE + COMMA_SEP +
                     BoardgameEntry.COLUMN_NAME_PUBLISHER + TEXT_TYPE + COMMA_SEP +
-                    BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED + TEXT_TYPE +
+                    BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED + TEXT_TYPE + COMMA_SEP +
+                    BoardgameEntry.COLUMN_NAME_CREATED_AT + TEXT_TYPE +
                     " )";
 
     private static final String SQL_DELETE_BOARDGAMES =
