@@ -319,25 +319,9 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public void addAndResort(Collection<? extends Boardgame> newItems) {
-        // de-dupe results as the same item can be returned by multiple feeds
+        // We don't have to worry about duplicates because the DB helpers will take care of that for us
         for (Boardgame newItem : newItems) {
-            boolean add = true;
-            int count = getDataItemCount();
-            for (int i = 0; i < count; i++) {
-                Boardgame existingItem = getItem(i);
-                if (existingItem.equals(newItem)) {
-                    // if we find a dupe mark the weight boost field on the first-in, but don't add
-                    // the dupe. We use the fact that an item comes from multiple sources to indicate it
-                    // is more important and sort it higher
-//                    existingItem.weightBoost = DUPE_WEIGHT_BOOST;
-                    add = false;
-                    break;
-                }
-            }
-            if (add) {
-                add(newItem);
-                add = true;
-            }
+            add(newItem);
         }
         sort();
         expandPopularItems();
