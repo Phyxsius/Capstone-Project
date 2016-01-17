@@ -7,6 +7,9 @@
     <string name="sort">Sort</string>
     <string name="about">About</string>
 
+    <!-- search -->
+    <string name="search_hint">Search by boardgame name</string>
+
     <!-- add new boardgame -->
     <string name="add_new_boardgame_title">Add a boardgame to your collection</string>
     <string name="add_new_boardgame_game_title">Title</string>

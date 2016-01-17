@@ -211,9 +211,9 @@ public class HomeActivity extends Activity {
                 View searchMenuView = toolbar.findViewById(R.id.menu_search);
                 int[] loc = new int[2];
                 searchMenuView.getLocationOnScreen(loc);
-//                startActivityForResult(SearchActivity.createStartIntent(this, loc[0], loc[0] +
-//                        (searchMenuView.getWidth() / 2)), RC_SEARCH, ActivityOptions
-//                        .makeSceneTransitionAnimation(this).toBundle());
+                startActivityForResult(SearchActivity.createStartIntent(this, loc[0], loc[0] +
+                        (searchMenuView.getWidth() / 2)), RC_SEARCH, ActivityOptions
+                        .makeSceneTransitionAnimation(this).toBundle());
                 searchMenuView.setAlpha(0f);
                 return true;
             case R.id.menu_about:

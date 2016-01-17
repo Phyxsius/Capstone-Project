@@ -116,8 +116,6 @@ public class BoardgameDbHelper {
                 sortOrder                                 // The sort order
         );
 
-        db.close();
-
         return c;
     }
 
