@@ -19,8 +19,11 @@ package us.phyxsi.gameshelf.ui;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -54,6 +57,7 @@ import butterknife.BindInt;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import us.phyxsi.gameshelf.R;
+import us.phyxsi.gameshelf.data.BoardgameComparator;
 import us.phyxsi.gameshelf.data.DataManager;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.data.api.gameshelf.NewBoardgameService;
@@ -217,7 +221,33 @@ public class HomeActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_sort:
-//                drawer.openDrawer(GravityCompat.END);
+                final SharedPreferences prefs = getApplicationContext()
+                        .getSharedPreferences(BoardgameComparator.SORT_PREF, Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = prefs.edit();
+
+
+                new AlertDialog.Builder(HomeActivity.this)
+                        .setTitle(getString(R.string.sort_title))
+                        .setSingleChoiceItems(R.array.sort_options,
+                                prefs.getInt(BoardgameComparator.KEY_SORT_ORDER, 0),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        editor.putInt(BoardgameComparator.KEY_SORT_ORDER, which);
+                                        editor.commit();
+                                    }
+                                })
+                        .setPositiveButton(getString(R.string.dialog_sort),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        adapter.sort();
+                                    }
+                                })
+                        .setNegativeButton(getString(R.string.dialog_cancel), null)
+                        .show();
+
                 return true;
             case R.id.menu_search:
                 // get the icon's location on screen to pass through to the search screen
@@ -233,7 +263,6 @@ public class HomeActivity extends Activity {
                 if (!bggPrefs.isLoggedIn()) {
                     startActivityForResult(new Intent(this, BGGLogin.class), RC_IMPORT);
 
-//                    dataManager.loadCollectionFromBGG();
                 } else {
                     bggPrefs.logout();
                     // TODO something better than a toast!!

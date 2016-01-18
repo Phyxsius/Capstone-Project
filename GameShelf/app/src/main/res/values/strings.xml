@@ -14,6 +14,14 @@
     <!-- search -->
     <string name="search_hint">Search your collection</string>
 
+    <!-- sort -->
+    <string name="sort_title">Sort by</string>
+    <string name="dialog_sort">Sort</string>
+    <string-array name="sort_options">
+        <item>Boardgame Title</item>
+        <item>Date Added</item>
+    </string-array>
+
     <!-- add new boardgame -->
     <string name="add_new_boardgame_title">Add a boardgame to your collection</string>
     <string name="add_new_boardgame_game_title">Title</string>

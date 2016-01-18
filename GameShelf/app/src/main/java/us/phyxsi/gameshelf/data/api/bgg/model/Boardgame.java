@@ -173,6 +173,10 @@ public class Boardgame implements Parcelable {
         return parsedDescription;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getTitle() {
         if (names != null) {
             if (names.size() == 1) return names.get(0).getTitle();

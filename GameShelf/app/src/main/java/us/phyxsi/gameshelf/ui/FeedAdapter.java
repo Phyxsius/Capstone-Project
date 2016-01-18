@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
@@ -412,6 +413,10 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //        }
 //
 //        // sort by weight
+        SharedPreferences prefs = context.getApplicationContext()
+                .getSharedPreferences(BoardgameComparator.SORT_PREF, Context.MODE_PRIVATE);
+        comparator.setSortMode(prefs.getInt(BoardgameComparator.KEY_SORT_ORDER, 0));
+
         Collections.sort(items, comparator);
         notifyDataSetChanged(); // TODO call the more specific RV variants
     }
