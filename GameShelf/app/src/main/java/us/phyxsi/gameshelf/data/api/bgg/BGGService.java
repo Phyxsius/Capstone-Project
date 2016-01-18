@@ -21,7 +21,7 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import us.phyxsi.gameshelf.data.api.bgg.model.BoardgamesResponse;
-import us.phyxsi.gameshelf.data.api.bgg.model.CollectionResponse;
+import us.phyxsi.gameshelf.data.api.bgg.model.CollectionItems;
 
 /**
  * Models the BGG API.
@@ -43,5 +43,5 @@ public interface BGGService {
 
     @GET("/xmlapi/collection/{username}")
     void getCollection(@Path("username") String username,
-                       Callback<CollectionResponse> callback);
+                       Callback<CollectionItems> callback);
 }

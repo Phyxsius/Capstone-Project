@@ -36,6 +36,12 @@
         </activity-alias>
 
         <activity
+            android:name=".ui.BGGLogin"
+            android:exported="false"
+            android:theme="@style/GameShelf.Translucent.BGGLogin"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".ui.AboutActivity"
             android:theme="@style/GameShelf.Translucent.About"
             android:parentActivityName=".ui.HomeActivity">

@@ -126,6 +126,48 @@ public class BoardgameDbHelper {
         return c;
     }
 
+    public Cursor get(String game_id) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                GameShelfContract.BoardgameEntry._ID,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_TITLE,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_DESCRIPTION,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_IMAGE,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYERS,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_MAX_PLAYTIME,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_AGE,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYERS,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_MIN_PLAYTIME,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_SUGGESTED_NUMPLAYERS,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_PUBLISHER,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED,
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_CREATED_AT,
+        };
+
+        String selection = GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID + " = " + game_id;
+        String[] selectionArgs = null;
+
+
+        // How you want the results sorted in the resulting Cursor
+        String sortOrder = null;
+
+        Cursor c = db.query(
+                GameShelfContract.BoardgameEntry.TABLE_NAME,  // The table to query
+                projection,                               // The columns to return
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                sortOrder                                 // The sort order
+        );
+
+        return c;
+    }
+
     public Cursor getByTitle(String title) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 

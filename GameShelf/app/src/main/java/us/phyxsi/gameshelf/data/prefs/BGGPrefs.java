@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import us.phyxsi.gameshelf.data.api.bgg.model.CollectionItems;
 import us.phyxsi.gameshelf.data.api.bgg.model.User;
 
 public class BGGPrefs {
@@ -57,13 +58,16 @@ public class BGGPrefs {
         return isLoggedIn;
     }
 
-    public void setLoggedInUser(User user) {
+    public void setLoggedInUser(User user, CollectionItems collectionItems) {
         if (user != null) {
             username = user.username;
 
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString(KEY_USER_NAME, username);
             editor.apply();
+
+            isLoggedIn = true;
+            dispatchLoginEvent(collectionItems);
         }
     }
 
@@ -94,10 +98,10 @@ public class BGGPrefs {
         }
     }
 
-    private void dispatchLoginEvent() {
+    private void dispatchLoginEvent(CollectionItems collection) {
         if (loginStatusListeners != null && loginStatusListeners.size() > 0) {
             for (BGGLoginStatusListener listener : loginStatusListeners) {
-                listener.onBGGLogin();
+                listener.onBGGLogin(collection);
             }
         }
     }
@@ -111,7 +115,7 @@ public class BGGPrefs {
     }
 
     public interface BGGLoginStatusListener {
-        void onBGGLogin();
+        void onBGGLogin(CollectionItems collection);
         void onBGGLogout();
     }
 

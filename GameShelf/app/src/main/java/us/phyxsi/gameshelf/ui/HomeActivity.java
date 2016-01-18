@@ -44,6 +44,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class HomeActivity extends Activity {
 
     private static final int RC_SEARCH = 0;
     private static final int RC_ADD_NEW_BOARDGAME = 1;
+    private static final int RC_IMPORT = 2;
 
     @Bind(R.id.drawer) DrawerLayout drawer;
     @Bind(R.id.toolbar) Toolbar toolbar;
@@ -201,6 +203,17 @@ public class HomeActivity extends Activity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem bggLogin = menu.findItem(R.id.menu_import);
+        if (bggLogin != null) {
+            bggLogin.setTitle(bggPrefs.isLoggedIn() ? R.string
+                    .bgg_log_out : R.string.bgg_login);
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_sort:
@@ -215,6 +228,18 @@ public class HomeActivity extends Activity {
                         (searchMenuView.getWidth() / 2)), RC_SEARCH, ActivityOptions
                         .makeSceneTransitionAnimation(this).toBundle());
                 searchMenuView.setAlpha(0f);
+                return true;
+            case R.id.menu_import:
+                if (!bggPrefs.isLoggedIn()) {
+                    startActivityForResult(new Intent(this, BGGLogin.class), RC_IMPORT);
+
+//                    dataManager.loadCollectionFromBGG();
+                } else {
+                    bggPrefs.logout();
+                    // TODO something better than a toast!!
+                    Toast.makeText(getApplicationContext(), R.string.bgg_logged_out,
+                            Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.menu_about:
                 startActivity(new Intent(HomeActivity.this, AboutActivity.class),
@@ -239,6 +264,8 @@ public class HomeActivity extends Activity {
                 if (resultCode == AddNewBoardgame.RESULT_BOARDGAME_ADDED) {
                     dataManager.loadFromDatabase();
                 }
+                break;
+            case RC_IMPORT:
                 break;
         }
     }
@@ -282,6 +309,18 @@ public class HomeActivity extends Activity {
                 overviewIcon,
                 ContextCompat.getColor(this, R.color.primary)));
         overviewIcon.recycle();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bggPrefs.addLoginStatusListener(dataManager);
+    }
+
+    @Override
+    protected void onPause() {
+        bggPrefs.removeLoginStatusListener(dataManager);
+        super.onPause();
     }
 
     private void animateToolbar() {

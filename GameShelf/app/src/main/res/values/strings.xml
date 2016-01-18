@@ -5,7 +5,11 @@
     <!-- main screen -->
     <string name="search">Search</string>
     <string name="sort">Sort</string>
+    <string name="import_from_bgg">Import from BGG</string>
     <string name="about">About</string>
+    <string name="bgg_login">Log in to Board Game Geek</string>
+    <string name="bgg_log_out">Log out of Board Game Geek</string>
+    <string name="bgg_logged_out">Logged out of Board Game Geek</string>
 
     <!-- search -->
     <string name="search_hint">Search your collection</string>
@@ -22,6 +26,10 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_remove">Remove</string>
 
+    <!-- designer news login -->
+    <string name="username">Username</string>
+    <string name="bgg_login_action">Log in</string>
+
     <!-- about screen -->
     <string name="about_gameshelf_0">Game Shelf helps you keep track of your growing boardgame collection all in one place. It pulls data from [Board Game Geek](https://www.boardgamegeek.com/); it is in no way an official client for this services nor endorsed by them.</string>
     <string name="about_gameshelf_1">Game Shelf is written by Andy&#160;Rose</string>
@@ -34,6 +42,7 @@
     <string name="transition_game" translatable="false">game</string>
     <string name="transition_game_background" translatable="false">game_background</string>
     <string name="transition_add_new_boardgame" translatable="false">add_new_boardgame</string>
+    <string name="transition_bgg_login" translatable="false">transition_bgg_login</string>
 
     <!-- content authorities -->
     <string name="share_authority"  translatable="false">us.phyxsi.gameshelf.shareprovider</string>

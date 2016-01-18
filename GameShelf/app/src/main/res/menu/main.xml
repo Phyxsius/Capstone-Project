@@ -28,6 +28,11 @@
         android:showAsAction="always" />
 
     <item
+        android:id="@+id/menu_import"
+        android:title="@string/import_from_bgg"
+        android:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_about"
         android:title="@string/about"
         android:showAsAction="never" />
