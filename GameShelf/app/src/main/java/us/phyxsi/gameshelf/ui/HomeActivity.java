@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -34,6 +35,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
+import android.text.style.StyleSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,7 +83,7 @@ public class HomeActivity extends Activity {
     @Bind(R.id.games_grid) RecyclerView grid;
     @Bind(R.id.fab) ImageButton fab;
     @Bind(android.R.id.empty) ProgressBar loading;
-    private TextView noFiltersEmptyText;
+    private TextView noResultsEmptyText;
     private GridLayoutManager layoutManager;
     @BindInt(R.integer.num_columns) int columns;
 
@@ -302,13 +309,50 @@ public class HomeActivity extends Activity {
 
     private void checkEmptyState() {
         if (adapter.getDataItemCount() == 0) {
-            loading.setVisibility(View.VISIBLE);
+            loading.setVisibility(View.GONE);
+            setNoResultsEmptyTextVisibility(View.VISIBLE);
 
             // ensure grid scroll tracking/toolbar z-order is reset
             gridScrollY = 0;
             toolbar.setTranslationZ(0f);
         } else {
             loading.setVisibility(View.GONE);
+            setNoResultsEmptyTextVisibility(View.GONE);
+        }
+    }
+
+    private void setNoResultsEmptyTextVisibility(int visibility) {
+        if (visibility == View.VISIBLE) {
+            if (noResultsEmptyText == null) {
+                // create the no results empty text
+                ViewStub stub = (ViewStub) findViewById(R.id.stub_no_results);
+                noResultsEmptyText = (TextView) stub.inflate();
+                String emptyText = getString(R.string.no_results_found);
+                int addPlaceholderStart = emptyText.indexOf('\u08B4');
+                int altMethodStart = addPlaceholderStart + 3;
+                SpannableStringBuilder ssb = new SpannableStringBuilder(emptyText);
+                // show an image of the add icon
+                ssb.setSpan(new ImageSpan(this, R.drawable.ic_add_small,
+                                ImageSpan.ALIGN_BASELINE),
+                        addPlaceholderStart,
+                        addPlaceholderStart + 1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                // make the alt method (swipe from right) less prominent and italic
+                ssb.setSpan(new ForegroundColorSpan(
+                                ContextCompat.getColor(this, R.color.text_secondary_light)),
+                        altMethodStart,
+                        emptyText.length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ssb.setSpan(new StyleSpan(Typeface.ITALIC),
+                        altMethodStart,
+                        emptyText.length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                noResultsEmptyText.setText(ssb);
+            }
+
+            noResultsEmptyText.setVisibility(visibility);
+        } else if (noResultsEmptyText != null) {
+            noResultsEmptyText.setVisibility(visibility);
         }
     }
 

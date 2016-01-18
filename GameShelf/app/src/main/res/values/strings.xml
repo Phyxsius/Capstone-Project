@@ -10,6 +10,7 @@
     <string name="bgg_login">Log in to Board Game Geek</string>
     <string name="bgg_log_out">Log out of Board Game Geek</string>
     <string name="bgg_logged_out">Logged out of Board Game Geek</string>
+    <string name="no_results_found">Looks like your collection is empty.\nPress the add button below (&#2228;)\nor import from Board Game Geek</string>
 
     <!-- search -->
     <string name="search_hint">Search your collection</string>
