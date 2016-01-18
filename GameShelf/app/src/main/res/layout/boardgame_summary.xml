@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:src="@drawable/ic_people_24dp"
-                    android:tint="@android:color/white" />
+                    android:tint="@color/text_primary_dark" />
                 <TextView
                     android:drawablePadding="@dimen/padding_normal"
                     android:id="@+id/num_of_players_text"
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:singleLine="true"
                     android:text="123 likes"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/text_primary_dark"
                     android:textSize="16.0sp" />
 
             </FrameLayout>
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:src="@drawable/ic_clock_24dp"
-                    android:tint="@android:color/white" />
+                    android:tint="@color/text_primary_dark" />
                 <TextView
                     android:drawablePadding="@dimen/padding_normal"
                     android:id="@+id/play_time_text"
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:singleLine="true"
                     android:text="123 likes"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/text_primary_dark"
                     android:textSize="16sp" />
 
             </FrameLayout>
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:src="@drawable/ic_people_24dp"
-                android:tint="@android:color/white" />
+                android:tint="@color/text_primary_dark" />
             <TextView
                 android:drawablePadding="@dimen/padding_normal"
                 android:id="@+id/best_with_text"
@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:singleLine="false"
                 android:text="Best with 8 players"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary_dark"
                 android:textSize="16.0sp" />
 
         </FrameLayout>
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:src="@drawable/ic_cake_24dp"
-                android:tint="@android:color/white" />
+                android:tint="@color/text_primary_dark" />
             <TextView
                 android:drawablePadding="@dimen/padding_normal"
                 android:id="@+id/ages_text"
@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:singleLine="true"
                 android:text="123 likes"
-                android:textColor="@android:color/white"
+                android:textColor="@color/text_primary_dark"
                 android:textSize="16sp" />
 
         </FrameLayout>
