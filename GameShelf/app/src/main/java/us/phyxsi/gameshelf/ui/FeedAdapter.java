@@ -191,6 +191,8 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                         BoardgameDbHelper bgHelper = new BoardgameDbHelper(context);
                                         bgHelper.delete((Boardgame) getItem(holder.getAdapterPosition()));
 
+                                        items.remove(getItem(holder.getAdapterPosition()));
+
                                         notifyDataSetChanged();
                                     }
                         })

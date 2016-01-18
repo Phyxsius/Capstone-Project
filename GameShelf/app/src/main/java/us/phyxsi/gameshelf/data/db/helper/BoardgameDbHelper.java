@@ -74,16 +74,15 @@ public class BoardgameDbHelper {
     public long delete(Boardgame boardgame) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        String selection = GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID + " = ?";
-        String[] selectionArgs = { String.valueOf(boardgame.id) };
+        String selection = GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID + " = " + boardgame.id;
+        String[] selectionArgs = null;
+//        String[] selectionArgs = { String.valueOf(boardgame.id) };
 
         long rowId = db.delete(
                 GameShelfContract.BoardgameEntry.TABLE_NAME,
                 selection,
                 selectionArgs
         );
-
-        db.close();
 
         return rowId;
     }
