@@ -22,6 +22,14 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_remove">Remove</string>
 
+    <!-- about screen -->
+    <string name="about_gameshelf_0">Game Shelf helps you keep track of your growing boardgame collection all in one place. It pulls data from [Board Game Geek](https://www.boardgamegeek.com/); it is in no way an official client for this services nor endorsed by them.</string>
+    <string name="about_gameshelf_1">Game Shelf is written by Andy&#160;Rose</string>
+    <string name="about_gameshelf_2">[Google+](https://plus.google.com/115735526839194099194)</string>
+    <string name="about_gameshelf_3">The source code is available on [GitHub](https://github.com/Phyxsius/Capstone-Project)</string>
+    <string name="about_libs_intro">Game Shelf is built with the help of these awesome&#160;libraries</string>
+    <string name="about_lib_link">website</string>
+
     <!-- transition shared elements -->
     <string name="transition_game" translatable="false">game</string>
     <string name="transition_game_background" translatable="false">game_background</string>

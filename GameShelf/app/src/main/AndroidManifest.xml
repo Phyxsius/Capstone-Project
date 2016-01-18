@@ -36,6 +36,15 @@
         </activity-alias>
 
         <activity
+            android:name=".ui.AboutActivity"
+            android:theme="@style/GameShelf.Translucent.About"
+            android:parentActivityName=".ui.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.HomeActivity" />
+        </activity>
+
+        <activity
             android:name=".ui.BoardgameDetails"
             android:parentActivityName=".ui.HomeActivity"
             android:theme="@style/GameShelf.Translucent.BoardgameDetails">

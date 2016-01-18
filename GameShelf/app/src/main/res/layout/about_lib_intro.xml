@@ -15,10 +15,15 @@
   limitations under the License.
   -->
 
-<resources>
-    <declare-styleable name="CutoutTextView">
-        <attr name="foregroundColor" format="color" />
-        <attr name="android:text" />
-        <attr name="font" />
-    </declare-styleable>
-</resources>
+<us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/libraries_intro"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_xlarge"
+    android:layout_marginBottom="@dimen/spacing_normal"
+    android:padding="@dimen/padding_normal"
+    android:text="@string/about_libs_intro"
+    style="@style/Widget.GameShelf.About"
+    tools:showIn="@layout/about_libs" />

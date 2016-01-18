@@ -15,10 +15,9 @@
   limitations under the License.
   -->
 
-<resources>
-    <declare-styleable name="CutoutTextView">
-        <attr name="foregroundColor" format="color" />
-        <attr name="android:text" />
-        <attr name="font" />
-    </declare-styleable>
-</resources>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/content_placeholder" />
+    <size android:height="@dimen/avatar_size" android:width="@dimen/avatar_size" />
+</shape>

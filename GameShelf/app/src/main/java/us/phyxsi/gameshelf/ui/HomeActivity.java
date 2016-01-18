@@ -217,8 +217,8 @@ public class HomeActivity extends Activity {
                 searchMenuView.setAlpha(0f);
                 return true;
             case R.id.menu_about:
-//                startActivity(new Intent(HomeActivity.this, AboutActivity.class),
-//                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                startActivity(new Intent(HomeActivity.this, AboutActivity.class),
+                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -15,10 +15,9 @@
   limitations under the License.
   -->
 
-<resources>
-    <declare-styleable name="CutoutTextView">
-        <attr name="foregroundColor" format="color" />
-        <attr name="android:text" />
-        <attr name="font" />
-    </declare-styleable>
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true" android:color="@color/text_primary_light" />
+    <item android:color="@color/primary_dark" />
+
+</selector>
