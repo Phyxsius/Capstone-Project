@@ -64,7 +64,7 @@
                     android:layout_marginStart="@dimen/spacing_large"
                     android:layout_width="wrap_content"
                     android:singleLine="true"
-                    android:text="123 likes"
+                    android:text="0-100 players"
                     android:textColor="@color/text_primary_dark"
                     android:textSize="16.0sp" />
 
@@ -99,7 +99,7 @@
                     android:layout_marginStart="@dimen/spacing_large"
                     android:layout_width="wrap_content"
                     android:singleLine="true"
-                    android:text="123 likes"
+                    android:text="0-120 minutes"
                     android:textColor="@color/text_primary_dark"
                     android:textSize="16sp" />
 
@@ -170,7 +170,7 @@
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_width="wrap_content"
                 android:singleLine="true"
-                android:text="123 likes"
+                android:text="0 and up"
                 android:textColor="@color/text_primary_dark"
                 android:textSize="16sp" />
 
