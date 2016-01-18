@@ -247,6 +247,10 @@
     <style name="Widget.GameShelf.EmptyText">
         <item name="android:textAppearance">@style/TextAppearance.DialogContent</item>
         <item name="lineHeightHint">24sp</item>
+        <item name="android:textColor">@color/text_primary_light</item>
+    </style>
+
+    <style name="Widget.GameShelf.EmptyText.Dark" parent="Widget.GameShelf.EmptyText">
         <item name="android:textColor">@color/text_primary_dark</item>
     </style>
 

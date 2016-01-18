@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -242,6 +243,13 @@ public class AddNewBoardgame extends Activity {
             if (noResults == null) {
                 noResults = (BaselineGridTextView) ((ViewStub)
                         findViewById(R.id.stub_no_search_results)).inflate();
+                noResults.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.drawable.ic_search_dark_24dp), null, null);
+                if (Build.VERSION.SDK_INT < 23) {
+                    noResults.setTextAppearance(AddNewBoardgame.this, R.style.Widget_GameShelf_EmptyText_Dark);
+                } else {
+                    noResults.setTextAppearance(R.style.Widget_GameShelf_EmptyText_Dark);
+                }
+
 //                noResults.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
