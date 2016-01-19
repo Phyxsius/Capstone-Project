@@ -61,7 +61,7 @@ public class GameShelfDbHelper extends SQLiteOpenHelper {
     static final String SQL_CREATE_CATEGORIES =
             "CREATE TABLE " + CategoryEntry.TABLE_NAME + " ( " +
                     CategoryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    CategoryEntry.COLUMN_NAME_CATEGORY_ID + TEXT_TYPE + COMMA_SEP +
+                    CategoryEntry.COLUMN_NAME_CATEGORY_ID + TEXT_TYPE + " UNIQUE " + COMMA_SEP +
                     CategoryEntry.COLUMN_NAME_NAME + TEXT_TYPE +
                     " )";
 

@@ -117,4 +117,35 @@ public class CategoryDbHelper {
         return c;
     }
 
+    public Cursor getByTitle(String title) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                GameShelfContract.CategoryEntry._ID,
+                GameShelfContract.CategoryEntry.COLUMN_NAME_CATEGORY_ID,
+                GameShelfContract.CategoryEntry.COLUMN_NAME_NAME,
+        };
+
+        String selection = GameShelfContract.CategoryEntry.COLUMN_NAME_NAME + " = ?";
+        String[] selectionArgs = { title };
+
+
+        // How you want the results sorted in the resulting Cursor
+        String sortOrder = null;
+
+        Cursor c = db.query(
+                GameShelfContract.CategoryEntry.TABLE_NAME,  // The table to query
+                projection,                               // The columns to return
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                sortOrder                                 // The sort order
+        );
+
+        return c;
+    }
+
 }

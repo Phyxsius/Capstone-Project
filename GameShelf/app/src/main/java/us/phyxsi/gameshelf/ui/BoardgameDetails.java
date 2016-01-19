@@ -40,7 +40,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -131,7 +130,6 @@ public class BoardgameDetails extends Activity {
         detailsList = (ListView) findViewById(R.id.game_details);
         detailsList.addHeaderView(boardgameDescription);
         detailsList.setOnScrollListener(scrollListener);
-//        detailsList.addFooterView();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,31 +203,6 @@ public class BoardgameDetails extends Activity {
     private ListAdapter getNoCategoriesAdapter() {
         String[] noCategories = { "No categories" };
         return new ArrayAdapter<>(this, R.layout.details_no_categories, noCategories);
-    }
-
-    private ListAdapter getCategoriesAdapter() {
-        return new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return 1;
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                return BoardgameDetails.this.getLayoutInflater().inflate(R.layout.loading, parent,
-                        false);
-            }
-        };
     }
 
     @Override

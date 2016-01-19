@@ -77,6 +77,15 @@ public class BoardgameDbHelper {
         for (Category category : boardgame.categories) {
             long catId = categoryDbHelper.insert(category);
 
+            if (catId == -1) {
+                Cursor catCursor = categoryDbHelper.getByTitle(category.name);
+
+                for (catCursor.moveToFirst(); !catCursor.isAfterLast(); catCursor.moveToNext()) {
+                    catId = catCursor.getLong(catCursor.getColumnIndex(
+                            GameShelfContract.CategoryEntry._ID));
+                }
+            }
+
             insertCategory(boardgame.id, catId);
         }
 
