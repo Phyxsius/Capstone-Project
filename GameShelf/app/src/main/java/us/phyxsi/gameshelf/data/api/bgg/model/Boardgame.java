@@ -16,6 +16,7 @@
 
 package us.phyxsi.gameshelf.data.api.bgg.model;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Parcel;
@@ -36,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import us.phyxsi.gameshelf.data.db.GameShelfContract;
+import us.phyxsi.gameshelf.data.db.helper.CategoryDbHelper;
 import us.phyxsi.gameshelf.util.HtmlUtils;
 
 /**
@@ -73,6 +75,8 @@ public class Boardgame implements Parcelable {
     public int minPlaytime;
     @ElementList(name = "boardgamepublisher", inline = true, required = false)
     public List<BoardgamePublisher> publishers;
+    @ElementList(name = "boardgamecategory", inline = true, required = false)
+    public List<Category> categories;
     @Element(name = "yearpublished", required = false)
     public String yearPublished;
     @ElementList(name = "poll", inline = true, required = false)
@@ -81,7 +85,6 @@ public class Boardgame implements Parcelable {
     public String title;
     private String publisher;
     public int suggestedNumplayers;
-    public List<Category> categories;
     public String created_at;
 
     // todo move this into a decorator
@@ -121,7 +124,7 @@ public class Boardgame implements Parcelable {
         this.categories = categories;
     }
 
-    public Boardgame(Cursor cursor) {
+    public Boardgame(Cursor cursor, Context context) {
         this.id = cursor.getLong(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_GAME_ID));
         this.title = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_TITLE));
         this.description = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_DESCRIPTION));
@@ -136,8 +139,7 @@ public class Boardgame implements Parcelable {
         this.yearPublished = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_YEAR_PUBLISHED));
         this.created_at = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.BoardgameEntry.COLUMN_NAME_CREATED_AT));
 
-        // TODO: Set categories from a cursor
-        this.categories = null;
+        this.categories = getCategories(context);
     }
 
     protected Boardgame(Parcel in) {
@@ -263,6 +265,21 @@ public class Boardgame implements Parcelable {
         }
 
         return null;
+    }
+
+    public List<Category> getCategories(Context context) {
+        CategoryDbHelper categoryDbHelper = new CategoryDbHelper(context);
+
+        Cursor cursor = categoryDbHelper.getByBoardgame(this);
+
+        List<Category> categories = new ArrayList<Category>();
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            Category category = new Category(cursor);
+
+            categories.add(category);
+        }
+
+        return categories;
     }
 
     public void weigh() {

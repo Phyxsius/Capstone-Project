@@ -21,6 +21,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,14 +29,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.transition.AutoTransition;
 import android.transition.Transition;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,10 +55,13 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import us.phyxsi.gameshelf.R;
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
+import us.phyxsi.gameshelf.data.api.bgg.model.Category;
 import us.phyxsi.gameshelf.ui.widget.ElasticDragDismissFrameLayout;
 import us.phyxsi.gameshelf.ui.widget.FabOverlapTextView;
 import us.phyxsi.gameshelf.ui.widget.ParallaxScrimageView;
@@ -88,6 +95,7 @@ public class BoardgameDetails extends Activity {
     private TextView ages;
     private ImageView agesIcon;
     private ListView detailsList;
+    private CategoriesAdapter categoriesAdapter;
 
     private Boardgame boardgame;
     private ElasticDragDismissFrameLayout.SystemChromeFader chromeFader;
@@ -123,6 +131,7 @@ public class BoardgameDetails extends Activity {
         detailsList = (ListView) findViewById(R.id.game_details);
         detailsList.addHeaderView(boardgameDescription);
         detailsList.setOnScrollListener(scrollListener);
+//        detailsList.addFooterView();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,10 +193,21 @@ public class BoardgameDetails extends Activity {
         bestWith.setText("Best with " + boardgame.suggestedNumplayers + " players");
         ages.setText(boardgame.minAge + " and up");
 
-        detailsList.setAdapter(getLoadingCommentsAdapter());
+        if (boardgame.categories.size() > 0) {
+            categoriesAdapter = new CategoriesAdapter(BoardgameDetails.this, R.layout
+                    .category_button, boardgame.categories);
+            detailsList.setAdapter(categoriesAdapter);
+        } else {
+            detailsList.setAdapter(getNoCategoriesAdapter());
+        }
     }
 
-    private ListAdapter getLoadingCommentsAdapter() {
+    private ListAdapter getNoCategoriesAdapter() {
+        String[] noCategories = { "No categories" };
+        return new ArrayAdapter<>(this, R.layout.details_no_categories, noCategories);
+    }
+
+    private ListAdapter getCategoriesAdapter() {
         return new BaseAdapter() {
             @Override
             public int getCount() {
@@ -460,5 +480,53 @@ public class BoardgameDetails extends Activity {
                 .setInterpolator(interp)
                 .setListener(null)
                 .start();
+    }
+
+    protected class CategoriesAdapter extends ArrayAdapter<Category> {
+
+        private final LayoutInflater inflater;
+        private final Transition change;
+        private int expandedCommentPosition = ListView.INVALID_POSITION;
+
+        public CategoriesAdapter(Context context, int resource, List<Category> comments) {
+            super(context, resource, comments);
+            inflater = LayoutInflater.from(context);
+            change = new AutoTransition();
+            change.setDuration(200L);
+            change.setInterpolator(AnimationUtils.loadInterpolator(context,
+                    android.R.interpolator.fast_out_slow_in));
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup container) {
+            if (view == null) {
+                view = newCategoryView(position, container);
+            }
+            bindCategory(getItem(position), position, view);
+            return view;
+        }
+
+        private View newCategoryView(int position, ViewGroup parent) {
+            View view = inflater.inflate(R.layout.category_button, parent, false);
+            view.setTag(R.id.category_button_text, view.findViewById(R.id.category_button_text));
+            return view;
+        }
+
+        private void bindCategory(final Category category, final int position, final View view) {
+            final TextView title = (TextView) view.getTag(R.id.category_button_text);
+
+            title.setText(category.name);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return getItem(position).id;
+        }
+
     }
 }

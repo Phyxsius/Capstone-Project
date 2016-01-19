@@ -56,7 +56,7 @@ public abstract class DataManager extends BaseDataManager {
 
         loadStarted();
         for (bgCursor.moveToFirst(); !bgCursor.isAfterLast(); bgCursor.moveToNext()) {
-            Boardgame bg = new Boardgame(bgCursor);
+            Boardgame bg = new Boardgame(bgCursor, context);
             boardgameList.add(bg);
         }
         loadFinished();
@@ -79,7 +79,7 @@ public abstract class DataManager extends BaseDataManager {
                         Cursor bgCursor = bgHelper.get(item.getObjectid());
 
                         for (bgCursor.moveToFirst(); !bgCursor.isAfterLast(); bgCursor.moveToNext()) {
-                            Boardgame bg = new Boardgame(bgCursor);
+                            Boardgame bg = new Boardgame(bgCursor, context);
 
                             boardgameList.add(bg);
 

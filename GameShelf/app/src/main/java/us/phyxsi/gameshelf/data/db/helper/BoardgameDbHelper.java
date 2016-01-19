@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
+import us.phyxsi.gameshelf.data.api.bgg.model.Category;
 import us.phyxsi.gameshelf.data.db.GameShelfContract;
 
 /**
@@ -32,8 +33,10 @@ import us.phyxsi.gameshelf.data.db.GameShelfContract;
  */
 public class BoardgameDbHelper {
     private static GameShelfDbHelper mDbHelper;
+    private static Context context;
 
     public BoardgameDbHelper(Context context) {
+        this.context = context;
         mDbHelper = new GameShelfDbHelper(context);
     }
 
@@ -64,7 +67,35 @@ public class BoardgameDbHelper {
         long newRowId  = db.insert(
                 GameShelfContract.BoardgameEntry.TABLE_NAME,
                 null,
-                values);
+                values
+        );
+
+        db.close();
+
+        // Insert categories and tie to joining table
+        CategoryDbHelper categoryDbHelper = new CategoryDbHelper(context);
+        for (Category category : boardgame.categories) {
+            long catId = categoryDbHelper.insert(category);
+
+            insertCategory(boardgame.id, catId);
+        }
+
+        return newRowId;
+    }
+
+    public long insertCategory(long boardgameId, long categoryId) {
+        // Gets the data repository in write mode
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(GameShelfContract.BoardgamesCategoriesEntry.COLUMN_NAME_BOARDGAME_ID, boardgameId);
+        values.put(GameShelfContract.BoardgamesCategoriesEntry.COLUMN_NAME_CATEGORY_ID, categoryId);
+
+        long newRowId = db.insert(
+                GameShelfContract.BoardgamesCategoriesEntry.TABLE_NAME,
+                null,
+                values
+        );
 
         db.close();
 
@@ -211,5 +242,4 @@ public class BoardgameDbHelper {
 
         return c;
     }
-
 }

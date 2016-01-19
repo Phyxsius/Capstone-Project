@@ -16,15 +16,28 @@
 
 package us.phyxsi.gameshelf.data.api.bgg.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Root;
+import org.simpleframework.xml.Text;
+
+import us.phyxsi.gameshelf.data.db.GameShelfContract;
 
 /**
  * Models a category on a Board Game Geek boardgame
  */
 
-
+@Root(name = "boardgamecategory")
 public class Category implements Parcelable {
+
+    @Attribute(name = "objectid", required = false)
+    public long id;
+
+    @Text
+    public String name;
 
     @SuppressWarnings("unused")
     public static final Parcelable.Creator<Category> CREATOR = new Parcelable.Creator<Category>() {
@@ -35,12 +48,16 @@ public class Category implements Parcelable {
         public Category[] newArray(int size) { return new Category[size]; }
     };
 
-    public final long id;
-    public final String name;
+    public Category() {}
 
     public Category(Parcel in) {
         id = in.readLong();
         name = in.readString();
+    }
+
+    public Category(Cursor cursor) {
+        this.id = cursor.getLong(cursor.getColumnIndexOrThrow(GameShelfContract.CategoryEntry.COLUMN_NAME_CATEGORY_ID));
+        this.name = cursor.getString(cursor.getColumnIndexOrThrow(GameShelfContract.CategoryEntry.COLUMN_NAME_NAME));
     }
 
     @Override

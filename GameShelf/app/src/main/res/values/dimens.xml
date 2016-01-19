@@ -15,8 +15,10 @@
 <resources>
 
     <!-- standard metrics -->
+    <dimen name="zero">0dp</dimen>
     <dimen name="spacing_normal">8dp</dimen>
     <dimen name="spacing_micro">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
     <dimen name="spacing_large">32dp</dimen>
     <dimen name="spacing_xlarge">48dp</dimen>
@@ -47,6 +49,8 @@
     <dimen name="grid_icon_with_padding">40dp</dimen> <!-- 24dp icon + 2 * @dimen/spacing_normal -->
 
     <!-- boardgame details -->
+    <dimen name="category_button_margin">4dp</dimen>
+    <dimen name="category_button_margin_start">16dp</dimen>
     <dimen name="details_collapsed_app_bar_height">168dp</dimen> <!-- 3 * ?android:actionBarSize -->
     <!-- avatar should be a 40dp asset in a 48dp touch target & optically aligned with standard padding -->
 

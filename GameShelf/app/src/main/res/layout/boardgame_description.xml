@@ -35,43 +35,12 @@
     <include
         layout="@layout/boardgame_title" />
 
-    <!--<us.phyxsi.gamehslef.ui.widget.BaselineGridTextView-->
-    <!--android:id="@+id/player_name"-->
-    <!--android:layout_gravity="end"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:gravity="end"-->
-    <!--android:layout_marginTop="@dimen/padding_normal"-->
-    <!--app:topPaddingHint="@dimen/avatar_padding"-->
-    <!--android:textAppearance="@style/TextAppearance.CommentAuthor"-->
-    <!--android:clickable="false"-->
-    <!--tools:text="—Nick B" />-->
-
-    <!--<us.phyxsi.gameshelf.ui.widget.CircularImageView-->
-    <!--android:id="@+id/player_avatar"-->
-    <!--android:layout_width="@dimen/avatar_bounds"-->
-    <!--android:layout_height="@dimen/avatar_bounds"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:layout_marginStart="@dimen/avatar_margin"-->
-    <!--android:layout_rowSpan="2"-->
-    <!--android:padding="@dimen/avatar_padding"-->
-    <!--android:textColorLink="@color/dribbble_links"-->
-    <!--android:textColorHighlight="@color/dribbble"-->
-    <!--android:stateListAnimator="@animator/raise"-->
-    <!--android:src="@drawable/avatar_placeholder"-->
-    <!--android:foreground="@drawable/mid_grey_ripple" />-->
-
     <!-- can't use a marginEnd on the above image view as it pushes in the whole column so instead
          add another column to contain the below space element -->
 
     <Space
         android:layout_width="12dp"
         android:layout_rowSpan="2" />
-
-    <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
-        android:id="@+id/shot_time_ago"
-        android:layout_gravity="end"
-        android:gravity="end"
-        tools:text="3 hours ago" />
 
     <!-- GridLayout seems to ignore layout_marginBottom so add another row with a space -->
 

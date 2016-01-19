@@ -249,15 +249,6 @@ public class AddNewBoardgame extends Activity {
                 } else {
                     noResults.setTextAppearance(R.style.Widget_GameShelf_EmptyText_Dark);
                 }
-
-//                noResults.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        searchView.setQuery("", false);
-//                        searchView.requestFocus();
-//                        ImeUtils.showIme(searchView);
-//                    }
-//                });
             }
             String message = String.format(getString(R
                     .string.no_search_results), title.getText().toString());

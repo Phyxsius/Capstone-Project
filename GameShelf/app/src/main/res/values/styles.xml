@@ -279,6 +279,16 @@
              Extend the material dark Action Bar overlay as this contains text styling. -->
     </style>
 
+    <style name="TextAppearance.Categories" parent="@android:style/TextAppearance.Material.Body1">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/text_secondary_dark</item>
+        <!--<item name="android:letterSpacing">0.01</item>-->
+    </style>
+
+    <style name="TextAppearance.Categories.None">
+        <item name="android:textColor">@color/grey_300</item>
+    </style>
+
     <style name="SearchViewTheme" parent="GameShelfDarkOverlay">
         <item name="colorControlActivated">?android:colorAccent</item>
         <item name="android:searchViewStyle">@style/Widget.GameShelf.SearchView</item>

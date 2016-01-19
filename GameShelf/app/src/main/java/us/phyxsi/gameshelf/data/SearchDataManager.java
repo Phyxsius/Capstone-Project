@@ -72,7 +72,7 @@ public abstract class SearchDataManager extends BaseDataManager {
 
         loadStarted();
         for (bgCursor.moveToFirst(); !bgCursor.isAfterLast(); bgCursor.moveToNext()) {
-            Boardgame bg = new Boardgame(bgCursor);
+            Boardgame bg = new Boardgame(bgCursor, context);
             boardgameList.add(bg);
         }
         loadFinished();

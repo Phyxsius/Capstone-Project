@@ -20,7 +20,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.data.api.bgg.model.Category;
 import us.phyxsi.gameshelf.data.db.GameShelfContract;
 
@@ -58,7 +63,7 @@ public class CategoryDbHelper {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
-                GameShelfContract.CategoryEntry._ID,
+                GameShelfContract.CategoryEntry.COLUMN_NAME_CATEGORY_ID,
                 GameShelfContract.CategoryEntry.COLUMN_NAME_NAME
         };
 
@@ -75,6 +80,39 @@ public class CategoryDbHelper {
                 null,                                     // don't filter by row groups
                 sortOrder                                 // The sort order
         );
+
+        return c;
+    }
+
+    public Cursor getByBoardgame(Boardgame boardgame) {
+
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                GameShelfContract.BoardgamesCategoriesEntry.COLUMN_NAME_CATEGORY_ID
+        };
+
+        String selection = GameShelfContract.BoardgamesCategoriesEntry.COLUMN_NAME_BOARDGAME_ID + " = " + boardgame.id;
+
+        Cursor c = db.query(
+                GameShelfContract.BoardgamesCategoriesEntry.TABLE_NAME,  // The table to query
+                projection,                               // The columns to return
+                selection,                                // The columns for the WHERE clause
+                null,                                     // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // The sort order
+        );
+
+        List<Long> categoryIds = new ArrayList<Long>();
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            categoryIds.add(c.getLong(c.getColumnIndexOrThrow(GameShelfContract.BoardgamesCategoriesEntry.COLUMN_NAME_CATEGORY_ID)));
+        }
+
+        c = db.rawQuery("SELECT * FROM " + GameShelfContract.CategoryEntry.TABLE_NAME + " WHERE _id IN (" +
+                        TextUtils.join(", ", categoryIds) + ")", null);
 
         return c;
     }
