@@ -22,9 +22,16 @@ def gitTag = 'git describe --tags'.execute([], project.rootDir).text.trim()
 def gitCommitCount = Integer.parseInt('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'Capstone'
+            keyPassword 'udacity'
+            storeFile file('/Users/andy/Projects/Capstone-Project/GameShelf/app/signingkey/signingkey.jks')
+            storePassword 'udacity'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
-
     defaultConfig {
         applicationId "us.phyxsi.gameshelf"
         minSdkVersion 21
@@ -36,6 +43,8 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
+
             lintOptions {
                 checkReleaseBuilds false
                 abortOnError false
@@ -67,7 +76,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.github.bumptech.glide:okhttp-integration:1.3.0'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile ('com.squareup.retrofit:converter-simplexml:1.9.0') {
+    compile('com.squareup.retrofit:converter-simplexml:1.9.0') {
         exclude group: 'xpp3', module: 'xpp3'
         exclude group: 'stax', module: 'stax-api'
         exclude group: 'stax', module: 'stax'
