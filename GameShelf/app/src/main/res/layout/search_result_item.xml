@@ -31,7 +31,6 @@
         app:topPaddingHint="@dimen/padding_normal"
         android:background="@color/background_light"
         style="@style/Widget.GameShelf.TilePrimary"
-        android:text="Flick Em&apos; Up!"
         android:paddingRight="@dimen/padding_small"
         android:paddingLeft="@dimen/padding_normal"
         android:paddingTop="@dimen/padding_normal"
@@ -44,7 +43,6 @@
         app:topPaddingHint="@dimen/padding_normal"
         android:background="@color/background_light"
         style="@style/Widget.GameShelf.TileSecondary"
-        android:text="2015"
         android:paddingTop="@dimen/padding_normal"
         android:paddingRight="@dimen/padding_normal"
         android:paddingBottom="@dimen/padding_normal" />
