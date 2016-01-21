@@ -20,10 +20,8 @@
 
     <item android:state_last="true" android:drawable="@android:color/transparent" />
     <item>
-        <inset android:insetLeft="@dimen/keyline_1">
-            <shape android:shape="rectangle">
-                <solid android:color="@color/divider" />
-            </shape>
-        </inset>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/divider" />
+        </shape>
     </item>
 </selector>

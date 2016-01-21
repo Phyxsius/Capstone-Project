@@ -315,22 +315,25 @@ public class AddNewBoardgame extends Activity {
         @Override
         public View getView(int position, View view, ViewGroup container) {
             if (view == null) {
-                view = newNewCommentView(position, container);
+                view = newSearchResultView(position, container);
             }
-            bindComment(getItem(position), position, view);
+            bindSearchResult(getItem(position), position, view);
             return view;
         }
 
-        private View newNewCommentView(int position, ViewGroup parent) {
+        private View newSearchResultView(int position, ViewGroup parent) {
             View view = inflater.inflate(R.layout.search_result_item, parent, false);
-            view.setTag(R.id.search_result, view.findViewById(R.id.search_result));
+            view.setTag(R.id.search_result_title, view.findViewById(R.id.search_result_title));
+            view.setTag(R.id.search_result_date, view.findViewById(R.id.search_result_date));
             return view;
         }
 
-        private void bindComment(final Boardgame boardgame, final int position, final View view) {
-            final TextView title = (TextView) view.getTag(R.id.search_result);
+        private void bindSearchResult(final Boardgame boardgame, final int position, final View view) {
+            final TextView title = (TextView) view.getTag(R.id.search_result_title);
+            final TextView date = (TextView) view.getTag(R.id.search_result_date);
 
             title.setText(boardgame.getTitle());
+            date.setText(boardgame.yearPublished);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

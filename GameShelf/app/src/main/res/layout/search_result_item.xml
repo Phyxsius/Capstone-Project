@@ -15,13 +15,38 @@
   limitations under the License.
   -->
 
-<us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_result"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_normal"
-    app:topPaddingHint="@dimen/padding_normal"
-    android:background="@color/background_light"
-    style="@style/Widget.GameShelf.TilePrimary" />
+    android:layout_width="match_parent"
+    android:orientation="horizontal">
+
+    <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
+        android:id="@+id/search_result_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_normal"
+        app:topPaddingHint="@dimen/padding_normal"
+        android:background="@color/background_light"
+        style="@style/Widget.GameShelf.TilePrimary"
+        android:text="Flick Em&apos; Up!"
+        android:paddingRight="@dimen/padding_small"
+        android:paddingLeft="@dimen/padding_normal"
+        android:paddingTop="@dimen/padding_normal"
+        android:paddingBottom="@dimen/padding_normal" />
+
+    <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
+        android:id="@+id/search_result_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:topPaddingHint="@dimen/padding_normal"
+        android:background="@color/background_light"
+        style="@style/Widget.GameShelf.TileSecondary"
+        android:text="2015"
+        android:paddingTop="@dimen/padding_normal"
+        android:paddingRight="@dimen/padding_normal"
+        android:paddingBottom="@dimen/padding_normal" />
+
+</LinearLayout>

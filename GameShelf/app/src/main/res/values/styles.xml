@@ -145,6 +145,7 @@
         <item name="android:letterSpacing">0.01</item>
         <item name="lineHeightHint">20sp</item>
         <item name="font">roboto-mono-regular</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Widget.GameShelf.TilePrimary">
@@ -154,6 +155,7 @@
     <style name="TextAppearance.TileSecondary" parent="@android:style/TextAppearance.Material.Body2">
         <item name="android:letterSpacing">0.01</item>
         <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textStyle"></item>
     </style>
 
     <style name="Widget.GameShelf.TileSecondary">

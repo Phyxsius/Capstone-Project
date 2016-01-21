@@ -82,55 +82,63 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <FrameLayout
-                    android:id="@+id/results_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/background_light">
-
-                    <ProgressBar
-                        android:id="@android:id/empty"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/spacing_huge"
-                        android:paddingBottom="@dimen/spacing_huge"
-                        android:visibility="gone"
-                        android:indeterminate="true"
-                        android:indeterminateTint="?android:colorAccent"
-                        android:indeterminateTintMode="src_in" />
-
-                    <ViewStub
-                        android:id="@+id/stub_no_search_results"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout="@layout/no_search_results" />
-
-                    <ListView
-                        android:id="@+id/search_results"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scrollbars="vertical"
-                        android:scrollbarStyle="outsideOverlay"
-                        android:clipToPadding="false"
-                        android:visibility="gone" />
-                </FrameLayout>
-
-                <Button
-                    android:id="@+id/add_new_boardgame_collect"
-                    android:layout_width="match_parent"
-                    android:layout_height="?android:actionBarSize"
-                    android:layout_marginTop="@dimen/padding_normal"
-                    android:enabled="false"
-                    android:background="@drawable/collect_boardgame"
-                    android:padding="@dimen/spacing_micro"
-                    android:stateListAnimator="@animator/raise"
-                    android:text="@string/add_new_boardgame_collect"
-                    android:textAppearance="@style/TextAppearance.Button"
-                    android:theme="@style/GameShelfDarkOverlay" />
-
             </LinearLayout>
 
         </us.phyxsi.gameshelf.ui.widget.ObservableScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <FrameLayout
+                android:id="@+id/results_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_light">
+
+                <ProgressBar
+                    android:id="@android:id/empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/spacing_huge"
+                    android:paddingBottom="@dimen/spacing_huge"
+                    android:visibility="gone"
+                    android:indeterminate="true"
+                    android:indeterminateTint="?android:colorAccent"
+                    android:indeterminateTintMode="src_in" />
+
+                <ViewStub
+                    android:id="@+id/stub_no_search_results"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout="@layout/no_search_results" />
+
+                <ListView
+                    android:id="@+id/search_results"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:clipToPadding="false"
+                    android:visibility="gone"
+                    android:nestedScrollingEnabled="true" />
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/add_new_boardgame_collect"
+                android:layout_width="match_parent"
+                android:layout_height="?android:actionBarSize"
+                android:layout_marginTop="@dimen/padding_normal"
+                android:enabled="false"
+                android:background="@drawable/collect_boardgame"
+                android:padding="@dimen/spacing_micro"
+                android:stateListAnimator="@animator/raise"
+                android:text="@string/add_new_boardgame_collect"
+                android:textAppearance="@style/TextAppearance.Button"
+                android:theme="@style/GameShelfDarkOverlay" />
+
+    </LinearLayout>
 
     </LinearLayout>
 
