@@ -34,7 +34,9 @@
         android:paddingRight="@dimen/padding_small"
         android:paddingLeft="@dimen/padding_normal"
         android:paddingTop="@dimen/padding_normal"
-        android:paddingBottom="@dimen/padding_normal" />
+        android:paddingBottom="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingStart="@dimen/padding_normal" />
 
     <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
         android:id="@+id/search_result_date"
@@ -45,6 +47,7 @@
         style="@style/Widget.GameShelf.TileSecondary"
         android:paddingTop="@dimen/padding_normal"
         android:paddingRight="@dimen/padding_normal"
-        android:paddingBottom="@dimen/padding_normal" />
+        android:paddingBottom="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_normal" />
 
 </LinearLayout>

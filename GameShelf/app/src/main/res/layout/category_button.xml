@@ -17,6 +17,6 @@
         android:text="Category"
         android:layout_marginLeft="@dimen/category_button_margin"
         android:layout_marginTop="@dimen/category_button_margin"
-        android:layout_marginRight="@dimen/category_button_margin"
-        android:layout_marginBottom="@dimen/category_button_margin" />
+        android:layout_marginBottom="@dimen/category_button_margin"
+        android:layout_marginEnd="@dimen/category_button_margin" />
 </FrameLayout>
