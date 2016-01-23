@@ -97,6 +97,13 @@ public class AddNewBoardgame extends Activity {
             public void onDataLoaded(List<? extends Boardgame> data) {
                 if (data != null) {
                     if (data.size() == 1) {
+                        // We got a single hit from the search so we need to get all the details of
+                        // the game and then we can add it to the database
+                        if (data.get(0).image == null) {
+                            addToCollection(data.get(0));
+                            return;
+                        }
+
                         // Save to DB
                         BoardgameDbHelper bgHelper = new BoardgameDbHelper(AddNewBoardgame.this);
                         bgHelper.insert(data.get(0));
