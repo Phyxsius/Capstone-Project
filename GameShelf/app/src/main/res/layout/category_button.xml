@@ -15,6 +15,7 @@
         android:paddingBottom="@dimen/zero"
         android:clickable="false"
         android:text="Category"
+        android:contentDescription="Category"
         android:layout_marginLeft="@dimen/category_button_margin"
         android:layout_marginTop="@dimen/category_button_margin"
         android:layout_marginBottom="@dimen/category_button_margin"

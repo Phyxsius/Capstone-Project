@@ -48,6 +48,7 @@
             android:gravity="start|center_vertical"
             android:minHeight="?android:actionBarSize"
             android:text="@string/add_new_boardgame_title"
+            android:contentDescription="@string/add_new_boardgame_title"
             android:background="@color/background_light"
             style="@style/Widget.GameShelf.DialogTitle" />
 
@@ -78,6 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/add_new_boardgame_game_title"
+                        android:contentDescription="@string/add_new_boardgame_game_title"
                         android:inputType="textCapWords" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -135,6 +137,7 @@
                 android:padding="@dimen/spacing_micro"
                 android:stateListAnimator="@animator/raise"
                 android:text="@string/add_new_boardgame_collect"
+                android:contentDescription="@string/add_new_boardgame_collect"
                 android:textAppearance="@style/TextAppearance.Button"
                 android:theme="@style/GameShelfDarkOverlay" />
 

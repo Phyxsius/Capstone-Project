@@ -11,6 +11,7 @@
     <string name="bgg_log_out">Log out of Board Game Geek</string>
     <string name="bgg_logged_out">Logged out of Board Game Geek</string>
     <string name="no_results_found">Looks like your collection is empty.\nPress the add button below (&#2228;)\nor import from Board Game Geek</string>
+    <string name="back">Back</string>
 
     <!-- search -->
     <string name="search_hint">Search your collection</string>
@@ -35,9 +36,20 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_remove">Remove</string>
 
-    <!-- designer news login -->
+    <!-- BGG login -->
     <string name="username">Username</string>
     <string name="bgg_login_action">Log in</string>
+
+    <!-- details screen -->
+    <string name="details_box_art">Boardgame box art</string>
+    <string name="details_num_of_players">Number of players</string>
+    <string name="details_play_time">Play time</string>
+    <string name="details_best_with">Best played with</string>
+    <string name="details_minium_age">Suggested ages</string>
+    <string name="details_title">Boardgame title</string>
+    <string name="details_publisher_date">Publisher and date</string>
+    <string name="details_description">Boardgame description</string>
+    <string name="details_date">Published on</string>
 
     <!-- about screen -->
     <string name="about_gameshelf_0">Game Shelf helps you keep track of your growing boardgame collection all in one place. It pulls data from [Board Game Geek](https://www.boardgamegeek.com/); it is in no way an official client for this services nor endorsed by them.</string>

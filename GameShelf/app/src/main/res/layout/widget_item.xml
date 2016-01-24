@@ -15,5 +15,6 @@
     android:id="@+id/widget_item"
     android:layout_width="@dimen/widget_image_size"
     android:layout_height="@dimen/widget_image_size"
+    android:contentDescription="@string/details_box_art"
     android:layout_centerInParent="true"
     android:scaleType="centerCrop" />

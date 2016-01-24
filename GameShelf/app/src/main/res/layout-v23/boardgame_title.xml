@@ -36,6 +36,7 @@
         app:fabOverlayHeight="@dimen/half_fab_plus_single_padding"
         app:fabOverlayWidth="@dimen/fab_plus_single_padding"
         tools:text="Boardgame title"
+        android:contentDescription="@string/details_title"
         style="@style/Widget.GameShelf.BoardgameDetailsTitle" />
 
     <us.phyxsi.gameshelf.ui.widget.FabOverlapTextView
@@ -51,6 +52,7 @@
         app:fabOverlayHeight="@dimen/half_fab_plus_single_padding"
         app:fabOverlayWidth="@dimen/fab_plus_single_padding"
         tools:text="by Publisher, 2015"
+        android:contentDescription="@string/details_publisher_date"
         style="@style/Widget.GameShelf.BoardgameDetailsByline" />
 
     <include
@@ -67,6 +69,7 @@
         app:fabOverlayHeight="@dimen/half_fab_plus_single_padding"
         app:fabOverlayWidth="@dimen/fab_plus_single_padding"
         tools:text="Check out this sweet eye candy!"
+        android:contentDescription="@string/details_description"
         style="@style/Widget.GameShelf.BoardgameDetailsDescription" />
 
 </merge>

@@ -25,5 +25,6 @@
     android:layout_marginBottom="@dimen/spacing_normal"
     android:padding="@dimen/padding_normal"
     android:text="@string/about_libs_intro"
+    android:contentDescription="@string/about_libs_intro"
     style="@style/Widget.GameShelf.About"
     tools:showIn="@layout/about_libs" />

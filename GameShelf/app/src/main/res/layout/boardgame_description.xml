@@ -30,7 +30,8 @@
     <us.phyxsi.gameshelf.ui.widget.FourFourView
         android:id="@+id/description_spacer"
         android:layout_columnSpan="3"
-        android:background="@drawable/mid_grey_bounded_ripple" />
+        android:background="@drawable/mid_grey_bounded_ripple"
+        android:contentDescription="@string/details_box_art" />
 
     <include
         layout="@layout/boardgame_title" />

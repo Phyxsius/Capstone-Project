@@ -65,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:singleLine="true"
                     android:text="0-100 players"
+                    android:contentDescription="@string/details_num_of_players"
                     android:textColor="@color/text_primary_dark"
                     android:textSize="16.0sp" />
 
@@ -100,6 +101,7 @@
                     android:layout_width="wrap_content"
                     android:singleLine="true"
                     android:text="0-120 minutes"
+                    android:contentDescription="@string/details_play_time"
                     android:textColor="@color/text_primary_dark"
                     android:textSize="16sp" />
 
@@ -136,6 +138,7 @@
                 android:layout_width="wrap_content"
                 android:singleLine="false"
                 android:text="Best with 8 players"
+                android:contentDescription="@string/details_best_with"
                 android:textColor="@color/text_primary_dark"
                 android:textSize="16.0sp" />
 
@@ -171,6 +174,7 @@
                 android:layout_width="wrap_content"
                 android:singleLine="true"
                 android:text="0 and up"
+                android:contentDescription="@string/details_minium_age"
                 android:textColor="@color/text_primary_dark"
                 android:textSize="16sp" />
 

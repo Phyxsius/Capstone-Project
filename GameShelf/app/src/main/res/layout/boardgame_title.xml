@@ -32,6 +32,7 @@
         android:paddingEnd="@dimen/padding_room_for_fab"
         android:background="@color/light_grey"
         tools:text="Boardgame title"
+        android:contentDescription="@string/details_title"
         style="@style/Widget.GameShelf.BoardgameDetailsTitle" />
 
     <us.phyxsi.gameshelf.ui.widget.BaselineGridTextView
@@ -44,6 +45,7 @@
         android:paddingBottom="@dimen/padding_normal"
         android:background="@color/light_grey"
         tools:text="by Publisher, 2015"
+        android:contentDescription="@string/details_publisher_date"
         style="@style/Widget.GameShelf.BoardgameDetailsByline"
         android:ellipsize="end" />
 
@@ -58,6 +60,7 @@
         android:textColorLink="@color/primary"
         android:textColorHighlight="@color/accent"
         tools:text="Check out this sweet eye candy!"
+        android:contentDescription="@string/details_description"
         style="@style/Widget.GameShelf.BoardgameDetailsDescription" />
 
 </merge>

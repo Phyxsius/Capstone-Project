@@ -23,4 +23,5 @@
     android:foreground="@drawable/mid_grey_ripple"
     android:theme="@style/GameShelfDarkOverlay"
     app:badgeGravity="end|bottom"
+    android:contentDescription="@string/details_box_art"
     app:badgePadding="@dimen/padding_normal" />

@@ -49,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
             android:title="@string/app_name"
+            android:contentDescription="@string/app_name"
             android:outlineProvider="none"
             android:elevation="1dp"
             style="@style/Widget.GameShelf.HomeToolbar" />
@@ -87,6 +88,7 @@
             android:layout_marginEnd="@dimen/padding_normal"
             android:layout_marginBottom="@dimen/padding_normal"
             android:stateListAnimator="@animator/raise"
+            android:contentDescription="@string/add_new_boardgame_title"
             android:src="@drawable/ic_add_dark" />
 
     </FrameLayout>
