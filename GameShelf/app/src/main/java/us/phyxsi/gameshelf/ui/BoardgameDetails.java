@@ -72,7 +72,7 @@ import us.phyxsi.gameshelf.util.glide.GlideUtils;
 
 public class BoardgameDetails extends Activity {
 
-    protected final static String EXTRA_BOARDGAME = "boardgame";
+    public final static String EXTRA_BOARDGAME = "boardgame";
     private static final float SCRIM_ADJUSTMENT = 0.075f;
 
     @Bind(R.id.draggable_frame) ElasticDragDismissFrameLayout draggableFrame;

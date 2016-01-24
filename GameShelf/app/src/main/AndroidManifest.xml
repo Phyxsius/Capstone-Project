@@ -10,27 +10,33 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/GameShelf">
-
         <activity
             android:name=".ui.HomeActivity"
+            android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/GameShelf.Home"
-            android:exported="true" />
+            android:theme="@style/GameShelf.Home" />
 
-        <!-- use an alias in case we want to change the launch activity later without breaking
-             homescreen shortcuts.  Note must be defined after the targetActivity -->
+        <!--
+             use an alias in case we want to change the launch activity later without breaking
+             homescreen shortcuts.  Note must be defined after the targetActivity
+        -->
         <activity-alias
             android:name=".Launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
@@ -40,16 +46,14 @@
             android:exported="false"
             android:theme="@style/GameShelf.Translucent.BGGLogin"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ui.AboutActivity"
-            android:theme="@style/GameShelf.Translucent.About"
-            android:parentActivityName=".ui.HomeActivity">
+            android:parentActivityName=".ui.HomeActivity"
+            android:theme="@style/GameShelf.Translucent.About">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.HomeActivity" />
         </activity>
-
         <activity
             android:name=".ui.BoardgameDetails"
             android:parentActivityName=".ui.HomeActivity"
@@ -58,19 +62,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.HomeActivity" />
         </activity>
-
         <activity
             android:name=".ui.AddNewBoardgame"
             android:exported="true"
             android:theme="@style/GameShelf.Translucent.AddNewBoardgame">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.SearchActivity"
             android:launchMode="singleTop"
@@ -80,8 +84,10 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="com.google.android.gms.actions.SEARCH_ACTION" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -96,6 +102,20 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/glide_disk_cache_path" />
         </provider>
+
+        <receiver android:name=".widget.StackWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/latest_games_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <!-- Glide configurations for image loading -->
         <meta-data

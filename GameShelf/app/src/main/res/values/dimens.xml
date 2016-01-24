@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright 2015 Google Inc.
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -28,7 +27,8 @@
     <dimen name="display_4_text_size">112sp</dimen>
     <dimen name="divider_height">1px</dimen>
     <dimen name="dialog_corners">2dp</dimen>
-    <dimen name="padding_room_for_fab">88dp</dimen> <!-- padding_normal + fab_size + padding_normal -->
+    <dimen name="padding_room_for_fab">88dp
+    </dimen> <!-- padding_normal + fab_size + padding_normal -->
     <dimen name="fab_plus_single_padding">72dp</dimen> <!-- fab_size + padding_normal -->
     <dimen name="half_fab_plus_single_padding">44dp</dimen> <!-- (fab_size / 2) + padding_normal -->
     <dimen name="drag_dismiss_distance">112dp</dimen> <!-- 2 * ?android:actionBarSize -->
@@ -64,6 +64,10 @@
     <dimen name="avatar_bounds">48dp</dimen>
     <dimen name="avatar_padding">4dp</dimen> <!-- (avatar_bounds - avatar_size) / 2 -->
     <dimen name="avatar_margin">12dp</dimen> <!-- padding_normal - avatar_padding -->
+
+    <!-- widget -->
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_image_size">200dp</dimen>
 
     <!-- Z-axis elevations -->
     <dimen name="z_app_bar">4dp</dimen>

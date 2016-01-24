@@ -51,7 +51,7 @@ public abstract class DataManager extends BaseDataManager {
 
     public void loadFromDatabase() {
         BoardgameDbHelper bgHelper = new BoardgameDbHelper(context);
-        Cursor bgCursor = bgHelper.getAll();
+        Cursor bgCursor = bgHelper.getAll("");
         List<Boardgame> boardgameList = new ArrayList<Boardgame>();
 
         loadStarted();

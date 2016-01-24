@@ -2,7 +2,7 @@
 <resources>
     <!-- app palette -->
     <color name="primary">#78319A</color>
-    <color name="accent">#FADE96</color> <!-- mono-color -->
+    <color name="accent">#7FDAD2</color> <!-- mono-color -->
     <color name="primary_dark">#54226C</color>
     <color name="primary_super_dark">#30133D</color> <!-- same hue & sat, 15% brightness -->
 

@@ -127,7 +127,7 @@ public class BoardgameDbHelper {
         return rowId;
     }
 
-    public Cursor getAll() {
+    public Cursor getAll(String limit) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
@@ -151,7 +151,7 @@ public class BoardgameDbHelper {
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                GameShelfContract.BoardgameEntry._ID + " DESC";
+                GameShelfContract.BoardgameEntry.COLUMN_NAME_CREATED_AT + " DESC";
 
         Cursor c = db.query(
                 GameShelfContract.BoardgameEntry.TABLE_NAME,  // The table to query
@@ -160,7 +160,8 @@ public class BoardgameDbHelper {
                 null,                                     // The values for the WHERE clause
                 null,                                     // don't group the rows
                 null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
+                sortOrder,                                // The sort order
+                limit                                     // The number to return
         );
 
         return c;
