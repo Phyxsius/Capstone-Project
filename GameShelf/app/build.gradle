@@ -26,7 +26,7 @@ android {
         release {
             keyAlias 'Capstone'
             keyPassword 'udacity'
-            storeFile file('/Users/andy/Projects/Capstone-Project/GameShelf/app/signingkey/signingkey.jks')
+            storeFile file('./signingkey/signingkey.jks')
             storePassword 'udacity'
         }
     }
