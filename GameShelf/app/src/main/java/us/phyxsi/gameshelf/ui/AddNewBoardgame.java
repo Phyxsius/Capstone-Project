@@ -18,12 +18,12 @@ package us.phyxsi.gameshelf.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -61,7 +61,7 @@ import us.phyxsi.gameshelf.ui.widget.BaselineGridTextView;
 import us.phyxsi.gameshelf.ui.widget.BottomSheet;
 import us.phyxsi.gameshelf.ui.widget.ObservableScrollView;
 
-public class AddNewBoardgame extends Activity {
+public class AddNewBoardgame extends AppCompatActivity {
 
     public static final int RESULT_DRAG_DISMISSED = 3;
     public static final int RESULT_BOARDGAME_ADDED = 4;

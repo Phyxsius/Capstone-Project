@@ -20,12 +20,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -70,7 +70,7 @@ import us.phyxsi.gameshelf.util.HtmlUtils;
 import us.phyxsi.gameshelf.util.ViewUtils;
 import us.phyxsi.gameshelf.util.glide.GlideUtils;
 
-public class BoardgameDetails extends Activity {
+public class BoardgameDetails extends AppCompatActivity {
 
     public final static String EXTRA_BOARDGAME = "boardgame";
     private static final float SCRIM_ADJUSTMENT = 0.075f;

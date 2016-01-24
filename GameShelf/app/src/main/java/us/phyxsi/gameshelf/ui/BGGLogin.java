@@ -3,6 +3,7 @@ package us.phyxsi.gameshelf.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.TransitionManager;
@@ -30,7 +31,7 @@ import us.phyxsi.gameshelf.data.api.bgg.model.User;
 import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
 import us.phyxsi.gameshelf.ui.transitions.FabDialogMorphSetup;
 
-public class BGGLogin extends Activity {
+public class BGGLogin extends AppCompatActivity {
 
     boolean isDismissing = false;
     @Bind(R.id.container) ViewGroup container;

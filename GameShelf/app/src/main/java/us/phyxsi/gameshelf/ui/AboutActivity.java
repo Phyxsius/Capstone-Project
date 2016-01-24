@@ -16,7 +16,6 @@
 
 package us.phyxsi.gameshelf.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -24,6 +23,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.text.SpannableString;
@@ -56,7 +56,7 @@ import us.phyxsi.gameshelf.util.glide.CircleTransform;
  *  – About GameShelf
  *  – Credit libraries
  */
-public class AboutActivity extends Activity {
+public class AboutActivity extends AppCompatActivity {
 
     @Bind(R.id.draggable_frame) ElasticDragDismissFrameLayout draggableFrame;
     @Bind(R.id.pager) ViewPager pager;

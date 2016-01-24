@@ -16,7 +16,6 @@
 
 package us.phyxsi.gameshelf.ui;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
@@ -33,6 +32,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -72,7 +72,7 @@ import us.phyxsi.gameshelf.data.prefs.BGGPrefs;
 import us.phyxsi.gameshelf.ui.transitions.FabDialogMorphSetup;
 import us.phyxsi.gameshelf.util.ViewUtils;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends AppCompatActivity {
 
     private static final int RC_SEARCH = 0;
     private static final int RC_ADD_NEW_BOARDGAME = 1;
