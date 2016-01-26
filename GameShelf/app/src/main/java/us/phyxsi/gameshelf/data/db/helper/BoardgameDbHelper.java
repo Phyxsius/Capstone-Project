@@ -16,10 +16,18 @@
 
 package us.phyxsi.gameshelf.data.db.helper;
 
+import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.net.Uri;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,14 +39,29 @@ import us.phyxsi.gameshelf.data.db.GameShelfContract;
 /**
  * Helper methods for the Boardgames table
  */
-public class BoardgameDbHelper {
+public class BoardgameDbHelper extends ContentProvider {
+
     private static GameShelfDbHelper mDbHelper;
     private static Context context;
+
+    static final int BOARDGAMES = 1;
+    static final int BOARDGAME_ID = 2;
+
+    static final UriMatcher uriMatcher;
+
+    static {
+        uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        uriMatcher.addURI(GameShelfContract.AUTHORITY, "boardgames", BOARDGAMES);
+        uriMatcher.addURI(GameShelfContract.AUTHORITY, "boardgames/#", BOARDGAME_ID);
+    }
+
+    public BoardgameDbHelper() {}
 
     public BoardgameDbHelper(Context context) {
         this.context = context;
         mDbHelper = new GameShelfDbHelper(context);
     }
+
 
     public long insert(Boardgame boardgame) {
         // Gets the data repository in write mode
@@ -251,5 +274,140 @@ public class BoardgameDbHelper {
         );
 
         return c;
+    }
+
+    @Nullable
+    @Override
+    public String getType(Uri uri) {
+        switch (uriMatcher.match(uri)){
+            case BOARDGAMES:
+                return GameShelfContract.BoardgameEntry.CONTENT_TYPE;
+            case BOARDGAME_ID:
+                return GameShelfContract.BoardgameEntry.CONTENT_ITEM_TYPE;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public boolean onCreate() {
+        mDbHelper = new GameShelfDbHelper(getContext());
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(GameShelfContract.BoardgameEntry.TABLE_NAME);
+
+        switch (uriMatcher.match(uri)) {
+            case BOARDGAMES:
+                if (TextUtils.isEmpty(sortOrder)) {
+                    sortOrder = GameShelfContract.BoardgameEntry.SORT_ORDER_DEFAULT;
+                }
+                break;
+
+            case BOARDGAME_ID:
+                builder.appendWhere(GameShelfContract.BoardgameEntry._ID + "=" + uri.getPathSegments().get(1));
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+
+        Cursor cursor = builder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
+        return cursor;
+    }
+
+    @Nullable
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        // Gets the data repository in write mode
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        values.put(GameShelfContract.BoardgameEntry.COLUMN_NAME_CREATED_AT, dateFormat.format(date));
+
+
+        // Insert the new row, returning the primary key value of the new row
+        long id  = db.insert(
+                GameShelfContract.BoardgameEntry.TABLE_NAME,
+                null,
+                values
+        );
+
+        if (id > 0) {
+            Uri itemUri = ContentUris.withAppendedId(uri, id);
+            getContext().getContentResolver().notifyChange(itemUri, null);
+            return itemUri;
+        }
+
+        throw new SQLException("Problem while inserting into uri: " + uri);
+    }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int deleteCount = 0;
+
+
+        switch (uriMatcher.match(uri)) {
+            case BOARDGAMES:
+                deleteCount = db.delete(GameShelfContract.BoardgameEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+
+            case BOARDGAME_ID:
+                String idStr = uri.getLastPathSegment();
+                String where = GameShelfContract.BoardgameEntry._ID + " = " + idStr;
+                if (!TextUtils.isEmpty(selection)) {
+                    where += " AND " + selection;
+                }
+
+                deleteCount = db.delete(GameShelfContract.BoardgameEntry.TABLE_NAME, where, selectionArgs);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported URI " + uri);
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return deleteCount;
+    }
+
+    @Override
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int updateCount = 0;
+
+
+        switch (uriMatcher.match(uri)) {
+            case BOARDGAMES:
+                updateCount = db.update(GameShelfContract.BoardgameEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+
+            case BOARDGAME_ID:
+                String idStr = uri.getLastPathSegment();
+                String where = GameShelfContract.BoardgameEntry._ID + " = " + idStr;
+                if (!TextUtils.isEmpty(selection)) {
+                    where += " AND " + selection;
+                }
+
+                updateCount = db.update(GameShelfContract.BoardgameEntry.TABLE_NAME, values, where, selectionArgs);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported URI " + uri);
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return updateCount;
     }
 }

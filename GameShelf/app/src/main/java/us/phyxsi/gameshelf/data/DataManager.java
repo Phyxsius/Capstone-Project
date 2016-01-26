@@ -18,6 +18,7 @@ package us.phyxsi.gameshelf.data;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import us.phyxsi.gameshelf.data.api.bgg.model.Boardgame;
 import us.phyxsi.gameshelf.data.api.bgg.model.BoardgamesResponse;
 import us.phyxsi.gameshelf.data.api.bgg.model.CollectionItem;
 import us.phyxsi.gameshelf.data.api.bgg.model.CollectionItems;
+import us.phyxsi.gameshelf.data.db.GameShelfContract;
 import us.phyxsi.gameshelf.data.db.helper.BoardgameDbHelper;
 
 /**
@@ -51,7 +53,8 @@ public abstract class DataManager extends BaseDataManager {
 
     public void loadFromDatabase() {
         BoardgameDbHelper bgHelper = new BoardgameDbHelper(context);
-        Cursor bgCursor = bgHelper.getAll("");
+        Uri uri = GameShelfContract.BoardgameEntry.CONTENT_URI;
+        Cursor bgCursor = context.getContentResolver().query(uri, null, null, null, null);
         List<Boardgame> boardgameList = new ArrayList<Boardgame>();
 
         loadStarted();
